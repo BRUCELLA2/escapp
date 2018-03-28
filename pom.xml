@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- =============================================================== -->
+  <!-- PROJECT INFORMATIONS -->
+  <!-- =============================================================== -->
+  <groupId>fr.brucella.form</groupId>
+  <artifactId>escapp</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <!-- =============================================================== -->
+  <!-- GENERAL INFORMATIONS -->
+  <!-- =============================================================== -->
+  <name>escapp</name>
+  <url>http://form.brucella.org</url>
+
+  <!-- =============================================================== -->
+  <!-- PROPERTIES -->
+  <!-- =============================================================== -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <!-- =============================================================== -->
+  <!-- DEPENDENCIES -->
+  <!-- =============================================================== -->
+  <dependencies>
+  </dependencies>
+  
+  <!-- =============================================================== -->
+  <!-- MODULES -->
+  <!-- =============================================================== -->
+  <modules>
+    <module>escapp-batch</module>
+    <module>escapp-webapp</module>
+    <module>escapp-business</module>
+    <module>escapp-consumer</module>
+    <module>escapp-model</module>
+  </modules>
+</project>
