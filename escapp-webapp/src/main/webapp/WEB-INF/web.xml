@@ -9,6 +9,7 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+
   <context-param>
     <param-name>contextConfigurationLocation</param-name>
     <param-value>fr.brucella.form.escapp.webapp.boostrap.SpringConfiguration</param-value>
