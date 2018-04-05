@@ -1,5 +1,9 @@
 package fr.brucella.form.escapp.model.beans.site;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Business object which represents a Sector
  * Sector is a part of Site.
@@ -7,11 +11,19 @@ package fr.brucella.form.escapp.model.beans.site;
  * @author BRUCELLA2
  */
 public class Sector {
-    // @TODO add JSR 380 validation tags
+
+    // @TODO check messages and write it in resource bundle
 
     private Integer id;
+
+    @NotEmpty(message = "Un secteur doit avoir un nom")
+    @Size(min = 1, max = 100, message = "Le nom d'un secteur doit contenir au maximum {max} caractères")
     private String name;
+
+    @Size(min = 0, max = 10000, message = "La description d'un secteur doit contenir au maximum {max} caractères")
     private String description;
+
+    @NotNull(message = "Un secteur doit avoir un identifiant de site associé")
     private Integer siteId;
 
     // ===== Constructor =====

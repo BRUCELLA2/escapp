@@ -1,5 +1,8 @@
 package fr.brucella.form.escapp.model.beans.topo;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -8,17 +11,39 @@ import java.util.Date;
  * @author BRUCELLA2
  */
 public class Topo {
-    // @TODO add JSR 380 validation tags
+
+    // @TODO check messages and write it in resource bundle
 
     private Integer id;
+
+    @NotEmpty(message = "Le topo doit avoir un nom")
+    @Size(min = 1, max = 100, message = "Le nom doit contenir au maximum {max} caractères")
     private String name;
+
+    @NotEmpty(message = "Le département doit être renseigné")
+    @Size(min = 2, max = 2, message = "Le numéro du département doit être sur deux caractères")
     private String department;
+
+    @Size(min = 1, max = 100, message = "La commune doit contenir au maximum {max} caractères")
     private String municipality;
+
+    @Size(max = 10000, message = "La description d'un topo doit contenir au maximum {max} caractères.")
     private String description;
+
+    @NotEmpty(message = "Le nom du fichier pdf doit être renseigné")
+    @Size(min = 1, max = 200, message = "Le nom du fichier doit avoir {max} caractères maximum")
     private String pdfFileName;
+
+    @NotNull(message = "Le propriétaire du topo doit être renseigné")
     private Integer owner;
+
+
     private Integer borrower;
+
+    @NotNull(message = "Il est nécessaire d'indiquer si le topo est empruntable ou non")
     private Boolean isBorrowable;
+
+
     private Date endDateBorrow;
 
 

@@ -1,17 +1,33 @@
 package fr.brucella.form.escapp.model.beans.comment;
 
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Business object which represents a Comment.
  *
  * @author BRUCELLA2
  */
 public class Comment {
-    // @TODO add JSR 380 validation tags
+
+    // @TODO check messages and write it in resource bundle
 
     private Integer id;
-    private String description;
+
+    @NotEmpty(message = "La text ne peut être vide")
+    @Size(min = 1, max = 1000, message = "La text ne peut dépasser {max} caractères")
+    private String text;
+
+    @NotNull(message = "Un commentaire doit être associé à un utilisateur")
     private Integer userId;
-    private Integer siteId;
+
+    @NotEmpty(message = "Le type de la cible du commentaire ne peut être null")
+    private String target_type;
+
+    @NotNull(message = "Un commentaire doit être associé à un élément à commenter")
+    private Integer idCommentTarget;
 
     // ===== Constructor =====
     /**
@@ -27,16 +43,18 @@ public class Comment {
         return id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getText() {
+        return text;
     }
 
     public Integer getUserId() {
         return userId;
     }
 
-    public Integer getSiteId() {
-        return siteId;
+    public String getTarget_type() { return target_type; }
+
+    public Integer getIdCommentTarget() {
+        return idCommentTarget;
     }
 
     // ===== Setters =====
@@ -45,29 +63,35 @@ public class Comment {
         this.id = pId;
     }
 
-    public void setDescription(String pDescription) {
-        this.description = pDescription;
+    public void setText(String pText) {
+        this.text = pText;
     }
 
     public void setUserId(Integer pUserId) {
         this.userId = pUserId;
     }
 
-    public void setSiteId(Integer pSiteId) {
-        this.siteId = pSiteId;
+    public void setTarget_type(String pTarget_type) {
+        this.target_type = pTarget_type;
+    }
+
+    public void setIdCommentTarget(Integer pIdCommentTarget) {
+        this.idCommentTarget = pIdCommentTarget;
     }
 
     // ===== Methods =====
 
     // @TODO make a better toString method
 
+
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
-                ", description='" + description + '\'' +
+                ", text='" + text + '\'' +
                 ", userId=" + userId +
-                ", siteId=" + siteId +
+                ", target_type='" + target_type + '\'' +
+                ", idCommentTarget=" + idCommentTarget +
                 '}';
     }
 }
