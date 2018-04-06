@@ -8,15 +8,25 @@ import fr.brucella.form.escapp.consumer.contract.dao.site.SectorDao;
 import fr.brucella.form.escapp.consumer.contract.dao.site.SiteDao;
 import fr.brucella.form.escapp.consumer.contract.dao.topo.TopoDao;
 import fr.brucella.form.escapp.consumer.contract.dao.user.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DaoFactoryImpl implements DaoFactory {
 
+    @Autowired
     private CommentDao vCommentDao;
+    @Autowired
     private SiteDao vSiteDao;
+    @Autowired
     private TopoDao vTopoDao;
+    @Autowired
     private UserDao vUserDao;
+    @Autowired
     private RouteDao vRouteDao;
+    @Autowired
     private SectorDao vSectorDao;
+    @Autowired
     private LengthDao vLengthDao;
 
 
