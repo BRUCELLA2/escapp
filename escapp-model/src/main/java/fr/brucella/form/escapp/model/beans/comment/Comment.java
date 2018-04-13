@@ -21,10 +21,10 @@ public class Comment {
     private String text;
 
     @NotNull(message = "Un commentaire doit être associé à un utilisateur")
-    private Integer userId;
+    private Integer escappUser;
 
     @NotEmpty(message = "Le type de la cible du commentaire ne peut être null")
-    private String target_type;
+    private String targetType;
 
     @NotNull(message = "Un commentaire doit être associé à un élément à commenter")
     private Integer idCommentTarget;
@@ -47,11 +47,11 @@ public class Comment {
         return text;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getEscappUser() {
+        return escappUser;
     }
 
-    public String getTarget_type() { return target_type; }
+    public String getTargetType() { return targetType; }
 
     public Integer getIdCommentTarget() {
         return idCommentTarget;
@@ -67,12 +67,12 @@ public class Comment {
         this.text = pText;
     }
 
-    public void setUserId(Integer pUserId) {
-        this.userId = pUserId;
+    public void setEscappUser(Integer pEscappUser) {
+        this.escappUser = pEscappUser;
     }
 
-    public void setTarget_type(String pTarget_type) {
-        this.target_type = pTarget_type;
+    public void setTargetType(String pTargetType) {
+        this.targetType = pTargetType;
     }
 
     public void setIdCommentTarget(Integer pIdCommentTarget) {
@@ -89,8 +89,8 @@ public class Comment {
         return "Comment{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", userId=" + userId +
-                ", target_type='" + target_type + '\'' +
+                ", escappUser=" + escappUser +
+                ", targetType='" + targetType + '\'' +
                 ", idCommentTarget=" + idCommentTarget +
                 '}';
     }

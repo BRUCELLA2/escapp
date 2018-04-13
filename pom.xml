@@ -25,8 +25,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <log4j.version>2.11.0</log4j.version>
-    <spring.version>5.0.5.RELEASE</spring.version>
-    <struts.version>2.5.16</struts.version>
+    <spring.version>4.3.11.RELEASE</spring.version>
+    <struts.version>2.5.14.1</struts.version>
   </properties>
 
   <!-- =============================================================== -->
@@ -149,9 +149,77 @@
         <scope>runtime</scope>
       </dependency>
 
+
+      <!-- TEST -->
+      <!-- JSR-250 -->
+      <dependency>
+        <groupId>javax.annotation</groupId>
+        <artifactId>javax.annotation-api</artifactId>
+        <version>1.2</version>
+      </dependency>
+      <!-- JSR-330 -->
+      <dependency>
+        <groupId>javax.inject</groupId>
+        <artifactId>javax.inject</artifactId>
+        <version>1</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
-  
+
+
+  <!-- =============================================================== -->
+  <!-- Build -->
+  <!-- =============================================================== -->
+  <build>
+    <!-- ===== Gestion des plugins ===== -->
+    <pluginManagement>
+      <plugins>
+        <!-- Packaging JAR -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+
+        <!-- Compilation des sources Java -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <showDeprecation>true</showDeprecation>
+            <showWarnings>true</showWarnings>
+          </configuration>
+        </plugin>
+
+        <!-- Packaging WAR -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+
+        <!-- Assemblage -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+
+        <!-- Site -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.6</version>
+          <configuration>
+            <locales>fr</locales>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
   <!-- =============================================================== -->
   <!-- MODULES -->
   <!-- =============================================================== -->

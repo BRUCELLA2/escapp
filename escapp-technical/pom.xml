@@ -59,5 +59,17 @@
       <artifactId>spring-context</artifactId>
     </dependency>
 
+    <!-- TEST -->
+    <!-- JSR-250 -->
+    <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+    </dependency>
+    <!-- JSR-330 -->
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+    </dependency>
+
   </dependencies>
 </project>

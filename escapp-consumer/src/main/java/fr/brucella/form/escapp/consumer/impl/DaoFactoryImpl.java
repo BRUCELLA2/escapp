@@ -9,10 +9,23 @@ import fr.brucella.form.escapp.consumer.contract.dao.site.SiteDao;
 import fr.brucella.form.escapp.consumer.contract.dao.topo.TopoDao;
 import fr.brucella.form.escapp.consumer.contract.dao.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+/*
+@Component
+public class DaoFactoryImpl {
+
+    public void test(){
+        System.out.println("Test inject DaoFactory");
+    }
+}
+*/
+
 
 @Component
 public class DaoFactoryImpl implements DaoFactory {
+
 
     @Autowired
     private CommentDao vCommentDao;
@@ -39,6 +52,7 @@ public class DaoFactoryImpl implements DaoFactory {
 
     @Override
     public SiteDao getSiteDao() {
+        System.out.println("test getSiteDao");
         return vSiteDao;
     }
 
@@ -104,4 +118,5 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setUserDao(UserDao pUserDao) {
         this.vUserDao = pUserDao;
     }
+
 }

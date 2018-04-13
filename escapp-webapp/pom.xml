@@ -17,6 +17,7 @@
 
   <!-- ===== Maven Informations ===== -->
   <artifactId>escapp-webapp</artifactId>
+  <packaging>war</packaging>
 
   <!-- ===== General Informations ===== -->
   <name>${projectName} - Webapp</name>
@@ -64,8 +65,22 @@
       <artifactId>postgresql</artifactId>
     </dependency>
 
+    <!-- Struts2 core -->
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-core</artifactId>
+    </dependency>
+
+    <!-- Struts2-Spring plugin -->
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-spring-plugin</artifactId>
+    </dependency>
+
   </dependencies>
+
   <build>
     <finalName>escapp-webapp</finalName>
   </build>
+
 </project>

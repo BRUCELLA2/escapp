@@ -6,4 +6,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SiteDaoImpl extends AbstractDao implements SiteDao {
+
+    public SiteDaoImpl(){
+
+            System.out.println("testDao CONST");
+    }
+
+    public void test(){
+        System.out.println("testDao");
+    }
 }

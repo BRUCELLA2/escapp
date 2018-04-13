@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context>
+<Context path="/">
     <Resource name="jdbc/DB_ESCAPP"
               auth="Container"
               type="javax.sql.DataSource"
@@ -8,7 +8,7 @@
               driverClassName="org.postgresql.Driver"
               username="adm_escapp"
               password="adm_escapp"
-              defaultAutoCommit="false"
+              defaultAutoCommit="true"
               defaultTransactionIsolation="READ_COMMITTED"
 
               initialSize="1"
