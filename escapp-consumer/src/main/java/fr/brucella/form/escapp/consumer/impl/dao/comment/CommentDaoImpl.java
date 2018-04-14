@@ -20,12 +20,12 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
     // TODO Add try/catch for Exception
 
     @Override
-    public Comment getComment(Integer pId) throws TechnicalException {
+    public Comment getComment(Integer pCommentId) throws TechnicalException {
         
         String vSQL = "SELECT * FROM comment WHERE id = :id";
 
         MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pId);
+        vParams.addValue("id", pCommentId);
 
         RowMapper<Comment> vRowMapper = new CommentRM();
 
@@ -49,6 +49,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
     @Override
     public void updateComment(Comment pComment) throws TechnicalException {
+    	
         String vSQL = "UPDATE comment SET text = :text, target_type = :targetType, id_comment_target = :idCommentTarget, escapp_user = :escappUser WHERE id = :id";
                 
         SqlParameterSource vParams = new BeanPropertySqlParameterSource(pComment);
@@ -58,18 +59,20 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
     @Override
     public void insertComment(Comment pComment) throws TechnicalException {
+    	
         String vSQL = "INSERT INTO comment (id, text, target_type, id_comment_target, escapp_user) VALUES (DEFAULT, :text, :targetType, :idCommentTarget, :escappUser)";
 
         SqlParameterSource vParams = new BeanPropertySqlParameterSource(pComment);
+        
         getNamedJdbcTemplate().update(vSQL, vParams);
     }
 
     @Override
-    public void deleteComment(Integer pId) throws TechnicalException {
+    public void deleteComment(Integer pCommentId) throws TechnicalException {
         String vSQL = "DELETE FROM comment WHERE id = :id";
 
         MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pId);
+        vParams.addValue("id", pCommentId);
 
         getNamedJdbcTemplate().update(vSQL, vParams);
     }

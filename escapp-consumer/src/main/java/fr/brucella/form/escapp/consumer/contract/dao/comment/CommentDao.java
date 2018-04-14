@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CommentDao {
 
-    Comment getComment(Integer pId) throws TechnicalException;
+    Comment getComment(Integer pCommentId) throws TechnicalException;
 
     List<Comment> getCommentsList(String pTargetType, Integer pIdCommentTarget) throws TechnicalException;
 
@@ -15,6 +15,6 @@ public interface CommentDao {
 
     void insertComment(Comment pComment) throws TechnicalException;
 
-    void deleteComment(Integer pId) throws TechnicalException;
+    void deleteComment(Integer pCommentId) throws TechnicalException;
 
 }

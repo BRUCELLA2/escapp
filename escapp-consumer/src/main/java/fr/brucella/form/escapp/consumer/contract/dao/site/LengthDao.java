@@ -7,7 +7,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 public interface LengthDao {
 	
-    Length getLength(Integer pId);
+    Length getLength(Integer pLengthId) throws TechnicalException;
 
     List<Length> getLengthsList(Integer pRouteId) throws TechnicalException;
     
@@ -15,6 +15,6 @@ public interface LengthDao {
     
     void insertLength(Length pLength) throws TechnicalException;
     
-    void deleteLength(Integer id) throws TechnicalException;
+    void deleteLength(Integer pLengthId) throws TechnicalException;
 
 }

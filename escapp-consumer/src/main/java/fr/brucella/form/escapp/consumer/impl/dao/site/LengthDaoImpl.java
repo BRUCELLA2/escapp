@@ -22,11 +22,11 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
     // TODO Add try/catch for Exception
 
 	@Override
-	public Length getLength(Integer pId) {
+	public Length getLength(Integer pLengthId) throws TechnicalException {
 		
 		String vSQL = "SELECT * FROM length WHERE id = :id";
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("id", pId);
+		vParams.addValue("id", pLengthId);
 		
 		RowMapper<Length> vRowMapper = new LengthRM();
 		
@@ -65,9 +65,14 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
 	}
 
 	@Override
-	public void deleteLength(Integer id) throws TechnicalException {
-		// TODO Auto-generated method stub
+	public void deleteLength(Integer pLengthId) throws TechnicalException {
 		
+		String vSQL = "DELETE FROM lenght WHERE id = :id";
+		
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("id", pLengthId);
+		
+		getNamedJdbcTemplate().update(vSQL, vParams);
 	}
 	
 }
