@@ -19,6 +19,7 @@
                 class="fr.brucella.form.escapp.webapp.action.TestAction"
                 method="doTest">
             <result name="success">/jsp/test.jsp</result>
+            <result name="error">/jsp/test.jsp</result>
         </action>
 
     </package>

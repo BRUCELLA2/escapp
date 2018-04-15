@@ -4,10 +4,17 @@ import fr.brucella.form.escapp.consumer.contract.dao.site.SectorDao;
 import fr.brucella.form.escapp.consumer.impl.dao.AbstractDao;
 import fr.brucella.form.escapp.consumer.impl.rowmapper.site.SectorRM;
 import fr.brucella.form.escapp.model.beans.site.Sector;
+import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -18,10 +25,10 @@ import org.springframework.stereotype.Component;
 public class SectorDaoImpl extends AbstractDao implements SectorDao {
 
     // TODO Complete methods
-    // TODO Add try/catch for Exception
+	// TODO Add log system
 	
 	@Override
-	public Sector getSector(Integer pSectorId) throws TechnicalException {
+	public Sector getSector(Integer pSectorId) throws TechnicalException, NotFoundException {
 		
 		String vSQL = "SELECT * FROM sector WHERE id = :id";
 		
@@ -30,11 +37,27 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
 		
 		RowMapper<Sector> vRowMapper = new SectorRM();
 		
-		return getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
+		try {
+			
+			return getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
+			
+		} catch (EmptyResultDataAccessException pException) {
+			pException.printStackTrace();
+			throw new NotFoundException("Le secteur demandé n'a pas été trouvé", pException);
+		} catch (PermissionDeniedDataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} catch (DataAccessResourceFailureException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+		} catch (DataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		}
 	}
 
 	@Override
-	public List<Sector> getSectorsList(Integer pSiteId) throws TechnicalException {
+	public List<Sector> getSectorsList(Integer pSiteId) throws TechnicalException, NotFoundException {
 		
 		String vSQL = "SELECT * FROM sector WHERE site_id = :siteId";
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -42,16 +65,53 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
 		
 		RowMapper<Sector> vRowMapper = new SectorRM();
 		
-		return getNamedJdbcTemplate().query(vSQL, vParams, vRowMapper);
+		try {
+			
+			List<Sector> sectorsList = getNamedJdbcTemplate().query(vSQL, vParams, vRowMapper);
+			if(sectorsList.isEmpty()) {
+				throw new NotFoundException("Aucun secteur n'a été trouvé.");
+			}else {
+				return sectorsList;
+			}
+			
+		} catch (PermissionDeniedDataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} catch (DataAccessResourceFailureException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+		} catch (DataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		}
 	}
 
 	@Override
-	public void updateSector(Sector pSector) throws TechnicalException {
+	public void updateSector(Sector pSector) throws TechnicalException, NotFoundException {
 		
 		String vSQL = "UPDATE sector SET name = :name, description = :description, site_id = :siteId WHERE id = :id";
 		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pSector);
 		
-		getNamedJdbcTemplate().update(vSQL, vParams);
+		try {
+			
+			int result = getNamedJdbcTemplate().update(vSQL, vParams);
+			if(result == 0) {
+				throw new NotFoundException("Le secteur à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
+			}
+			
+		} catch (DataIntegrityViolationException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du secteur n'a pu être réalisée.", pException);
+    	} catch (PermissionDeniedDataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} catch (DataAccessResourceFailureException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+		} catch (DataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		}
 	}
 
 	@Override
@@ -60,16 +120,51 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
 		String vSQL = "INSERT INTO sector (id, name, description, site_id) VALUES (DEFAULT, :name, :description, :siteId)";
 		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pSector);
 
-		getNamedJdbcTemplate().update(vSQL, vParams);
+		try {
+			
+			getNamedJdbcTemplate().update(vSQL, vParams);
+			
+		} catch (DuplicateKeyException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException("Un secteur existe déjà avec cet identifiant", pException);
+		} catch (DataIntegrityViolationException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException("Les données n'étant pas conformes, la création du secteur n'a pu être réalisée", pException);	
+    	} catch (PermissionDeniedDataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} catch (DataAccessResourceFailureException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+		} catch (DataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		}
 	}
 
 	@Override
-	public void deleteSector(Integer pSectorId) throws TechnicalException {
+	public void deleteSector(Integer pSectorId) throws TechnicalException, NotFoundException {
 
 		String vSQL = "DELETE FROM sector WHERE id = :id";
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id", pSectorId);
 		
-		getNamedJdbcTemplate().update(vSQL, vParams);
+		try {
+			
+			int result = getNamedJdbcTemplate().update(vSQL, vParams);
+			if(result == 0) {
+				throw new NotFoundException("Le secteur à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
+			}
+			
+    	} catch (PermissionDeniedDataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} catch (DataAccessResourceFailureException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+		} catch (DataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		}
 	}
 }

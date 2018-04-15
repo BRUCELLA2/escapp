@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import fr.brucella.form.escapp.consumer.impl.DaoFactoryImpl;
 import fr.brucella.form.escapp.consumer.impl.dao.comment.CommentDaoImpl;
 import fr.brucella.form.escapp.model.beans.comment.Comment;
+import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.webapp.WebappHelper;
 
@@ -33,12 +34,15 @@ public class TestAction extends ActionSupport {
         Comment comment = null;
 		try {
 			comment = daoFactoryImpl.getCommentDao().getComment(1);
-		} catch (TechnicalException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+	        System.out.println(comment.toString());
+		} catch (NotFoundException pNotFoundException) {
+			addActionError(pNotFoundException.getMessage());
+		} catch (TechnicalException pTechnicalException) {
+			addActionError(pTechnicalException.getMessage());
+			pTechnicalException.printStackTrace();
+			return ActionSupport.ERROR;
 		}
         
-        System.out.println(comment.toString());
         
         Comment updateComment = new Comment();
         updateComment.setId(1);
@@ -49,7 +53,7 @@ public class TestAction extends ActionSupport {
         
         try {
 			daoFactoryImpl.getCommentDao().updateComment(updateComment);
-		} catch (TechnicalException e) {
+		} catch (TechnicalException | NotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -79,17 +83,20 @@ public class TestAction extends ActionSupport {
         
         List<Comment> comments = new ArrayList<>();
         try {
-			comments = daoFactoryImpl.getCommentDao().getCommentsList("site", 1);
-		} catch (TechnicalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			comments = daoFactoryImpl.getCommentDao().getCommentsList("site", 0);
+
+		} catch (NotFoundException pNotFoundException) {
+			addActionError(pNotFoundException.getMessage());
+	        ListIterator<Comment> it = comments.listIterator();
+	        while(it.hasNext()) {
+	        	Comment com = it.next();
+	        	System.out.println(com.toString());
+	        }
+		} catch (TechnicalException pTechnicalException) {
+			addActionError(pTechnicalException.getMessage());
+			pTechnicalException.printStackTrace();
+			return ActionSupport.ERROR;
 		}
-        
-        ListIterator<Comment> it = comments.listIterator();
-        while(it.hasNext()) {
-        	Comment com = it.next();
-        	System.out.println(com.toString());
-        }
         
         
         return ActionSupport.SUCCESS;

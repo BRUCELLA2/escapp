@@ -11,5 +11,7 @@
 
 <h2>Test</h2>
 
+<s:actionerror/>
+
 </body>
 </html>
