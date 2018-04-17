@@ -21,12 +21,20 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
+/**
+ * Sector Data Access Object
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class SectorDaoImpl extends AbstractDao implements SectorDao {
 
     // TODO Complete methods
 	// TODO Add log system
 	
+	/**
+	 * @see SectorDao#getSector(Integer)
+	 */
 	@Override
 	public Sector getSector(Integer pSectorId) throws TechnicalException, NotFoundException {
 		
@@ -56,6 +64,9 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
 		}
 	}
 
+	/**
+	 * @see SectorDao#getSectorsList(Integer)
+	 */
 	@Override
 	public List<Sector> getSectorsList(Integer pSiteId) throws TechnicalException, NotFoundException {
 		
@@ -86,6 +97,9 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
 		}
 	}
 
+	/**
+	 * @see SectorDao#updateSector(Sector)
+	 */
 	@Override
 	public void updateSector(Sector pSector) throws TechnicalException, NotFoundException {
 		
@@ -114,6 +128,9 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
 		}
 	}
 
+	/**
+	 * @see SectorDao#insertSector(Sector)
+	 */
 	@Override
 	public void insertSector(Sector pSector) throws TechnicalException {
 
@@ -142,6 +159,9 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
 		}
 	}
 
+	/**
+	 * @see SectorDao#deleteSector(Integer)
+	 */
 	@Override
 	public void deleteSector(Integer pSectorId) throws TechnicalException, NotFoundException {
 

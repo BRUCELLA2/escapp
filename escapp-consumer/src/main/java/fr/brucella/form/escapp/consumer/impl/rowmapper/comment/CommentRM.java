@@ -6,8 +6,16 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class allow to map row of {@link java.sql.ResultSet} to an {@link Comment} business object
+ * 
+ * @author BRUCELLA2
+ */
 public class CommentRM implements RowMapper<Comment> {
 
+	/**
+	 * @see RowMapper#mapRow(ResultSet, int)
+	 */
     @Override
     public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
 

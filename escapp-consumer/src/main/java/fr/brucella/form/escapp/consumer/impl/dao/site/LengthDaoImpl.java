@@ -16,18 +16,25 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
+/**
+ * Length Data Access Object
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class LengthDaoImpl extends AbstractDao implements LengthDao {
 	
     // TODO Complete methods
 	// TODO Add log system
 
+	/**
+	 * @see LengthDao#getLength(Integer)
+	 */
 	@Override
 	public Length getLength(Integer pLengthId) throws TechnicalException, NotFoundException {
 		
@@ -56,7 +63,9 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
 		} 
 	}
 	
-
+	/**
+	 * @see LengthDao#getLengthsList(Integer)
+	 */
 	@Override
 	public List<Length> getLengthsList(Integer pRouteId) throws TechnicalException, NotFoundException {
 
@@ -87,6 +96,9 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
 		}
 	}
 
+	/**
+	 * @see LengthDao#updateLength(Length)
+	 */
 	@Override
 	public void updateLength(Length pLength) throws TechnicalException, NotFoundException {
 		
@@ -115,6 +127,9 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
 		}
 	}
 
+	/**
+	 * @see LengthDao#insertLength(Length)
+	 */
 	@Override
 	public void insertLength(Length pLength) throws TechnicalException {
 		
@@ -143,6 +158,9 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
 		}	
 	}
 
+	/**
+	 * @see LengthDao#deleteLength(Integer)
+	 */
 	@Override
 	public void deleteLength(Integer pLengthId) throws TechnicalException, NotFoundException {
 		

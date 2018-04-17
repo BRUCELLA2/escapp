@@ -1,13 +1,15 @@
 package fr.brucella.form.escapp.consumer.impl.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
-
+/**
+ * Abstract class inherited by all Data Access Object implementations.
+ * 
+ * @author BRUCELLA
+ */
 @Component
 public abstract class AbstractDao {
 	
@@ -21,10 +23,20 @@ public abstract class AbstractDao {
     @Autowired
     private NamedParameterJdbcTemplate vNamedJdbcTemplate;
 
+    /**
+     * Get the JdbcTemplate
+     * 
+     * @return the JdbcTemplate
+     */
     public JdbcTemplate getJdbcTemplate() {
         return vJdbcTemplate;
     }
 
+    /**
+     * Get the NamedJdbcTemplate
+     * 
+     * @return the NamedJdbcTemplate
+     */
     public NamedParameterJdbcTemplate getNamedJdbcTemplate() {
         return vNamedJdbcTemplate;
     }

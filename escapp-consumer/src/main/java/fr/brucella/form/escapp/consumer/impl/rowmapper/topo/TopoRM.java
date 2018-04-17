@@ -7,8 +7,16 @@ import org.springframework.jdbc.core.RowMapper;
 
 import fr.brucella.form.escapp.model.beans.topo.Topo;
 
+/**
+ * This class allow to map row of {@link java.sql.ResultSet} to an {@link Topo} business object
+ * 
+ * @author BRUCELLA2
+ */
 public class TopoRM implements RowMapper<Topo>{
 
+	/**
+	 * @see RowMapper#mapRow(ResultSet, int)
+	 */
 	@Override
 	public Topo mapRow(ResultSet rs, int rowNum) throws SQLException {
 

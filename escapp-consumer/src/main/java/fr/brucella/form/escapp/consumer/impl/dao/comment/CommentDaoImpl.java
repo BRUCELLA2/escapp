@@ -21,12 +21,20 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Comment Data Access Object
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
     // TODO Complete methods
 	// TODO Add log system
 
+	/**
+	 * @see CommentDao#getComment(Integer)
+	 */
     @Override
     public Comment getComment(Integer pCommentId) throws TechnicalException, NotFoundException {
         
@@ -56,6 +64,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 		}   
     }
 
+    /**
+     * @see CommentDao#getCommentsList(String, Integer)
+     */
     @Override
     public List<Comment> getCommentsList(String pTargetType, Integer pIdCommentTarget) throws TechnicalException, NotFoundException {
 
@@ -87,6 +98,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
     }
 
+    /**
+     * @see CommentDao#updateComment(Comment)
+     */
     @Override
     public void updateComment(Comment pComment) throws TechnicalException, NotFoundException {
     	
@@ -116,6 +130,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 		}
     }
 
+    /**
+     * @see CommentDao#insertComment(Comment)
+     */
     @Override
     public void insertComment(Comment pComment) throws TechnicalException {
     	
@@ -145,6 +162,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 		}
     }
 
+    /**
+     * @see CommentDao#deleteComment(Integer)
+     */
     @Override
     public void deleteComment(Integer pCommentId) throws TechnicalException, NotFoundException {
         String vSQL = "DELETE FROM comment WHERE id = :id";

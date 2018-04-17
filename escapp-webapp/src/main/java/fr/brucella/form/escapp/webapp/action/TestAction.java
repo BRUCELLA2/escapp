@@ -2,14 +2,12 @@ package fr.brucella.form.escapp.webapp.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import fr.brucella.form.escapp.consumer.impl.DaoFactoryImpl;
-import fr.brucella.form.escapp.consumer.impl.dao.comment.CommentDaoImpl;
 import fr.brucella.form.escapp.model.beans.comment.Comment;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.webapp.WebappHelper;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 

@@ -7,8 +7,16 @@ import org.springframework.jdbc.core.RowMapper;
 
 import fr.brucella.form.escapp.model.beans.site.Length;
 
+/**
+ * This class allow to map row of {@link java.sql.ResultSet} to an {@link Length} business object
+ * 
+ * @author BRUCELLA2
+ */
 public class LengthRM implements RowMapper<Length>{
 
+	/**
+	 * @see RowMapper#mapRow(ResultSet, int)
+	 */
 	@Override
 	public Length mapRow(ResultSet rs, int rowNum) throws SQLException {
 		

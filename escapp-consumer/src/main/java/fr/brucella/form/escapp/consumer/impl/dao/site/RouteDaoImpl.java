@@ -21,6 +21,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
+/**
+ * Route Data Access Object
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class RouteDaoImpl extends AbstractDao implements RouteDao {
 
@@ -28,6 +33,9 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
     // TODO Complete methods
 	// TODO Add log system
 	
+	/**
+	 * @see RouteDao#getRoute(Integer)
+	 */
 	@Override
 	public Route getRoute(Integer pRouteId) throws TechnicalException, NotFoundException {
 		
@@ -57,6 +65,9 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
 		}
 	}
 
+	/**
+	 * @see RouteDao#getRoutesList(Integer)
+	 */
 	@Override
 	public List<Route> getRoutesList(Integer pSectorId) throws TechnicalException, NotFoundException {
 
@@ -88,6 +99,9 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
 		}
 	}
 
+	/**
+	 * @see RouteDao#updateRoute(Route)
+	 */
 	@Override
 	public void updateRoute(Route pRoute) throws TechnicalException, NotFoundException {
 		
@@ -116,6 +130,9 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
 		}		
 	}
 
+	/**
+	 * @see RouteDao#insertRoute(Route)
+	 */
 	@Override
 	public void insertRoute(Route pRoute) throws TechnicalException {
 		
@@ -144,6 +161,9 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
 		}		
 	}
 
+	/**
+	 * @see RouteDao#deleteRoute(Integer)
+	 */
 	@Override
 	public void deleteRoute(Integer pRouteId) throws TechnicalException, NotFoundException {
 

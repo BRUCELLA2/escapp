@@ -19,12 +19,20 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
+/**
+ * User Data Access Object
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class UserDaoImpl extends AbstractDao implements UserDao {
 	
     // TODO Complete methods
 	// TODO Add log system
 
+	/**
+	 * @see UserDao#getUserById(Integer)
+	 */
 	@Override
 	public User getUserById(Integer pUserId) throws TechnicalException, NotFoundException {
 		
@@ -54,7 +62,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 		}	
 	}
 	
-
+	/**
+	 * @see UserDao#getUserByLogin(String)
+	 */
 	@Override
 	public User getUserByLogin(String pUserLogin) throws TechnicalException, NotFoundException {
 		
@@ -82,6 +92,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 		}
 	}
 
+	/**
+	 * @see UserDao#updateUser(User)
+	 */
 	@Override
 	public void updateUser(User pUser) throws TechnicalException, NotFoundException {
 
@@ -111,6 +124,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 		}
 	}
 
+	/**
+	 * @see UserDao#insertUser(User)
+	 */
 	@Override
 	public void insertUser(User pUser) throws TechnicalException {
 
@@ -140,6 +156,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 		}
 	}
 
+	/**
+	 * @see UserDao#deleteUser(Integer)
+	 */
 	@Override
 	public void deleteUser(Integer pUserId) throws TechnicalException, NotFoundException {
 		

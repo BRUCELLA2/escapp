@@ -21,12 +21,20 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
+/**
+ * Topo Data Access Object
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class TopoDaoImpl extends AbstractDao implements TopoDao {
 	
     // TODO Complete methods
 	// TODO Add log system
 
+	/**
+	 * @see TopoDao#getTopo(Integer)
+	 */
 	@Override
 	public Topo getTopo(Integer pTopoId) throws TechnicalException, NotFoundException {
 		
@@ -56,6 +64,9 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 		} 
 	}
 
+	/**
+	 * @see TopoDao#getAllToposList()
+	 */
 	@Override
 	public List<Topo> getAllToposList() throws TechnicalException, NotFoundException {
 
@@ -84,6 +95,9 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 		}
 	}
 
+	/**
+	 * @see TopoDao#getOwnerToposList(Integer)
+	 */
 	@Override
 	public List<Topo> getOwnerToposList(Integer pOwnerId) throws TechnicalException, NotFoundException {
 
@@ -115,6 +129,9 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 		}
 	}
 
+	/**
+	 * @see TopoDao#getBorrowerToposList(Integer)
+	 */
 	@Override
 	public List<Topo> getBorrowerToposList(Integer pBorrowerId) throws TechnicalException, NotFoundException {
 		
@@ -146,6 +163,9 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 		}
 	}
 
+	/**
+	 * @see TopoDao#updateTopo(Topo)
+	 */
 	@Override
 	public void updateTopo(Topo pTopo) throws TechnicalException, NotFoundException {
 
@@ -176,6 +196,9 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 		}		
 	}
 
+	/**
+	 * @see TopoDao#insertTopo(Topo)
+	 */
 	@Override
 	public void insertTopo(Topo pTopo) throws TechnicalException {
 
@@ -206,6 +229,9 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 		}
 	}
 
+	/**
+	 * @see TopoDao#deleteTopo(Integer)
+	 */
 	@Override
 	public void deleteTopo(Integer pTopoId) throws TechnicalException, NotFoundException {
 

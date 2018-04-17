@@ -4,8 +4,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import fr.brucella.form.escapp.model.beans.site.Site;
-
 /**
  * Business object which represents an User
  *

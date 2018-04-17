@@ -4,8 +4,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import fr.brucella.form.escapp.model.beans.site.Site;
-
 import java.util.Date;
 
 /**

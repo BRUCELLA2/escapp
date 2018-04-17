@@ -21,12 +21,20 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
+/**
+ * Site Data Access Object
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class SiteDaoImpl extends AbstractDao implements SiteDao {
 	
     // TODO Complete methods
 	// TODO Add log system
 
+	/**
+	 * @see SiteDao#getSite(Integer)
+	 */
 	@Override
 	public Site getSite(Integer pSiteId) throws TechnicalException, NotFoundException {
 		
@@ -56,6 +64,9 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
 		} 
 	}
 
+	/**
+	 * @see SiteDao#getAllSitesList()
+	 */
 	@Override
 	public List<Site> getAllSitesList() throws TechnicalException, NotFoundException {
 
@@ -84,6 +95,9 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
 		}
 	}
 
+	/**
+	 * @see SiteDao#updateSite(Site)
+	 */
 	@Override
 	public void updateSite(Site pSite) throws TechnicalException, NotFoundException {
 
@@ -113,6 +127,9 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
 		}
 	}
 
+	/**
+	 * @see SiteDao#insertSite(Site)
+	 */
 	@Override
 	public void insertSite(Site pSite) throws TechnicalException {
 
@@ -142,6 +159,9 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
 		}
 	}
 
+	/**
+	 * @see SiteDao#deleteSite(Integer)
+	 */
 	@Override
 	public void deleteSite(Integer pSiteId) throws TechnicalException, NotFoundException {
 
