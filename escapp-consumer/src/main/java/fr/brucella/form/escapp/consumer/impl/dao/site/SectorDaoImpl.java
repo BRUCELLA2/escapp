@@ -19,6 +19,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -132,14 +134,18 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
 	 * @see SectorDao#insertSector(Sector)
 	 */
 	@Override
-	public void insertSector(Sector pSector) throws TechnicalException {
+	public int insertSector(Sector pSector) throws TechnicalException {
 
 		String vSQL = "INSERT INTO sector (id, name, description, site_id) VALUES (DEFAULT, :name, :description, :siteId)";
+		
+		KeyHolder vKeyHolder = new GeneratedKeyHolder();
+		
 		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pSector);
 
 		try {
 			
-			getNamedJdbcTemplate().update(vSQL, vParams);
+			getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] { "id" });
+			return vKeyHolder.getKey().intValue();
 			
 		} catch (DuplicateKeyException pException) {
 			pException.printStackTrace();

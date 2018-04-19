@@ -1,8 +1,12 @@
 package fr.brucella.form.escapp.webapp.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+
+import fr.brucella.form.escapp.business.contract.ManagerFactory;
 import fr.brucella.form.escapp.consumer.impl.DaoFactoryImpl;
 import fr.brucella.form.escapp.model.beans.comment.Comment;
+import fr.brucella.form.escapp.model.beans.site.Site;
+import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.webapp.WebappHelper;
@@ -22,10 +26,90 @@ public class TestAction extends ActionSupport {
 
     @Autowired
     private DaoFactoryImpl daoFactoryImpl;
+    
+    @Autowired
+    private ManagerFactory managerFactory;
+    
+    // --------- Elements en sortie
+    private List<Site> listSite;
 
+    
+    // --------- Getters
+    public List<Site> getListSite(){
+    	return listSite;
+    }
+    
     public String doTest(){
         System.out.println("test");
+        
+        Site badSite = new Site();
+        badSite.setName("");
+        badSite.setDepartment("dsfze");
+        badSite.setDescription("bad site");
+        badSite.setMunicipality("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
 
+        try {
+			managerFactory.getSiteManager().modifySite(badSite);
+		} catch (TechnicalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FunctionalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        try {
+			managerFactory.getSiteManager().deleteSite(7);
+		} catch (TechnicalException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (FunctionalException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (NotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+        
+        Site newSite = new Site();
+        newSite.setName("Site ajouté");
+        newSite.setDepartment("034");
+        newSite.setMunicipality("Montpellier");
+        newSite.setDescription("Test ajout site");
+        
+        try {
+			managerFactory.getSiteManager().addSite(newSite);
+		} catch (TechnicalException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (FunctionalException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        try {
+        	listSite = managerFactory.getSiteManager().getAllSitesList();
+			
+			ListIterator<Site> it = listSite.listIterator();
+			while(it.hasNext()) {
+				System.out.println(it.next().toString());
+			}
+			
+		} catch (TechnicalException e) {
+			e.printStackTrace();
+			addActionError(e.getMessage());
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+			addActionError(e.getMessage());
+		} catch (FunctionalException e) {
+			e.printStackTrace();
+		}
+        
+        
+        /*
         WebappHelper.getInjectAction().test();
         noteInjection.test();
         
@@ -77,8 +161,9 @@ public class TestAction extends ActionSupport {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		*/
+		*/ 
         
+        /*
         List<Comment> comments = new ArrayList<>();
         try {
 			comments = daoFactoryImpl.getCommentDao().getCommentsList("site", 0);
@@ -95,7 +180,7 @@ public class TestAction extends ActionSupport {
 			pTechnicalException.printStackTrace();
 			return ActionSupport.ERROR;
 		}
-        
+        */
         
         return ActionSupport.SUCCESS;
     }

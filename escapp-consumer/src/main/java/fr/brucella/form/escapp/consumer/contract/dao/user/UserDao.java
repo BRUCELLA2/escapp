@@ -53,9 +53,11 @@ public interface UserDao {
 	 * 
 	 * @param pUser The {@link User} to insert in datastore.
 	 * 
+	 * @return the id of the new {@link User}.
+	 * 
 	 * @throws TechnicalException - wraps technical exception caused during data access.
 	 */
-	void insertUser(User pUser) throws TechnicalException;
+	int insertUser(User pUser) throws TechnicalException;
 	
 	
 	/**

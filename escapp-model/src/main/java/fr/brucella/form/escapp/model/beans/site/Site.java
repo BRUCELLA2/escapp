@@ -28,7 +28,7 @@ public class Site {
      * @see #getName()
      * @see #setName(String)
      */
-    @NotEmpty(message = "Un site doit avoir un nom")
+    @NotEmpty(message = "Un site doit avoir un nom.")
     @Size(min = 1, max = 100, message = "Le nom du site ne peut dépasser {max} caractères.")
     private String name;
 
@@ -41,8 +41,8 @@ public class Site {
      * @see #getDepartment()
      * @see #setDepartment(String)
      */
-    @NotEmpty(message = "Un site doit avoir un numéro de département")
-    @Size(min = 3, max = 3, message = "Le numéro de département d'un site doit être constitué de 2 caractères.")
+    @NotEmpty(message = "Un site doit avoir un numéro de département.")
+    @Size(min = 3, max = 3, message = "Le numéro de département d'un site doit être constitué de 3 caractères.")
     private String department;
 
     
@@ -53,7 +53,7 @@ public class Site {
      * @see #getMunicipality()
      * @see #setMunicipality(String)
      */
-    @NotEmpty(message = "La commune d'un site ne peut être vide")
+    @NotEmpty(message = "La commune d'un site ne peut être vide.")
     @Size(min = 1, max = 100, message = "Le nom de la commune associée ne doit pas dépasser {max} caractères.")
     private String municipality;
 

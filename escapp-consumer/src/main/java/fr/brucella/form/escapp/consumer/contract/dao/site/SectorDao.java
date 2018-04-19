@@ -56,9 +56,11 @@ public interface SectorDao {
 	 * 
 	 * @param pSector The {@link Sector} to insert in datastore.
 	 * 
+	 * @return the id of the new {@link Sector} 
+	 * 
 	 * @throws TechnicalException - wraps technical exception caused during data access.
 	 */
-	void insertSector(Sector pSector) throws TechnicalException;
+	int insertSector(Sector pSector) throws TechnicalException;
 	
 	
 	/**

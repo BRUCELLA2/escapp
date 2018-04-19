@@ -19,6 +19,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -131,14 +133,18 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
 	 * @see LengthDao#insertLength(Length)
 	 */
 	@Override
-	public void insertLength(Length pLength) throws TechnicalException {
+	public int insertLength(Length pLength) throws TechnicalException {
 		
 		String vSQL = "INSERT INTO length (id, length, grade, points_nb, description, route_id) VALUES (DEFAULT, :length, :grade, :pointsNb, :description, :routeId)";
+		
+		KeyHolder vKeyHolder = new GeneratedKeyHolder();
+		
 		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pLength);
 		
 		try {
 			
-			getNamedJdbcTemplate().update(vSQL, vParams);
+			getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] { "id" });
+			return vKeyHolder.getKey().intValue();
 			
 		} catch (DuplicateKeyException pException) {
 			pException.printStackTrace();

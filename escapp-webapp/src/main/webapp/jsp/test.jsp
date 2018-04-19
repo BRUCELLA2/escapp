@@ -12,6 +12,10 @@
 <h2>Test</h2>
 
 <s:actionerror/>
-
+<ul>
+	<s:iterator value="listSite">
+		<li><s:property value="id"/> - <s:property value="name"/> - <s:property value="description"/></li>
+	</s:iterator>
+</ul>
 </body>
 </html>

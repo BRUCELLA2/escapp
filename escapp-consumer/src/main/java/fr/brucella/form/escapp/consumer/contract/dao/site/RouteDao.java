@@ -56,9 +56,11 @@ public interface RouteDao {
 	 * 
 	 * @param pRoute The {@link Route} to insert in datastore.
 	 * 
+	 * @return the id of the new {@link Route}
+	 * 
 	 * @throws TechnicalException - wraps technical exception caused during data access.
 	 */
-	void insertRoute(Route pRoute) throws TechnicalException;
+	int insertRoute(Route pRoute) throws TechnicalException;
 	
 	
 	/**

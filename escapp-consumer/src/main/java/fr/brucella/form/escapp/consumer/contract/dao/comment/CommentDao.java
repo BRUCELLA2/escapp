@@ -58,9 +58,11 @@ public interface CommentDao {
      * 
      * @param pComment The {@link Comment} to insert in datastore.
      * 
+     * @return the id of the new {@link Comment}
+     * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      */
-    void insertComment(Comment pComment) throws TechnicalException;
+    int insertComment(Comment pComment) throws TechnicalException;
 
     
     /**

@@ -52,9 +52,11 @@ public interface SiteDao {
 	 * 
 	 * @param pSite The {@link Site} to insert in datastore.
 	 * 
+	 * @return the id of the new {@link Site}
+	 * 
 	 * @throws TechnicalException - wraps technical exception caused during data access.
 	 */
-	void insertSite(Site pSite) throws TechnicalException;
+	int insertSite(Site pSite) throws TechnicalException;
 	
 	
 	/**

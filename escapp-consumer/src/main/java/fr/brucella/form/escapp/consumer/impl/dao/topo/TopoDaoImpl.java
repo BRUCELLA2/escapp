@@ -19,6 +19,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -200,16 +202,19 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 	 * @see TopoDao#insertTopo(Topo)
 	 */
 	@Override
-	public void insertTopo(Topo pTopo) throws TechnicalException {
+	public int insertTopo(Topo pTopo) throws TechnicalException {
 
 		String vSQL = "INSERT INTO topo (id, name, department, is_borrowable, pdf_file_name, municipality, end_date_borrow, borrower_id, description, owner_id) "
 				+ "VALUES (DEFAULT, :name, :department, :isBorrowable, :pdfFileName, :municipality, :endDateBorrow, :borrowerId, :description, :ownerId";
+		
+		KeyHolder vKeyHolder = new GeneratedKeyHolder();
 		
 		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pTopo);
 		
 		try {
 			
-			getNamedJdbcTemplate().update(vSQL, vParams);
+			getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] { "id" });
+			return vKeyHolder.getKey().intValue();
 			
 		} catch (DuplicateKeyException pException) {
 			pException.printStackTrace();

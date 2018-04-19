@@ -17,6 +17,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -128,15 +130,18 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	 * @see UserDao#insertUser(User)
 	 */
 	@Override
-	public void insertUser(User pUser) throws TechnicalException {
+	public int insertUser(User pUser) throws TechnicalException {
 
 		String vSQL = "INSERT INTO escapp_user (id, login, email, password) VALUES (DEFAULT, :login, :email, :password)";
+		
+		KeyHolder vKeyHolder = new GeneratedKeyHolder();
 		
 		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pUser);
 		
 		try {
 			
-			getNamedJdbcTemplate().update(vSQL, vParams);
+			getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] { "id" });
+			return vKeyHolder.getKey().intValue();
 			
 		} catch (DuplicateKeyException pException) {
 			pException.printStackTrace();

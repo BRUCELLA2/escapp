@@ -17,6 +17,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -134,15 +136,18 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
      * @see CommentDao#insertComment(Comment)
      */
     @Override
-    public void insertComment(Comment pComment) throws TechnicalException {
+    public int insertComment(Comment pComment) throws TechnicalException {
     	
         String vSQL = "INSERT INTO comment (id, text, target_type, id_comment_target, escapp_user) VALUES (DEFAULT, :text, :targetType, :idCommentTarget, :escappUser)";
 
+		KeyHolder vKeyHolder = new GeneratedKeyHolder();
+        
         SqlParameterSource vParams = new BeanPropertySqlParameterSource(pComment);
         
         try {
         	
-			getNamedJdbcTemplate().update(vSQL, vParams);	
+			getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] { "id" });
+			return vKeyHolder.getKey().intValue();
 			
 		} catch (DuplicateKeyException pException) {
 			pException.printStackTrace();

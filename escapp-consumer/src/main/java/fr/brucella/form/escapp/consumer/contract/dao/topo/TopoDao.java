@@ -79,9 +79,11 @@ public interface TopoDao {
 	 * 
 	 * @param pTopo The {@link Topo} to insert in datastore.
 	 * 
+	 * @return the id of the new {@link Topo}.
+	 * 
 	 * @throws TechnicalException - wraps technical exception caused during data access.
 	 */
-	void insertTopo(Topo pTopo) throws TechnicalException;
+	int insertTopo(Topo pTopo) throws TechnicalException;
 	
 	
 	/**

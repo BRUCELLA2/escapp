@@ -19,6 +19,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -134,14 +136,18 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
 	 * @see RouteDao#insertRoute(Route)
 	 */
 	@Override
-	public void insertRoute(Route pRoute) throws TechnicalException {
+	public int insertRoute(Route pRoute) throws TechnicalException {
 		
 		String vSQL = "INSERT INTO route (id, sector_id, name, grade, points_nb, description) VALUES (DEFAULT, :sectorId, :name, :grade, :pointsNb, :description";
+		
+		KeyHolder vKeyHolder = new GeneratedKeyHolder();
+		
 		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pRoute);
 		
 		try {
 			
-			getNamedJdbcTemplate().update(vSQL, vParams);
+			getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] { "id" });
+			return vKeyHolder.getKey().intValue();
 			
 		} catch (DuplicateKeyException pException) {
 			pException.printStackTrace();

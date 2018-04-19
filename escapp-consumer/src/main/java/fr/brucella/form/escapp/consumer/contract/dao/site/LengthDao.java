@@ -55,9 +55,11 @@ public interface LengthDao {
      * 
      * @param pLength The {@link Length} to insert in datastore.
      * 
+     * @return the id of the new {@link Length}
+     * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      */
-    void insertLength(Length pLength) throws TechnicalException;
+    int insertLength(Length pLength) throws TechnicalException;
     
     
     /**

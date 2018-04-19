@@ -19,6 +19,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -131,15 +133,18 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
 	 * @see SiteDao#insertSite(Site)
 	 */
 	@Override
-	public void insertSite(Site pSite) throws TechnicalException {
+	public int insertSite(Site pSite) throws TechnicalException {
 
-		String vSQL = "INSERT INTO site (id, name, department, municipality, description) VALUES (DEFAULT, :name, :department, :municipality, :description";
+		String vSQL = "INSERT INTO site (id, name, department, municipality, description) VALUES (DEFAULT, :name, :department, :municipality, :description)";
+		
+		KeyHolder vKeyHolder = new GeneratedKeyHolder();
 		
 		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pSite);
 		
 		try {
 			
-			getNamedJdbcTemplate().update(vSQL, vParams);
+			getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] { "id" });
+			return vKeyHolder.getKey().intValue();
 			
 		} catch (DuplicateKeyException pException) {
 			pException.printStackTrace();
