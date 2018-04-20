@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.brucella.form.escapp.model.beans.site.Sector;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
+import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
@@ -12,9 +13,11 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
  */
 public interface SectorManager {
 
-	public List<Sector> getSectorsSiteList(Integer pSite) throws TechnicalException, FunctionalException;
+	public List<Sector> getSectorsSiteList(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
 	
-	public void modifySector(Sector pSector) throws TechnicalException, FunctionalException;
+	public void modifySector(Sector pSector) throws TechnicalException, FunctionalException, NotFoundException;
 	
-	public void deleteSector(Integer pSectorId) throws TechnicalException, FunctionalException;
+	public void addSector(Sector pSector) throws TechnicalException, FunctionalException;
+	
+	public void deleteSector(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException;
 }

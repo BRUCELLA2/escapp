@@ -61,6 +61,7 @@ public class TestAction extends ActionSupport {
 			e.printStackTrace();
 		}
         
+        /*
         try {
 			managerFactory.getSiteManager().deleteSite(7);
 		} catch (TechnicalException e2) {
@@ -73,7 +74,9 @@ public class TestAction extends ActionSupport {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+        */
         
+        /*
         Site newSite = new Site();
         newSite.setName("Site ajouté");
         newSite.setDepartment("034");
@@ -107,7 +110,7 @@ public class TestAction extends ActionSupport {
 		} catch (FunctionalException e) {
 			e.printStackTrace();
 		}
-        
+        */
         
         /*
         WebappHelper.getInjectAction().test();

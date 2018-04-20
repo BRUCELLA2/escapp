@@ -51,7 +51,7 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager{
 	public void modifySite(Site pSite) throws TechnicalException, FunctionalException, NotFoundException {
 		
 		if(pSite == null) {
-			throw new FunctionalException("Aucune modification n'a été transmis (Site vide) - Echec de la mise à jour");
+			throw new FunctionalException("Aucune modification n'a été transmise (Site vide) - Echec de la mise à jour");
 		}
 		
 		Set<ConstraintViolation<Site>> vViolations = getConstraintValidator().validate(pSite);
@@ -100,7 +100,7 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager{
 	public void deleteSite(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException {
 
 		if(pSiteId == null) {
-			throw new FunctionalException("L'identifiant du site à supprimer est incorrect (Identifiant null) - Echec de la suppression");
+			throw new FunctionalException("L'identifiant du site à supprimer est incorrect (Identifiant vide) - Echec de la suppression");
 		}
 		
 		try {
