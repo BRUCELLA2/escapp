@@ -1,13 +1,11 @@
 package fr.brucella.form.escapp.business.impl.managers.comment;
 
-import java.beans.PersistenceDelegate;
 import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.stereotype.Component;
 
 import fr.brucella.form.escapp.business.contract.managers.comment.CommentManager;

@@ -4,6 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -122,9 +123,9 @@ public class Topo {
      * Can be null.
      * 
      * @see #getEndDateBorrow()
-     * @see #setEndDateBorrow(Date)
+     * @see #setEndDateBorrow(LocalDateTime)
      */
-    private Date endDateBorrow;
+    private LocalDateTime endDateBorrow;
 
 
     // ===== Constructor =====
@@ -277,9 +278,9 @@ public class Topo {
      * 			Can be null.
      * 
      * @see #endDateBorrow
-     * @see #setEndDateBorrow(Date)
+     * @see #setEndDateBorrow(LocalDateTime)
      */
-    public Date getEndDateBorrow() {
+    public LocalDateTime getEndDateBorrow() {
         return endDateBorrow;
     }
     
@@ -427,7 +428,7 @@ public class Topo {
      * @see #endDateBorrow
      * @see #getEndDateBorrow()
      */
-    public void setEndDateBorrow(Date pEndDateBorrow) {
+    public void setEndDateBorrow(LocalDateTime pEndDateBorrow) {
         this.endDateBorrow = pEndDateBorrow;
     }
 
