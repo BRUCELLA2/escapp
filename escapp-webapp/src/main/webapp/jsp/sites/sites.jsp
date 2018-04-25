@@ -17,7 +17,7 @@
       		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     	<![endif]-->
-		<title>Accueil</title>
+		<title>Les sites d'escalades</title>
 	</head>
 
 <body>
@@ -37,8 +37,8 @@
 				<s:a class="navbar-brand" action="index">EscApp</s:a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><s:a action="index">Accueil</s:a></li>
-				<li><s:a action="sites">Sites</s:a></li>
+				<li><s:a action="index">Accueil</s:a></li>
+				<li class="active"><s:a action="sites">Sites</s:a></li>
 				<li><s:a action="topo">Topos</s:a></li>
 			</ul>
 			
@@ -50,11 +50,34 @@
 	</nav>
 	
 	<div class="panel panel-primary">
-		<div class="panel-heading"><h4>L'escalade c'est fantastique et enrichissant !</h4></div>
-	    <div class="panel-body"><p>L'escalade c'est aussi un partage de moment et de sensation, alors pourquoi ne pas partager nos sites, 
-	      								nos topos, nos avis ?<p>
-								<p>C'est l'objet de ce site. Dans la partie "Sites" vous pourrez faire une recherche de sites d'escalades et 
-								dans la partie "Topos" vous pourrez partager et emprunter des topos.</p>
+		<div class="panel-heading"><h3 class="panel-title">Sites d'escalades enregistrés</h3></div>
+		<div class="panel-body">
+			<table class="table table-bordered table-striped table-condensed">
+				<thead>
+					<tr>
+						<th class="text-center">Identifiant</th>
+						<th>Nom du site</th>
+						<th class="text-center">Département</th>
+						<th>Commune</th>
+						<th>Description</th> 
+						<th></th>
+					</tr>
+				</thead>
+				
+				<s:iterator value="sitesList">
+					<tr>
+						<td class="text-center"><s:property value="id"/></td>
+						<td><s:property value="name"/></td>
+						<td class="text-center"><s:property value="department"/></td>
+						<td><s:property value="municipality"/></td>
+						<td><s:property value="description"/></td> 
+						<td><s:a class="btn btn-primary btn-block" action="site_details"><s:param name="id" value="id" /><span class="glyphicon glyphicon-search"></span>
+								Voir le détail
+							</s:a>
+						</td>
+					</tr>
+				</s:iterator>			
+			</table>
 		</div>
 	</div>
 </div>

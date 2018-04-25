@@ -10,10 +10,16 @@
         <default-action-ref name="index"/>
 
         <!-- Index action -->
-        <action name="index"
+        <action name="index">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="error">/jsp/error.jsp</result>
+        </action>
+        
+        <!-- sites action -->
+        <action name="sites"
         		class="fr.brucella.form.escapp.webapp.action.sites.SitesListAction"
         		method="doList">
-            <result name="success">/jsp/index.jsp</result>
+            <result name="success">/jsp/sites/sites.jsp</result>
             <result name="error">/jsp/error.jsp</result>
         </action>
 

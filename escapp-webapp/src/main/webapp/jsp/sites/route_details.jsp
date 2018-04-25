@@ -23,12 +23,32 @@
 <body>
 	<div class="container">
 	
-		<header class="page-header header-site">
-			<div class="jumbotron">
-				<h1>EscApp</h1>
-				<p>L'Application des sites d'Escalade</p>
+		<s:a action="index" class="deco-none">
+			<header class="page-header header-site">
+				<div class="jumbotron">
+					<h1>EscApp</h1>
+					<p>L'Application des sites d'Escalade</p>
+				</div>
+			</header>
+		</s:a>
+		
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<s:a class="navbar-brand" action="index">EscApp</s:a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><s:a action="index">Accueil</s:a></li>
+					<li class="active"><s:a action="sites">Sites</s:a></li>
+					<li><s:a action="topo">Topos</s:a></li>
+				</ul>
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li><s:a action="sign_up"><span class="glyphicon glyphicon-user"></span> S'inscrire</s:a></li>
+					<li><s:a action="login"><span class="glyphicon glyphicon-log-in"></span> Login</s:a></li>
+				</ul>
 			</div>
-		</header>
+		</nav>
 	
 		<header class="page-header text-center">
         	<h1>Détails de la voie : <s:property value="route.name"/></h1>
