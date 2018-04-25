@@ -35,6 +35,22 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager{
 	}
 
 	@Override
+	public Sector getSectorById(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException{
+	  
+	  if(pSectorId == null) {
+	    throw new FunctionalException("L'identifiant du secteur recherché est incorrect (Identifiant vide) - Echec de la recherche");
+	  }
+	  
+	  try {
+	    return getDaoFactory().getSectorDao().getSector(pSectorId);
+	  }catch (TechnicalException pException) {
+        throw new TechnicalException(pException.getMessage(),pException);
+      }catch (NotFoundException pException) {
+        throw new NotFoundException(pException.getMessage(),pException);
+      }
+	}
+	
+	@Override
 	public void modifySector(Sector pSector) throws TechnicalException, FunctionalException, NotFoundException {
 		
 		if(pSector == null) {

@@ -6,6 +6,7 @@
 
   <display-name>Escapp</display-name>
 
+
   <!-- Listener Spring -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -45,6 +46,12 @@
     <res-auth>Container</res-auth>
   </resource-ref>
 
-
+  <!--  Taglig insertion -->
+  <jsp-config>
+  	<jsp-property-group>
+  		<url-pattern>*.jsp</url-pattern>
+  		<include-prelude>/_include/jsp/strutstaglibs.jsp</include-prelude>
+  	</jsp-property-group>
+  </jsp-config>
 
 </web-app>

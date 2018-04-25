@@ -93,7 +93,6 @@ public class DaoFactoryImpl implements DaoFactory {
      */
     @Override
     public SiteDao getSiteDao() {
-        System.out.println("test getSiteDao");
         return vSiteDao;
     }
 

@@ -15,6 +15,8 @@ public interface RouteManager {
 
 	public List<Route> getRoutesSectorList(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException;
 	
+	public Route getRouteById(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException;
+	
 	public void modifyRoute(Route pRoute) throws TechnicalException, FunctionalException, NotFoundException;
 	
 	public void addRoute(Route pRoute) throws TechnicalException, FunctionalException;

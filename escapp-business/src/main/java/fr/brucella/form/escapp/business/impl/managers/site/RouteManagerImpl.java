@@ -33,6 +33,23 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager{
 			throw new NotFoundException(pException.getMessage(),pException);
 		}
 	}
+	
+	@Override
+	public Route getRouteById(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException {
+	  
+	  if(pRouteId == null) {
+	    throw new FunctionalException("L'identifiant du site recherché est incorrect (Identifiant vide) - Echec de la recherche");
+	  }
+	  
+	  try {
+	    return getDaoFactory().getRouteDao().getRoute(pRouteId);
+	  }catch (TechnicalException pException) {
+        throw new TechnicalException(pException.getMessage(),pException);
+      }catch (NotFoundException pException) {
+        throw new NotFoundException(pException.getMessage(),pException);
+      }
+	  
+	}
 
 	@Override
 	public void modifyRoute(Route pRoute) throws TechnicalException, FunctionalException, NotFoundException {

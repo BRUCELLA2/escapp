@@ -10,17 +10,28 @@
         <default-action-ref name="index"/>
 
         <!-- Index action -->
-        <action name="index">
-            <result>/jsp/index.jsp</result>
+        <action name="index"
+        		class="fr.brucella.form.escapp.webapp.action.sites.SitesListAction"
+        		method="doList">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="error">/jsp/error.jsp</result>
         </action>
 
-        <!-- Test action -->
-        <action name="test"
-                class="fr.brucella.form.escapp.webapp.action.TestAction"
-                method="doTest">
-            <result name="success">/jsp/test.jsp</result>
-            <result name="error">/jsp/test.jsp</result>
-        </action>
+		<!--  site detail action -->
+		<action name="site_details"
+				class="fr.brucella.form.escapp.webapp.action.sites.SiteDetailsAction"
+				method="doSiteDetails">
+			<result name="success">/jsp/sites/site_details.jsp</result>
+			<result name="error">/jsp/error.jsp</result>		
+		</action>
+		
+		<!--  route detail action -->
+		<action name="route_details"
+				class="fr.brucella.form.escapp.webapp.action.sites.SiteDetailsAction"
+				method="doRouteDetails">
+			<result name="success">/jsp/sites/route_details.jsp</result>
+			<result name="error">/jsp/error.jsp</result>		
+		</action>
 
     </package>
 </struts>

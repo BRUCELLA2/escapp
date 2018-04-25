@@ -15,6 +15,8 @@ public interface SectorManager {
 
 	public List<Sector> getSectorsSiteList(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
 	
+	public Sector getSectorById(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException;
+	
 	public void modifySector(Sector pSector) throws TechnicalException, FunctionalException, NotFoundException;
 	
 	public void addSector(Sector pSector) throws TechnicalException, FunctionalException;

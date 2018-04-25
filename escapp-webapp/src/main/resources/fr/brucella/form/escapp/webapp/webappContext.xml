@@ -9,10 +9,4 @@
         <property name="jndiName" value="java:comp/env/jdbc/DB_ESCAPP"/>
     </bean>
 
-    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="targetClass" value="fr.brucella.form.escapp.webapp.WebappHelper"/>
-        <property name="targetMethod" value="setInjectAction"/>
-        <property name="arguments" ref="injectAction"/>
-    </bean>
-
 </beans>
