@@ -38,13 +38,13 @@ public class User {
     /**
      * Password of the {@link User}.
      * Can't be empty.
-     * Min size is 5 characters and max size is 50 characters.
+     * Max size is 60 characters.
      * 
      * @see #getPassword()
      * @see #setPassword(String)
      */
     @NotEmpty(message = "Il est obligatoire de renseigner le mot de passe")
-    @Size(min = 5, max = 50, message = "Le mot de passe ne peut avoir que {max} caractères au maximum")
+    @Size(max = 60, message = "Le mot de passe ne peut avoir que {max} caractères au maximum")
     private String password;
 
     
@@ -109,8 +109,7 @@ public class User {
      * 
      * @return the password of the {@link User}.
      * 			Can't be empty.
-     * 			Min size is 5 characters.
-     * 			Max size is 50 characters.
+     * 			Max size is 60 characters.
      * 
      * @see #password
      * @see #setPassword(String)
@@ -155,7 +154,8 @@ public class User {
      * Set the login of the {@link User}.
      * 
      * @param pLogin the login of the {@link User}.
-     * 
+     * 			Can't be empty.
+     * 			Max size is 30 characters.
      * @see #login
      * @see #getLogin()
      */
@@ -168,7 +168,8 @@ public class User {
      * Set the password of the {@link User}.
      * 
      * @param pPassword the password of the {@link User}.
-     * 
+     * 			Can't be empty.
+     * 			Max size is 60 characters.
      * @see #password
      * @see #getPassword()
      */
@@ -181,7 +182,8 @@ public class User {
      * Set the email of the {@link User}.
      * 
      * @param pEmail the email of the {@link User}.
-     * 
+     * 			Can't be empty.
+     * 			Max size is 100 characters.
      * @see #email
      * @see #getEmail()
      */

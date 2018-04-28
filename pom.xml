@@ -26,6 +26,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <log4j.version>2.11.0</log4j.version>
     <spring.version>4.3.11.RELEASE</spring.version>
+    <spring.security.version>4.1.4.RELEASE</spring.security.version>
     <struts.version>2.5.14.1</struts.version>
   </properties>
 
@@ -90,6 +91,12 @@
         <scope>import</scope>
       </dependency>
 
+	<!-- Apache Commons Lang -->
+	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-lang3</artifactId>
+	    <version>3.6</version>
+	</dependency>
 
       <!-- Validation API JSR 380 -->
       <dependency>
@@ -131,7 +138,14 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
+      
+      <!-- Spring Security -->
+		<dependency>
+	    	<groupId>org.springframework.security</groupId>
+	    	<artifactId>spring-security-core</artifactId>
+	    	<version>${spring.security.version}</version>
+	    </dependency>
+	    
       <!-- Apache Struts Framework  -->
       <dependency>
         <groupId>org.apache.struts</groupId>
@@ -149,20 +163,6 @@
         <scope>runtime</scope>
       </dependency>
 
-
-      <!-- TEST -->
-      <!-- JSR-250 -->
-      <dependency>
-        <groupId>javax.annotation</groupId>
-        <artifactId>javax.annotation-api</artifactId>
-        <version>1.2</version>
-      </dependency>
-      <!-- JSR-330 -->
-      <dependency>
-        <groupId>javax.inject</groupId>
-        <artifactId>javax.inject</artifactId>
-        <version>1</version>
-      </dependency>
 
     </dependencies>
   </dependencyManagement>

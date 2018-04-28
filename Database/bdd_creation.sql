@@ -62,7 +62,7 @@ CREATE TABLE public.escapp_user (
                 id INTEGER NOT NULL DEFAULT nextval('public.escapp_user_id_seq'),
                 login VARCHAR(30) NOT NULL,
                 email VARCHAR(100) NOT NULL,
-                password VARCHAR(50) NOT NULL,
+                password VARCHAR(60) NOT NULL,
                 CONSTRAINT escapp_user_pk PRIMARY KEY (id)
 );
 

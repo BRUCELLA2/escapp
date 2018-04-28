@@ -38,6 +38,17 @@
 			<result name="success">/jsp/sites/route_details.jsp</result>
 			<result name="error">/jsp/error.jsp</result>		
 		</action>
+		
+		<!--  sign up action -->
+		<action name="sign_up"
+				class="fr.brucella.form.escapp.webapp.action.users.UserAction"
+				method="doSignUp">
+			<result name="input">/jsp/users/register.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				/jsp/index.jsp
+			</result>
+		</action>
 
     </package>
 </struts>

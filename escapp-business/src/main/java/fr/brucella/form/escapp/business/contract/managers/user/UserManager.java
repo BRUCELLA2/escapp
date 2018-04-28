@@ -2,6 +2,7 @@ package fr.brucella.form.escapp.business.contract.managers.user;
 
 import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
+import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
@@ -10,13 +11,14 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
  */
 public interface UserManager {
 
-	public User getUserByLogin(String pLogin) throws TechnicalException, FunctionalException;
+	public User getUserByLogin(String pUserLogin) throws TechnicalException, FunctionalException, NotFoundException;
 	
-	public User getUserById(Integer pId) throws TechnicalException, FunctionalException;
+	public User getUserById(Integer pUserId) throws TechnicalException, FunctionalException, NotFoundException;
 	
-	public User getConnectUser(String pLogin, String pPassword) throws TechnicalException, FunctionalException;
+	public User getConnectUser(String pLogin, String pPassword) throws TechnicalException, FunctionalException, NotFoundException;
 	
-	public void addUser(User pUser) throws TechnicalException, FunctionalException;
+	public User addUser(User pUser) throws TechnicalException, FunctionalException;
 	
-	public void modifyPassword(User pUser) throws TechnicalException, FunctionalException;
+	public void modifyPassword(User pUser, String pNewRawPassword) throws TechnicalException, FunctionalException, NotFoundException;
+	
 }

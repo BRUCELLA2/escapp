@@ -95,6 +95,6 @@
       	</div> 	
     </div>
     	<!--  Java Scripts -->
-	<script src="bootstrap/js/jquery.js"></script>
+	<script src="bootstrap/js/jquery-3.3.1.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
 </body>
