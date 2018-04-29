@@ -93,7 +93,32 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
 		}
 	}
-
+	
+	/**
+	 * @see UserDao#countUserByLogin(String)
+	 */
+	@Override
+	public Integer countUserByLogin(String pUserLogin) throws TechnicalException {
+		
+		String vSQL = "SELECT COUNT(login) FROM escapp_user WHERE login = :login";
+		
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("login", pUserLogin);
+		
+		try {
+			return getNamedJdbcTemplate().queryForObject(vSQL, vParams,Integer.class);
+		} catch (PermissionDeniedDataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} catch (DataAccessResourceFailureException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+		} catch (DataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		}
+	}
+	
 	/**
 	 * @see UserDao#updateUser(User)
 	 */

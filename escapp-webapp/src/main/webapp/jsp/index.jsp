@@ -41,17 +41,8 @@
 				<li><s:a action="sites">Sites</s:a></li>
 				<li><s:a action="topo">Topos</s:a></li>
 			</ul>
-			<s:if test="#session.user">
-				<ul class="nav navbar-nav navbar-right">
-					<li><s:a action="logout"><span class="glyphicon glyphicon-user"></span> Se déconnecter</s:a></li>
-				</ul>
-			</s:if>
-			<s:else>
-				<ul class="nav navbar-nav navbar-right">
-					<li><s:a action="sign_up"><span class="glyphicon glyphicon-user"></span> S'inscrire</s:a></li>
-					<li><s:a action="login"><span class="glyphicon glyphicon-log-in"></span> Login</s:a></li>
-				</ul>
-			</s:else>
+			
+			<%@include file="/_include/jsp/navbar_right.jsp" %>
 		</div>
 	</nav>
 	

@@ -42,10 +42,7 @@
 				<li><s:a action="topo">Topos</s:a></li>
 			</ul>
 			
-			<ul class="nav navbar-nav navbar-right">
-				<li><s:a action="sign_up"><span class="glyphicon glyphicon-user"></span> S'inscrire</s:a></li>
-				<li><s:a action="login"><span class="glyphicon glyphicon-log-in"></span> Login</s:a></li>
-			</ul>
+			<%@include file="/_include/jsp/navbar_right.jsp" %>
 		</div>
 	</nav>
 	

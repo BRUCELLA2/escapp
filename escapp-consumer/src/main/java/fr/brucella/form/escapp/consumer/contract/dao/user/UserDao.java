@@ -38,6 +38,18 @@ public interface UserDao {
 	
 	
 	/**
+	 * Count the number of {@link User} with the specified login from the datastore.
+	 * 
+	 * @param pUserLogin the login of the {@link User}
+	 * 
+	 * @return the number of {@link User} with the specified login
+	 * 
+	 * @throws TechnicalException - wraps technical exception caused during data access.
+	 */
+	Integer countUserByLogin(String pUserLogin) throws TechnicalException;
+	
+	
+	/**
 	 * Update an existing {@link User} in datastore.
 	 * 
 	 * @param pUser The {@link User} with the updated informations to save in datastore.

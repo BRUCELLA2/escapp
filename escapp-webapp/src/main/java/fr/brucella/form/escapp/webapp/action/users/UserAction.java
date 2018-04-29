@@ -2,18 +2,21 @@ package fr.brucella.form.escapp.webapp.action.users;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import fr.brucella.form.escapp.business.contract.ManagerFactory;
 import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
+import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
-public class UserAction extends ActionSupport implements SessionAware{
+public class UserAction extends ActionSupport implements SessionAware, ServletRequestAware{
 
 	// ----- Input
 	private String login;
@@ -27,8 +30,10 @@ public class UserAction extends ActionSupport implements SessionAware{
 	@Autowired
 	private ManagerFactory managerFactory;
 	
-	// ----- Session
+	// ----- Struts Elements
 	private Map<String, Object> session;
+	private HttpServletRequest servletRequest;
+	
 	
 	// ===== Getters / Setters =====
 	public  String getLogin() {
@@ -69,9 +74,15 @@ public class UserAction extends ActionSupport implements SessionAware{
 		this.session = pSession;
 	}
 	
+	@Override
+	public void setServletRequest(HttpServletRequest pServletRequest) {
+		this.servletRequest = pServletRequest;
+		
+	}
+	
 	// ===== Methods =====
 	
-	public String doSignUp() {
+	public String doRegister() {
 		
 		if(StringUtils.isEmpty(login) && StringUtils.isEmpty(password) && StringUtils.isEmpty(confPwd) && StringUtils.isEmpty(email)) {
 	       return ActionSupport.INPUT;
@@ -79,7 +90,16 @@ public class UserAction extends ActionSupport implements SessionAware{
 		
 		if(StringUtils.isEmpty(login)) {
 		  this.addFieldError("login", "L'identifiant doit être renseigné");
-		}
+		} 
+		else
+			try {
+				if(!managerFactory.getUserManager().checkLoginDispo(login)) {
+					this.addFieldError("login", "L'identifiant est déjà utilisé");
+				}
+			} catch (TechnicalException pException) {
+	        	this.addActionError(pException.getMessage());
+	        	return ActionSupport.ERROR;
+			}
 		
 		if(StringUtils.isEmpty(password)) {
 		  this.addFieldError("password", "Le mot de passe doit être renseigné");
@@ -96,6 +116,7 @@ public class UserAction extends ActionSupport implements SessionAware{
 		if(!StringUtils.equals(password, confPwd)) {
           this.addFieldError("password", "La confirmation du mot de passe ne correspond pas au mot de passe");
 		}
+		
 		
 		if(this.hasFieldErrors()) {
 		  return ActionSupport.INPUT;
@@ -117,6 +138,51 @@ public class UserAction extends ActionSupport implements SessionAware{
         }
 		
 		this.session.put("user", vUser);
+		return ActionSupport.SUCCESS;
+	}
+	
+	
+	public String doLogin() {
+		
+		if(StringUtils.isAllEmpty(login, password)) {
+			return ActionSupport.INPUT;
+		}
+		
+		if(StringUtils.isEmpty(login)) {
+			this.addFieldError("login", "L'identifiant doit être renseigné");
+		}
+		
+		if(StringUtils.isEmpty(password)) {
+			this.addFieldError("password", "Le mot de passe doit être renseigné");
+		}
+		
+		if(hasFieldErrors()) {
+			return ActionSupport.INPUT;
+		}
+		
+		User vUser = new User();
+		
+		try {
+			vUser = managerFactory.getUserManager().getConnectUser(login, password);
+		} catch (FunctionalException pException) {
+			this.addActionError(pException.getMessage());
+			return ActionSupport.ERROR;
+		} catch (NotFoundException pException) {
+			this.addFieldError("login", "L'identifiant et/ou le mot de passe sont incorrects - La connexion n'a pu être réalisée");
+			this.addFieldError("password", "L'identifiant et/ou le mot de passe sont incorrects - La connexion n'a pu être réalisée");
+			return ActionSupport.INPUT;
+		}catch (TechnicalException pException) {
+			this.addActionError(pException.getMessage());
+			return ActionSupport.ERROR;
+		}
+		
+		this.session.put("user", vUser);
+		return ActionSupport.SUCCESS;		
+	}
+	
+	public String doLogout() {
+		
+		this.servletRequest.getSession().invalidate();
 		return ActionSupport.SUCCESS;
 	}
 }

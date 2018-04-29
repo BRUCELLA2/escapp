@@ -15,10 +15,11 @@ public interface UserManager {
 	
 	public User getUserById(Integer pUserId) throws TechnicalException, FunctionalException, NotFoundException;
 	
-	public User getConnectUser(String pLogin, String pPassword) throws TechnicalException, FunctionalException, NotFoundException;
+	public User getConnectUser(String pUserLogin, String pRawUserPassword) throws TechnicalException, FunctionalException, NotFoundException;
 	
 	public User addUser(User pUser) throws TechnicalException, FunctionalException;
 	
 	public void modifyPassword(User pUser, String pNewRawPassword) throws TechnicalException, FunctionalException, NotFoundException;
 	
+	public boolean checkLoginDispo(String pLogin) throws TechnicalException;
 }

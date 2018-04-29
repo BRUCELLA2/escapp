@@ -39,15 +39,32 @@
 			<result name="error">/jsp/error.jsp</result>		
 		</action>
 		
-		<!--  sign up action -->
-		<action name="sign_up"
+		<!--  register action -->
+		<action name="register"
 				class="fr.brucella.form.escapp.webapp.action.users.UserAction"
-				method="doSignUp">
+				method="doRegister">
 			<result name="input">/jsp/users/register.jsp</result>
 			<result name="error">/jsp/error.jsp</result>
 			<result name="success" type="redirectAction">
 				/jsp/index.jsp
 			</result>
+		</action>
+		
+		<!--  logout action -->
+		<action name="logout"
+				class="fr.brucella.form.escapp.webapp.action.users.UserAction"
+				method="doLogout">
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success">/jsp/index.jsp</result>
+		</action>
+		
+		<!-- login action -->
+		<action name="login"
+				class="fr.brucella.form.escapp.webapp.action.users.UserAction"
+				method="doLogin">
+			<result name="input">/jsp/users/login.jsp</result>	
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success">/jsp/index.jsp</result>	
 		</action>
 
     </package>

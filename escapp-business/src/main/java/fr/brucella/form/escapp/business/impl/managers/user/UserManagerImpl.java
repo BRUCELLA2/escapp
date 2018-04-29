@@ -54,26 +54,26 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 	}
 
 	@Override
-	public User getConnectUser(String pLogin, String pPassword) throws TechnicalException, FunctionalException, NotFoundException {
+	public User getConnectUser(String pUserLogin, String pRawUserPassword) throws TechnicalException, FunctionalException, NotFoundException {
 
-		if(StringUtils.isAllEmpty(pLogin, pPassword)) {
+		if(StringUtils.isAllEmpty(pUserLogin, pRawUserPassword)) {
 			throw new FunctionalException("Le login et le mot de passe de l'utilisateur sont incorrect (Login et mot de passe vides) - Echec de la connection");
 		}
 		
-		if(StringUtils.isEmpty(pLogin)) {
+		if(StringUtils.isEmpty(pUserLogin)) {
 			throw new FunctionalException("Le login de l'utilisateur est incorrect (Login vide) - Echec de la connection");
 		}
 		
-		if(StringUtils.isEmpty(pPassword)) {
+		if(StringUtils.isEmpty(pRawUserPassword)) {
 			throw new FunctionalException("Le mot de passe est incorrect (Mot de passe vide) - Echec de la connection");
 		}
 		
 		try {
-			User vUser = getDaoFactory().getUserDao().getUserByLogin(pLogin);
-			if(checkPassword(pPassword, vUser.getPassword())) {
+			User vUser = getDaoFactory().getUserDao().getUserByLogin(pUserLogin);
+			if(checkPassword(pRawUserPassword, vUser.getPassword())) {
 				return vUser;
 			}else {
-				throw new FunctionalException("Le login et le mot de passe ne corresponde pas - Echec de la connection");
+				throw new NotFoundException("Le login et le mot de passe ne corresponde pas - Echec de la connection");
 			}
 		}catch (TechnicalException pException) {
 			throw new TechnicalException(pException.getMessage(),pException);
@@ -105,6 +105,14 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 				System.out.println(violation.getMessage());
 			}
 			throw new FunctionalException("L'utilisateur à ajouter n'est pas valide",new ConstraintViolationException(vViolations));
+		}
+		
+		try {
+			if(!checkLoginDispo(vUser.getLogin())){
+				throw new FunctionalException("Cette identifiant est déjà utilisé");
+			}
+		} catch (TechnicalException pException) {
+			throw new TechnicalException(pException.getMessage(),pException);
 		}
 		
 		try {
@@ -164,6 +172,19 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 		}else {
 			return false;
 		}
+  }
+  
+  public boolean checkLoginDispo(String pLogin) throws TechnicalException {
+	  
+	try {
+		if(getDaoFactory().getUserDao().countUserByLogin(pLogin) > 0) {
+			return false;
+		}
+	} catch (TechnicalException pException) {
+		throw new TechnicalException(pException.getMessage(),pException);
+	}
+	
+	return true;
   }
 
 }

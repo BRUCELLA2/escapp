@@ -34,7 +34,7 @@
       	
       		<div class="panel panel-danger">
       			<div class="panel-heading"><h4><s:actionerror/></h4></div>
-      			<div class="panel-body"><p>Veuillez réessayer plus tard ou contacter l'administrateur du site.</div>
+      			<div class="panel-body"><p>Veuillez réessayer ou si nécessaire contacter l'administrateur du site.</div>
       		</div>
 	</div>
 

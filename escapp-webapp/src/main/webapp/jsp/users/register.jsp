@@ -42,10 +42,7 @@
 					<li><s:a action="topo">Topos</s:a></li>
 				</ul>
 				
-				<ul class="nav navbar-nav navbar-right">
-					<li><s:a action="sign_up"><span class="glyphicon glyphicon-user"></span> S'inscrire</s:a></li>
-					<li><s:a action="login"><span class="glyphicon glyphicon-log-in"></span> Login</s:a></li>
-				</ul>
+				<%@include file="/_include/jsp/navbar_right.jsp" %>
 			</div>
 		</nav>
       	
@@ -77,11 +74,12 @@
 		      		<div class="panel-body">
 			      		<div class="col-xs-6 col-xs-offset-3">
 			      		
-					      	<form class="form-horizontal" method="post" action="sign_up">
+					      	<form class="form-horizontal" method="post" action="register">
 					      	
 					      		<div class="form-group">				      			
 					      			<label for="login">Identifiant :</label>
 					      			<input type="text" class="form-control" id="login" name="login" value='<s:property value="login"/>'>
+					      			<div class="has-error"><span class="help-block"><s:fielderror fieldName="login"/></span></div> 
 					      		</div>
 					      		
 					      		<div class="form-group">
@@ -103,7 +101,7 @@
 					      			<div class="has-error"><span class="help-block"><s:fielderror fieldName="email"/></span></div>
 					      		</div>
 					      		
-					      		<button type="submit" class="btn btn-primary">Valider</button>
+					      		<button type="submit" class="btn btn-primary">S'enregistrer</button>
 					      	</form>
 
 			      		</div>
