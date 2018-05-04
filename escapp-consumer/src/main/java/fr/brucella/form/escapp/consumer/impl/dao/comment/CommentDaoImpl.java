@@ -3,10 +3,12 @@ package fr.brucella.form.escapp.consumer.impl.dao.comment;
 import fr.brucella.form.escapp.consumer.contract.dao.comment.CommentDao;
 import fr.brucella.form.escapp.consumer.impl.dao.AbstractDao;
 import fr.brucella.form.escapp.consumer.impl.rowmapper.comment.CommentRM;
+import fr.brucella.form.escapp.consumer.impl.rowmapper.comment.CommentWithLoginRM;
 import fr.brucella.form.escapp.model.beans.comment.Comment;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +24,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Comment Data Access Object
@@ -98,6 +101,46 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
 		}
 
+    }
+
+    /**
+     * @see CommentDao#getCommentsListWithLogin(String, Integer)
+     */
+    @Override
+    public List<Pair<Comment, String>> getCommentsListWithLogin(String pTargetType, Integer pIdCommentTarget, String pOrder) throws TechnicalException, NotFoundException{
+		
+    	String vSQL = "SELECT comment.id, comment.text, comment.target_type, comment.id_comment_target, comment.escapp_user, escapp_user.login "
+    			+ "		FROM comment "
+    			+ "		INNER JOIN escapp_user "
+    			+ "		ON comment.escapp_user = escapp_user.id "
+    			+ "		WHERE comment.target_type = :targetType AND comment.id_comment_target = :idCommentTarget "
+    			+ "		ORDER BY comment.id " + pOrder;
+    	
+    	MapSqlParameterSource vParams = new MapSqlParameterSource();
+    	vParams.addValue("targetType", pTargetType);
+    	vParams.addValue("idCommentTarget", pIdCommentTarget);
+    //	vParams.addValue("order", pOrder);
+    	
+    	RowMapper<Pair<Comment, String>> vRowMapper = new CommentWithLoginRM();
+    	
+        try {
+        	List<Pair<Comment, String>> commentsListWithLogin = getNamedJdbcTemplate().query(vSQL, vParams, vRowMapper);
+        	if(commentsListWithLogin.isEmpty()) {
+        		throw new NotFoundException("Aucun commentaire n'a été trouvé.");
+        	}else {
+        		return commentsListWithLogin;
+        	}
+		} catch (PermissionDeniedDataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} catch (DataAccessResourceFailureException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+		} catch (DataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		}
+ 	
     }
 
     /**

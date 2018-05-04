@@ -59,13 +59,8 @@
       					 - <s:a action="site_details"><s:param name="id" value="site.id"/>Secteur : <s:property value="sector.name"/></s:a></h4>
       				<p><s:property value="route.description"/><p>
       				<p>Cotation : <s:property value="route.grade"/></p>
-      				<p>Nombre de points : <s:property value="nbPoints"/></p>      				
-      			</div>
-      		</div>
-      		
-      		<div class="panel panel-primary">
-      			<div class="panel-heading"><h4>Longueurs :</h4></div>
-      			<div class="panel-body">
+      				<p>Nombre de points : <s:property value="nbPoints"/></p>
+      				<p>Longueurs :</p> 
       				<table class="table table-bordered table-striped table-condensed">
       					<thead>
       						<tr>
@@ -86,8 +81,47 @@
       							<td><s:property value="#length.description"/></td>
       						</tr>      					
       					</s:iterator>
-      				</table>
-      			</div>
+      				</table>   
+      				
+      				<s:a data-toggle="collapse" href="#collapseCommentRoute">Commentaires <span class="badge"><s:property value="nbCommentsRoute"/></span></s:a>  	
+      				
+      				<div class="panel-group">
+	      				<div class="panel panel-default">
+	      					<div id="collapseCommentRoute" class="panel-collapse collapse">
+	      						<div class="panel-body">
+	      							<s:actionmessage/>
+	      							<s:iterator value="commentsRouteList" status="statusComRouteList" var="commentRoute">
+	      								<div class="panel panel-info">
+	      									<div class="panel-heading">
+	      										<p>Commentaire <s:property value="#statusComRouteList.count"/> - <s:property value="#commentRoute.value"/></p>
+	      									</div>
+	      									<div class="panel-body">
+	      										<p><s:property value="#commentRoute.key.text"/></p>
+	      									</div>
+	      								</div>
+	      							</s:iterator>
+	      							
+	      							<hr />
+	      							
+	      							<s:if test="#session.user">
+	      								<form action="comment_route">
+	      									<div class="form-group">
+		      									<label for="commentSite">Ajouter un commentaire :</label>
+		      									<textarea class="form-control" rows="5" name="commentRoute" placeholder="Saisissez votre commentaire ici."></textarea>
+		      									<div class="has-error"><span class="help-block"><s:fielderror fieldName="commentRoute"/></span></div>
+		      									<input type="hidden" name="routeId" id="routeId" value="<s:property value='route.id'/>"/>
+		      								</div>
+		      								<button type="submit" class="btn btn-default">Envoyer</button>
+	      								</form>
+	      							</s:if>
+	      							<s:else>
+	      								<p><span class="help-block text-center">Veuillez vous connecter pour poster un commentaire</span></p>
+	      							</s:else>
+	      						</div>
+	      					</div>
+	      				</div>
+      				</div>    			
+      			</div>   			
       		</div>
       	</div> 	
     </div>

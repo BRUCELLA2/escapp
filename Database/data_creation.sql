@@ -11,9 +11,9 @@ INSERT INTO public.escapp_user(id, login, email, password)
 
 INSERT INTO public.comment(id, text, target_type, id_comment_target, escapp_user)
 	VALUES 
-		(DEFAULT, 'Premier commentaire site1, target_type = site, id_comment_target = 1, user = user1', 'site', 1, 1),
-		(DEFAULT, 'Premier commentaire secteur 1, target_type = sector, id_comment_target = 1, user = user2', 'sector', 1, 2 ),
-		(DEFAULT, '2nd commentaire site 1, target_type = site, id_comment_target = 1, user = user1', 'site', 1, 1);
+		(DEFAULT, 'Premier commentaire site1, target_type = site, id_comment_target = 1, user = user1', 'Site', 1, 1),
+		(DEFAULT, 'Premier commentaire secteur 1, target_type = sector, id_comment_target = 1, user = user2', 'Sector', 1, 2 ),
+		(DEFAULT, '2nd commentaire site 1, target_type = site, id_comment_target = 1, user = user1', 'Site', 1, 1);
 
 /* INSERT INTO site TABLE */
 

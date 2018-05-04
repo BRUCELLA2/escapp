@@ -5,6 +5,9 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 
 /**
@@ -41,6 +44,22 @@ public interface CommentDao {
      */
     List<Comment> getCommentsList(String pTargetType, Integer pIdCommentTarget) throws TechnicalException, NotFoundException;
 
+    
+    /**
+     * Get a list of {@link Pair} of {@link Comment} with the login of the user who write the comment.
+     * Sorted by comment id.
+     * 
+     * @param pTargetType {@link String} which represents the Target Type
+     * 					  Value can be one of these : "Length", "Route", "Sector", "Site" or "Topo".
+     * @param pIdCommentTarget {@link Integer} id of the target which is commented.
+     * @param pOrder {@link String} "ASC" or "DESC" for a ASCENDING sort or DESCENDING sort by the id of the comment
+     * 
+     * @return a list of {@link Pair} of {@link Comment} with the login of the user who write the comment and sorted by id of the comment
+     * 
+     * @throws TechnicalException - wraps technical exception caused during data access.
+     * @throws NotFoundException - This exception is throws if there is no technical exception and no {@link Comment} is found.
+     */
+    List <Pair<Comment, String>> getCommentsListWithLogin(String pTargetType, Integer pIdCommentTarget, String pOrder) throws TechnicalException, NotFoundException;
     
     /**
      * Update an existing {@link Comment} in the datastore.

@@ -2,11 +2,14 @@ package fr.brucella.form.escapp.webapp.action.sites;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import fr.brucella.form.escapp.business.contract.ManagerFactory;
+import fr.brucella.form.escapp.model.beans.comment.Comment;
 import fr.brucella.form.escapp.model.beans.site.Length;
 import fr.brucella.form.escapp.model.beans.site.Route;
 import fr.brucella.form.escapp.model.beans.site.Sector;
@@ -29,12 +32,19 @@ public class SiteDetailsAction extends ActionSupport {
 	private List<Length> lengthsList;
 	private int nbPoints;
 	
+	private Integer nbCommentsSite;
+	private List<Pair<Integer, Integer>> nbCommentsSectorsList;
+	private Integer nbCommentsRoute;
+	private List<Pair<Comment, String>> commentsSiteList;
+	private List<Pair<Comment, String>> commentsSectorList;
+	private List<Pair<Comment, String>> commentsRouteList;
+	
 	// ----- Manager
 	@Autowired
 	private ManagerFactory managerFactory;
 	
 	
-	// ===== Getters / Setters =====
+	// ===== Getters =====
 	public Integer getId() {
 		return id;
 	}
@@ -67,9 +77,38 @@ public class SiteDetailsAction extends ActionSupport {
 	  return nbPoints;
 	}
 	
+	public Integer getNbCommentsSite() {
+		return nbCommentsSite;
+	}
+	
+	public Integer getNbCommentsRoute() {
+	    return nbCommentsRoute;
+	}
+	
+	public List<Pair<Integer, Integer>> getNbCommentsSectorsList() {
+		return nbCommentsSectorsList;
+	}
+	
+	public List<Pair<Comment, String>> getCommentsSiteList(){
+		return commentsSiteList;
+	}
+	
+	public List<Pair<Comment, String>> getCommentsSectorList(){
+		return commentsSectorList;
+	}
+	
+	public List<Pair<Comment, String>> getCommentsRouteList(){
+	    return commentsRouteList;
+	}
+	
+	
+	// ===== Setters =====
+	
 	public void setId(Integer pId) {
 		id = pId;
 	}
+	
+	
 	
 	
 	// ===== Methods =====
@@ -95,10 +134,30 @@ public class SiteDetailsAction extends ActionSupport {
 		}
 		
 		try {
+			commentsSiteList = managerFactory.getCommentManager().getCommentsSiteListWithLogin(id, "ASC");
+		}catch (TechnicalException pException) {
+			this.addActionError(pException.getMessage());
+			return ActionSupport.ERROR;
+		}catch (FunctionalException pException) {
+			this.addActionError(pException.getMessage());
+			return ActionSupport.ERROR;
+		}catch (NotFoundException pException) {
+			this.addActionMessage("Aucun commentaire");
+			return ActionSupport.SUCCESS;
+		}
+		
+		nbCommentsSite = commentsSiteList.size();
+		
+		try {
 		  sectorsList = managerFactory.getSectorManager().getSectorsSiteList(site.getId());
 	      routesList = new ArrayList<>();
+	      commentsSectorList = new ArrayList<>();
+	      nbCommentsSectorsList = new ArrayList<>();
 	      for(Sector sector : sectorsList) {
               routesList.addAll(managerFactory.getRouteManager().getRoutesSectorList(sector.getId()));
+              List<Pair<Comment, String>> tempCommentsSectorList = managerFactory.getCommentManager().getCommentsSectorListWithLogin(sector.getId(),"ASC");
+              nbCommentsSectorsList.add(new MutablePair<Integer, Integer>(sector.getId(), tempCommentsSectorList.size()));
+              commentsSectorList.addAll(tempCommentsSectorList);
 	      }
 		}catch(TechnicalException pException) {
 		  this.addActionError(pException.getMessage());
@@ -150,7 +209,22 @@ public class SiteDetailsAction extends ActionSupport {
        }
 	   
 	   nbPoints = nbPoints(lengthsList);
-	  
+	   
+       try {
+         commentsRouteList = managerFactory.getCommentManager().getCommentsRouteListWithLogin(id, "ASC");
+     }catch (TechnicalException pException) {
+         this.addActionError(pException.getMessage());
+         return ActionSupport.ERROR;
+     }catch (FunctionalException pException) {
+         this.addActionError(pException.getMessage());
+         return ActionSupport.ERROR;
+     }catch (NotFoundException pException) {
+         this.addActionMessage("Aucun commentaire");
+         return ActionSupport.SUCCESS;
+     }
+       
+	  nbCommentsRoute = commentsRouteList.size();
+       
 	  return(this.hasErrors()) ? ActionSupport.ERROR : ActionSupport.SUCCESS; 
 	}
 	

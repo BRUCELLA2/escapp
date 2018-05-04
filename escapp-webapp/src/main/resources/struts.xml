@@ -50,6 +50,52 @@
 			</result>
 		</action>
 		
+		<!--  comment site action -->
+		<action name="comment_site"
+				class="fr.brucella.form.escapp.webapp.action.comments.CommentsAction"
+				method="doAddCommentSite">
+			<result name="input" type="redirectAction">				
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>	
+		</action>
+		
+		<!--  comment sector action -->
+		<action name="comment_sector"
+				class="fr.brucella.form.escapp.webapp.action.comments.CommentsAction"
+				method="doAddCommentSector">
+			<result name="input" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>		
+		</action>
+		
+		<!--  comment route action -->
+		<action name="comment_route"
+				class="fr.brucella.form.escapp.webapp.action.comments.CommentsAction"
+				method="doAddCommentRoute">
+			<result name="input" type="redirectAction">
+				<param name="actionName">route_details</param>
+				<param name="id">${routeId}</param>
+			</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">route_details</param>
+				<param name="id">${routeId}</param>
+			</result>		
+		</action>
+		
+		
 		<!--  logout action -->
 		<action name="logout"
 				class="fr.brucella.form.escapp.webapp.action.users.UserAction"

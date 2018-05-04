@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Component;
 
 import fr.brucella.form.escapp.business.contract.managers.comment.CommentManager;
@@ -30,6 +32,16 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		
 		return getCommentsList(pSiteId, "Site");		
 	}
+	
+	@Override
+	public List<Pair<Comment, String>> getCommentsSiteListWithLogin(Integer pSiteId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
+		
+		if(pSiteId == null) {
+			throw new FunctionalException("L'identifiant du site est incorrect (Identifiant vide) - Echec de la recherche");
+		}
+		
+		return getCommentsListWithLogin(pSiteId, "Site", pOrder);
+	}
 
 	@Override
 	public List<Comment> getCommentsSectorList(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException {
@@ -40,6 +52,16 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		
 		return getCommentsList(pSectorId, "Sector");	
 	}
+	
+	@Override
+	public List<Pair<Comment, String>> getCommentsSectorListWithLogin(Integer pSectorId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
+		
+		if(pSectorId == null) {
+			throw new FunctionalException("L'identifiant du secteur est incorrect (Identifiant vide) - Echec de la recherche");
+		}
+		
+		return getCommentsListWithLogin(pSectorId, "Sector", pOrder);
+	}
 
 	@Override
 	public List<Comment> getCommentsRouteList(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException {
@@ -49,6 +71,16 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		}
 		
 		return getCommentsList(pRouteId, "Route");
+	}
+	
+	@Override
+	public List<Pair<Comment, String>> getCommentsRouteListWithLogin(Integer pRouteId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
+		
+		if(pRouteId == null) {
+			throw new FunctionalException("L'identifiant de la voie est incorrect (Identifiant vide) - Echec de la recherche");
+		}
+		
+		return getCommentsListWithLogin(pRouteId, "Route", pOrder);
 	}
 
 	@Override
@@ -63,6 +95,16 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 	}
 	
 	@Override
+	public List<Pair<Comment, String>> getCommentsLengthListWithLogin(Integer pLengthId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
+		
+		if(pLengthId == null) {
+			throw new FunctionalException("L'identifiant de la longueur est incorrect (Identifiant vide) - Echec de la recherche");
+		}
+		
+		return getCommentsListWithLogin(pLengthId, "Length", pOrder);
+	}
+	
+	@Override
 	public List<Comment> getCommentsTopoList(Integer pTopoId) throws TechnicalException, FunctionalException, NotFoundException {
 
 		if(pTopoId == null) {
@@ -70,6 +112,16 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		}
 		
 		return getCommentsList(pTopoId, "Topo");
+	}
+	
+	@Override
+	public List<Pair<Comment, String>> getCommentsTopoListLogin(Integer pTopoId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
+		
+		if(pTopoId == null) {
+			throw new FunctionalException("L'identifiant du topo est incorrect (Identifiant vide) - Echec de la recherche");
+		}
+		
+		return getCommentsListWithLogin(pTopoId, "Topo", pOrder);
 	}
 
 	@Override
@@ -253,6 +305,24 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		
 		try {
 			return getDaoFactory().getCommentDao().getCommentsList(pTargetType, pIdCommentTarget);
+		}catch (TechnicalException pException) {
+			throw new TechnicalException(pException.getMessage(),pException);
+		}catch (NotFoundException pException) {
+			throw new NotFoundException(pException.getMessage(),pException);
+		}
+	}
+	
+	private List<Pair<Comment, String>> getCommentsListWithLogin(Integer pIdCommentTarget, String pTargetType, String pOrder) throws TechnicalException, NotFoundException{
+		
+		String vOrder;
+		if(StringUtils.isEmpty(pOrder)) {
+			vOrder = "DESC";
+		}else {
+			vOrder = pOrder;
+		}
+		
+		try {
+			return getDaoFactory().getCommentDao().getCommentsListWithLogin(pTargetType, pIdCommentTarget, vOrder);
 		}catch (TechnicalException pException) {
 			throw new TechnicalException(pException.getMessage(),pException);
 		}catch (NotFoundException pException) {

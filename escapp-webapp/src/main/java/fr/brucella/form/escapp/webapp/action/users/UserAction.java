@@ -84,7 +84,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
 	
 	public String doRegister() {
 		
-		if(StringUtils.isEmpty(login) && StringUtils.isEmpty(password) && StringUtils.isEmpty(confPwd) && StringUtils.isEmpty(email)) {
+		if(StringUtils.isAllEmpty(login, password, confPwd, email)){
 	       return ActionSupport.INPUT;
 		}
 		

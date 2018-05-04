@@ -73,7 +73,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 			if(checkPassword(pRawUserPassword, vUser.getPassword())) {
 				return vUser;
 			}else {
-				throw new NotFoundException("Le login et le mot de passe ne corresponde pas - Echec de la connection");
+				throw new NotFoundException("Le login et le mot de passe ne correspondent pas - Echec de la connection");
 			}
 		}catch (TechnicalException pException) {
 			throw new TechnicalException(pException.getMessage(),pException);
@@ -167,7 +167,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 
   private boolean checkPassword(String pRawPassword,String pEncodePassword){
     
-		if(vPasswordEncoder.matches(encodePassword(pRawPassword), pEncodePassword)) {
+		if(vPasswordEncoder.matches(pRawPassword, pEncodePassword)) {
 			return true;
 		}else {
 			return false;

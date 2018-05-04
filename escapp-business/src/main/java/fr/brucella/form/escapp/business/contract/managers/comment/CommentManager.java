@@ -2,6 +2,8 @@ package fr.brucella.form.escapp.business.contract.managers.comment;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import fr.brucella.form.escapp.model.beans.comment.Comment;
 import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
@@ -16,13 +18,23 @@ public interface CommentManager {
 
 	public List<Comment> getCommentsSiteList(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
 	
+	public List<Pair<Comment, String>> getCommentsSiteListWithLogin(Integer pSiteId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException;
+	
 	public List<Comment> getCommentsSectorList(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException;
+	
+	public List<Pair<Comment, String>> getCommentsSectorListWithLogin(Integer pSectorId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException;
 	
 	public List<Comment> getCommentsRouteList(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException;
 	
+	public List<Pair<Comment, String>> getCommentsRouteListWithLogin(Integer pRouteId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException;
+	
 	public List<Comment> getCommentsLengthList(Integer pLengthId) throws TechnicalException, FunctionalException, NotFoundException;
 	
+	public List<Pair<Comment, String>> getCommentsLengthListWithLogin(Integer pLengthId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException;
+	
 	public List<Comment> getCommentsTopoList(Integer pTopoId) throws TechnicalException, FunctionalException, NotFoundException;
+	
+	public List<Pair<Comment, String>> getCommentsTopoListLogin(Integer pTopoId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException;
 	
 	public Comment getCommentById(Integer pCommentId) throws TechnicalException, FunctionalException, NotFoundException;
 	
