@@ -2,6 +2,7 @@ package fr.brucella.form.escapp.model.beans.site;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import fr.brucella.form.escapp.model.search.SiteSearch;
 
 /**
  * Business object which represents a Site
@@ -40,6 +41,7 @@ public class Site {
      * 
      * @see #getDepartment()
      * @see #setDepartment(String)
+     * @see SiteSearch
      */
     @NotEmpty(message = "Un site doit avoir un numéro de département.")
     @Size(min = 3, max = 3, message = "Le numéro de département d'un site doit être constitué de 3 caractères.")

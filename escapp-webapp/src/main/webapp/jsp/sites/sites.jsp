@@ -47,6 +47,36 @@
 	</nav>
 	
 	<div class="panel panel-primary">
+		<div class="panel-heading"><h3 class="panel-title">Recherche de sites d'escalade</h3></div>
+		<div class="panel-body">
+			
+			<form class="form-horizontal" method="post" action="searching_site">
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="departmentSite">Département (sur 3 caractères) :</label>
+					<input class="col-sm-1" type="text" class="form-control" id="departmentSite" name="departmentSite" maxlength="3" placeholder="xxx">
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="municipalitySite">Commune :</label>
+					<input class="col-sm-4" type="text" class="form-control" id="municipalitySite" name="municipalitySite" maxlength="100" placeholder="Nom de la ville">
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="minGrade">Cotation min (sur 2 caractères) :</label>
+					<input class="col-sm-1" type="text" class="form-control" id="minGrade" name="minGrade" maxlength="2" placeholder="xx">
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="maxGrade">Cotation max (sur 2 caractères) :</label>
+					<input class="col-sm-1" type="text" class="form-control" id="maxGrade" name="maxGrade" maxlength="2" placeholder="xx">
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-5">
+        				<button type="submit" class="btn btn-primary">Rechercher</button>
+     				</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div class="panel panel-primary">
 		<div class="panel-heading"><h3 class="panel-title">Sites d'escalades enregistrés</h3></div>
 		<div class="panel-body">
 			<table class="table table-bordered table-striped table-condensed">

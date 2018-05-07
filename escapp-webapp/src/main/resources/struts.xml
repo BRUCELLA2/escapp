@@ -22,6 +22,15 @@
             <result name="success">/jsp/sites/sites.jsp</result>
             <result name="error">/jsp/error.jsp</result>
         </action>
+        
+        <!--  site searching action -->
+        <action name="searching_site"
+        		class="fr.brucella.form.escapp.webapp.action.sites.SitesListAction"
+        		method="doSiteSearching">
+        	<result name="success">/jsp/sites/sites.jsp</result>
+        	<result name="input">/jsp/sites/sites.jsp</result>
+        	<result name="error">/jsp/error.jsp</result>		
+        </action>
 
 		<!--  site detail action -->
 		<action name="site_details"

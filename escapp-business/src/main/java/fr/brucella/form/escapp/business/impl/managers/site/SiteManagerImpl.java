@@ -14,6 +14,7 @@ import fr.brucella.form.escapp.model.beans.site.Site;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
+import fr.brucella.form.escapp.model.search.SiteSearch;
 
 @Component
 public class SiteManagerImpl extends AbstractManager implements SiteManager{
@@ -45,6 +46,30 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager{
 		}catch (NotFoundException pException) {
 			throw new NotFoundException(pException.getMessage(),pException);
 		}
+	}
+	
+	@Override
+	public List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException, FunctionalException {
+		
+		if(pSiteSearch == null) {
+			return getAllSitesList();
+		}
+		
+		Set<ConstraintViolation<SiteSearch>> vViolations = getConstraintValidator().validate(pSiteSearch);
+		if(!vViolations.isEmpty()) {
+			for(ConstraintViolation<SiteSearch> violation : vViolations) {
+				System.out.println(violation.getMessage());
+			}
+			throw new FunctionalException("Les critères de recherche de sont pas valides",new ConstraintViolationException(vViolations));
+		}
+		try {
+			return getDaoFactory().getSiteDao().getSearchSitesLIst(pSiteSearch);
+		}catch (TechnicalException pException) {
+			throw new TechnicalException(pException.getMessage(),pException);
+		}catch (NotFoundException pException) {
+			throw new NotFoundException(pException.getMessage(),pException);
+		}
+		
 	}
 
 	@Override

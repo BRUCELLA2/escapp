@@ -96,7 +96,7 @@
 				</div> 
 	      	</div>	
 	  
-	 		<s:if test="sectorsList != null">  			
+	 		<s:if test="sectorsList != null"> 			
 	      		<s:iterator value="sectorsList" status="statusSector" var="sector">
 	      		<s:set var="idSector"><s:property value='#sector.id'/></s:set>
 	      			<div class="panel panel-primary">
@@ -122,7 +122,6 @@
 					    				<div id="collapseCommentSector<s:property value='#statusSector.count'/>" class="panel-collapse collapse">
 					      					<div class="panel-body">
 					      						
-					      						<s:actionmessage/>
 					      						<s:set var="counterCommSectorList" value="0"/>
 	      										<s:iterator value="commentsSectorList" var="commentSector">
 	      											<s:if test="#idSector == #commentSector.key.idCommentTarget">

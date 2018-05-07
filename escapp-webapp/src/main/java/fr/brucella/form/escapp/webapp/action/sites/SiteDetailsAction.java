@@ -135,6 +135,7 @@ public class SiteDetailsAction extends ActionSupport {
 		
 		try {
 			commentsSiteList = managerFactory.getCommentManager().getCommentsSiteListWithLogin(id, "ASC");
+			nbCommentsSite = commentsSiteList.size();
 		}catch (TechnicalException pException) {
 			this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
@@ -142,15 +143,14 @@ public class SiteDetailsAction extends ActionSupport {
 			this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
 		}catch (NotFoundException pException) {
+		    nbCommentsSite = 0;
 			this.addActionMessage("Aucun commentaire");
-			return ActionSupport.SUCCESS;
 		}
 		
-		nbCommentsSite = commentsSiteList.size();
 		
 		try {
 		  sectorsList = managerFactory.getSectorManager().getSectorsSiteList(site.getId());
-	      routesList = new ArrayList<>();
+		  routesList = new ArrayList<>();
 	      commentsSectorList = new ArrayList<>();
 	      nbCommentsSectorsList = new ArrayList<>();
 	      for(Sector sector : sectorsList) {

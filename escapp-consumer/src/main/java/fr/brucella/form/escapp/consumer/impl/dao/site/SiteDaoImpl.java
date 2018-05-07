@@ -6,9 +6,11 @@ import fr.brucella.form.escapp.consumer.impl.rowmapper.site.SiteRM;
 import fr.brucella.form.escapp.model.beans.site.Site;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
+import fr.brucella.form.escapp.model.search.SiteSearch;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -31,7 +33,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class SiteDaoImpl extends AbstractDao implements SiteDao {
 	
-    // TODO Complete methods
 	// TODO Add log system
 
 	/**
@@ -95,6 +96,60 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
 			pException.printStackTrace();
 			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
 		}
+	}
+	
+	/**
+	 * @see SiteDao#getSearchSiteLIst(SiteSearch)
+	 */
+	@Override
+	public List<Site> getSearchSitesLIst(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException{
+		
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		
+		StringBuilder vSQL = new StringBuilder("SELECT DISTINCT site.id, site.name, site.department, site.municipality, site.description "
+				+ " 	FROM site "
+				+ " 	INNER JOIN sector "
+				+ " 	ON sector.site_id = site.id "
+				+ " 		INNER JOIN route "
+				+ " 		ON route.sector_id = sector.id "
+				+ " 	WHERE 1 = 1 ");
+		
+		if(pSiteSearch != null) {
+			if(!StringUtils.isEmpty(pSiteSearch.getDepartmentSite())) {
+				vSQL.append(" AND UPPER(site.department) = UPPER(:departmentSite) ");
+				vParams.addValue("departmentSite", pSiteSearch.getDepartmentSite());
+			}
+			if(!StringUtils.isEmpty(pSiteSearch.getMunicipalitySite())) {
+				vSQL.append(" AND UPPER(site.municipality) = UPPER(:municipalitySite) ");
+				vParams.addValue("municipalitySite", pSiteSearch.getMunicipalitySite());
+			}
+			if(!StringUtils.isEmpty(pSiteSearch.getMinGradeRoute())) {
+				vSQL.append(" AND UPPER(route.grade) >= UPPER(:minGradeRoute) ");
+				vParams.addValue("minGradeRoute", pSiteSearch.getMinGradeRoute());
+			}
+			if(!StringUtils.isEmpty(pSiteSearch.getMaxGradeRoute())) {
+				vSQL.append(" AND UPPER(route.grade) <= UPPER(:maxGradeRoute) ");
+				vParams.addValue("maxGradeRoute", pSiteSearch.getMaxGradeRoute());
+			}
+		}
+		
+		RowMapper<Site> vRowMapper = new SiteRM();
+		
+		try {
+			return getNamedJdbcTemplate().query(vSQL.toString(), vParams, vRowMapper);
+		} catch (EmptyResultDataAccessException pException) {
+			pException.printStackTrace();
+			throw new NotFoundException("Aucun site ne correspond à votre recherche", pException);
+		} catch (PermissionDeniedDataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} catch (DataAccessResourceFailureException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+		} catch (DataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} 
 	}
 
 	/**

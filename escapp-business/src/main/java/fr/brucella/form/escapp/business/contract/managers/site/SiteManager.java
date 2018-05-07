@@ -6,6 +6,7 @@ import fr.brucella.form.escapp.model.beans.site.Site;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
+import fr.brucella.form.escapp.model.search.SiteSearch;
 
 /**
  * 
@@ -16,6 +17,8 @@ public interface SiteManager {
 	public List<Site> getAllSitesList() throws TechnicalException, NotFoundException, FunctionalException;
 	
 	public Site getSiteById(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
+	
+	public List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException, FunctionalException;
 	
 	public void modifySite(Site pSite) throws TechnicalException, FunctionalException, NotFoundException;
 	

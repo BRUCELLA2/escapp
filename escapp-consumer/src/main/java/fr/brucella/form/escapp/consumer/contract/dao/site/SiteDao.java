@@ -5,6 +5,7 @@ import java.util.List;
 import fr.brucella.form.escapp.model.beans.site.Site;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
+import fr.brucella.form.escapp.model.search.SiteSearch;
 
 /**
  * Interface for the Site Data Access Object.
@@ -35,6 +36,18 @@ public interface SiteDao {
 	 */
 	List<Site> getAllSitesList() throws TechnicalException, NotFoundException;
 	
+	
+	/**
+	 * Get the list of {@link Site} searched from the datastore.
+	 * 
+	 * @param pSiteSearch the {@link SiteSearch} wich represents the site searching criteria.
+	 * 
+	 * @return the list of {@link Site} searched.
+	 * 
+	 * @throws TechnicalException - wraps technical exception caused during data access.
+	 * @throws NotFoundException - This exception is throws if there is no technical exception and no {@link SIte} is found.
+	 */
+	List<Site> getSearchSitesLIst(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException;
 	
 	/**
 	 * Update an existing {@link Site} in the datastore.
