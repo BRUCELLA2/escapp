@@ -5,6 +5,7 @@ import java.util.List;
 import fr.brucella.form.escapp.model.beans.topo.Topo;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
+import fr.brucella.form.escapp.model.search.TopoSearch;
 
 /**
  * Interface for the Topo Data Access Object.
@@ -36,6 +37,17 @@ public interface TopoDao {
 	 */
 	List<Topo> getAllToposList() throws TechnicalException, NotFoundException;
 	
+	/**
+	 * Get the list of {@link Topo} searched from the datastore.
+	 * 
+	 * @param pTopoSearch the {@link TopoSearch} which represents the topo searching criteria.
+	 * 
+	 * @return the list of {@link Topo} searched.
+	 * 
+	 * @throws TechnicalException - wraps technical exception caused during data access.
+	 * @throws NotFoundException - This exception is throws of there is no technical exception and no {@link Topo} is found.
+	 */
+	List<Topo> getSearchToposList(TopoSearch pTopoSearch) throws TechnicalException, NotFoundException;
 	
 	/**
 	 * Get a list of {@link Topo} with the specified owner from the datastore.

@@ -6,9 +6,11 @@ import fr.brucella.form.escapp.consumer.impl.rowmapper.topo.TopoRM;
 import fr.brucella.form.escapp.model.beans.topo.Topo;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
+import fr.brucella.form.escapp.model.search.TopoSearch;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -96,6 +98,50 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
 		}
 	}
+	
+	/**
+	 * @see TopoDao#getSearchTopoList(TopoSearch)
+	 */
+	@Override
+	public List<Topo> getSearchToposList(TopoSearch pTopoSearch) throws TechnicalException, NotFoundException{
+		
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		
+		StringBuilder vSQL = new StringBuilder("SELECT * FROM topo WHERE 1 = 1 ");
+		
+		if(pTopoSearch != null) {
+			if(!StringUtils.isEmpty(pTopoSearch.getDepartmentTopo())) {
+				vSQL.append(" AND UPPER(department) = UPPER(:departmentTopo) ");
+				vParams.addValue("departmentTopo", pTopoSearch.getDepartmentTopo());
+			}
+			if(!StringUtils.isEmpty(pTopoSearch.getMunicipalityTopo())) {
+				vSQL.append(" AND UPPER(municipality) = UPPER(:municipalityTopo) ");
+				vParams.addValue("municipalityTopo", pTopoSearch.getMunicipalityTopo());
+			}
+			if(pTopoSearch.getAvailableTopo()) {
+				vSQL.append(" AND is_borrowable = true ");
+				vSQL.append(" AND (end_date_borrow is null or end_date_borrow < CURRENT_TIMESTAMP)");
+			}
+		}
+		
+		RowMapper<Topo> vRowMapper = new TopoRM();
+		
+		try {
+			return getNamedJdbcTemplate().query(vSQL.toString(), vParams,vRowMapper );
+		} catch (EmptyResultDataAccessException pException) {
+			pException.printStackTrace();
+			throw new NotFoundException("Aucun topo ne correspond à votre recherche", pException);
+		} catch (PermissionDeniedDataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} catch (DataAccessResourceFailureException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+		} catch (DataAccessException pException) {
+			pException.printStackTrace();
+			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+		} 
+	}
 
 	/**
 	 * @see TopoDao#getOwnerToposList(Integer)
@@ -175,7 +221,17 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 				+ "name = :name, department = :department, is_borrowable = :isBorrowable, pdf_file_name = :pdfFileName, municipality = :municipality, "
 				+ "end_date_borrow = :endDateBorrow, borrower_id = :borrowerId, description = :description, owner_id = :ownerId WHERE id = :id";
 		
-		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pTopo);
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("name", pTopo.getName());
+		vParams.addValue("department", pTopo.getDepartment());
+		vParams.addValue("isBorrowable", pTopo.isIsBorrowable());
+		vParams.addValue("pdfFileName", pTopo.getPdfFileName());
+		vParams.addValue("municipality", pTopo.getMunicipality());
+		vParams.addValue("endDateBorrow", pTopo.getEndDateBorrow());
+		vParams.addValue("borrowerId", pTopo.getBorrower());
+		vParams.addValue("description", pTopo.getDescription());
+		vParams.addValue("ownerId", pTopo.getOwner());
+		vParams.addValue("id", pTopo.getId());
 		
 		try {
 			int result = getNamedJdbcTemplate().update(vSQL, vParams);

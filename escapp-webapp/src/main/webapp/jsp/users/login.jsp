@@ -38,8 +38,8 @@
 				</div>
 				<ul class="nav navbar-nav">
 					<li><s:a action="index">Accueil</s:a></li>
-					<li><s:a action="sites">Sites</s:a></li>
-					<li><s:a action="topo">Topos</s:a></li>
+					<li><s:a action="searching_site">Sites</s:a></li>
+					<li><s:a action="searching_topo">Topos</s:a></li>
 				</ul>
 				
 				<%@include file="/_include/jsp/navbar_right.jsp" %>

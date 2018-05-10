@@ -34,7 +34,7 @@ public interface CommentManager {
 	
 	public List<Comment> getCommentsTopoList(Integer pTopoId) throws TechnicalException, FunctionalException, NotFoundException;
 	
-	public List<Pair<Comment, String>> getCommentsTopoListLogin(Integer pTopoId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException;
+	public List<Pair<Comment, String>> getCommentsTopoListWithLogin(Integer pTopoId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException;
 	
 	public Comment getCommentById(Integer pCommentId) throws TechnicalException, FunctionalException, NotFoundException;
 	
@@ -46,6 +46,8 @@ public interface CommentManager {
 	public void addCommentRoute(Comment pComment) throws TechnicalException, FunctionalException;
 	
 	public void addCommentLength(Comment pComment) throws TechnicalException, FunctionalException;
+	
+	public void addCommentTopo(Comment pComment) throws TechnicalException, FunctionalException;
 	
 	public void deleteComment(Integer pCommentId) throws TechnicalException, FunctionalException, NotFoundException;
 	

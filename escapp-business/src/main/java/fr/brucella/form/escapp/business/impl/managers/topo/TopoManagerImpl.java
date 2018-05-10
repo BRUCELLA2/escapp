@@ -16,6 +16,7 @@ import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
+import fr.brucella.form.escapp.model.search.TopoSearch;
 
 @Component
 public class TopoManagerImpl extends AbstractManager implements TopoManager{
@@ -30,6 +31,30 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}catch (NotFoundException pException) {
 			throw new NotFoundException(pException.getMessage(),pException);
 		}
+	}
+	
+	@Override
+	public List<Topo> getSearchToposList(TopoSearch pTopoSearch) throws TechnicalException, NotFoundException, FunctionalException{
+		
+		if(pTopoSearch == null) {
+			return getAllToposList();
+		}
+		
+		Set<ConstraintViolation<TopoSearch>> vViolations = getConstraintValidator().validate(pTopoSearch);
+		if(!vViolations.isEmpty()) {
+			for(ConstraintViolation<TopoSearch> violation : vViolations) {
+				System.out.println(violation.getMessage());
+			}
+			throw new FunctionalException("Les critères de recherche ne sont pas valides",new ConstraintViolationException(vViolations));
+		}
+		try {
+			return getDaoFactory().getTopoDao().getSearchToposList(pTopoSearch);
+		}catch (TechnicalException pException) {
+			throw new TechnicalException(pException.getMessage(),pException);
+		}catch (NotFoundException pException) {
+			throw new NotFoundException(pException.getMessage(),pException);
+		}
+		
 	}
 
 	@Override
@@ -73,7 +98,8 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}
 		
 		try {
-			return getDaoFactory().getTopoDao().getTopo(pTopoId);
+			Topo vTopo = getDaoFactory().getTopoDao().getTopo(pTopoId);
+			return clearBorrow(vTopo);
 		}catch (TechnicalException pException) {
 			throw new TechnicalException(pException.getMessage(),pException);
 		}catch (NotFoundException pException) {
@@ -98,7 +124,7 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 			throw new FunctionalException("Seul le propriétaire du topo peut le modifier. L'utilisateur n'est pas le propriétaire du topo - Echec de la modification");
 		}
 		
-		Boolean oldBorrowable = pTopo.getBorrowable();
+		Boolean oldBorrowable = pTopo.isIsBorrowable();
 		pTopo.setBorrowable(pBorrowable);
 		try {
 			getDaoFactory().getTopoDao().updateTopo(pTopo);
@@ -112,9 +138,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 	}
 
 	@Override
-	public void borrowTopo(Topo pTopo, Integer pNbDays, User pBorrower) throws TechnicalException, FunctionalException, NotFoundException {
+	public Topo borrowTopo(Topo pTopo, Integer pNbDays, User pBorrower) throws TechnicalException, FunctionalException, NotFoundException {
 		
-		int vNbDaysBorrowMax = 15;
+		int vNbDaysBorrowMax = 14;
 		
 		if(pTopo == null) {
 			throw new FunctionalException("Aucun topo à emprunter n'a été transmis (Topo vide) - Echec de l'emprunt");
@@ -129,23 +155,28 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		if(pNbDays > vNbDaysBorrowMax) {
 			throw new FunctionalException("Le topo ne peut être emprunté plus de "+ vNbDaysBorrowMax + " jours - Echec de l'emprunt");
 		}
-		if(pTopo.getBorrowable() != true) {
-			throw new FunctionalException("Ce topo ne peut être emprunté - Echec de l'emprunt");
+		if(pNbDays < 1) {
+			throw new FunctionalException("Le nombre de jours d'emprunt est incorrect (inférieur à 1 - Echec de l'emprunt");
 		}
+		if(pTopo.isIsBorrowable() != true || (pTopo.getEndDateBorrow() != null && LocalDateTime.now().compareTo(pTopo.getEndDateBorrow()) < 0)) {
+			throw new FunctionalException("Ce topo ne peut être emprunté - Echec de l'emprunt");
+		}/*
+		else if (pTopo.getEndDateBorrow() != null && LocalDateTime.now().compareTo(pTopo.getEndDateBorrow()) < 0) {
+		}*/
 		
 	 	LocalDateTime date = LocalDateTime.now();
 	 	date = date.plusDays(pNbDays);
 	 	
-	 	LocalDateTime oldEndDateBorrow = pTopo.getEndDateBorrow();
-	 	pTopo.setEndDateBorrow(date);
+	 	Topo vTopo = pTopo;
+	 	vTopo.setEndDateBorrow(date);
+	 	vTopo.setBorrower(pBorrower.getId());
 	 	
 	 	try {
-	 		getDaoFactory().getTopoDao().updateTopo(pTopo);
+	 		getDaoFactory().getTopoDao().updateTopo(vTopo);
+	 		return vTopo;
 	 	}catch (TechnicalException pException) {
-	 		pTopo.setEndDateBorrow(oldEndDateBorrow);
 			throw new TechnicalException(pException.getMessage(),pException);
 		}catch (NotFoundException pException) {
-			pTopo.setEndDateBorrow(oldEndDateBorrow);
 			throw new NotFoundException(pException.getMessage(),pException);
 		}
 	}
@@ -187,7 +218,7 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 			try {
 				if(pUser != getDaoFactory().getUserDao().getUserById(pTopo.getOwner()));
 			} catch (NotFoundException pException) {
-				throw new FunctionalException("Seul le créateur du TOpo peut réaliser une modification. L'utilisateur ayant créé le topo n'a pu être trouvé - Echec de la modification",pException);
+				throw new FunctionalException("Seul le créateur du Topo peut réaliser une modification. L'utilisateur ayant créé le topo n'a pu être trouvé - Echec de la modification",pException);
 			}catch (TechnicalException pException) {
 				throw new TechnicalException("Un problème technique empêche de vérifier quel est l'utilisateur ayant créé le commentaire - Echec de la modification",pException);
 			}
@@ -209,6 +240,29 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}catch (NotFoundException pException) {
 			throw new NotFoundException(pException.getMessage(),pException);
 		}
+	}
+	
+	
+	private Topo clearBorrow(Topo pTopo) throws TechnicalException {
+		
+		Topo vTopo = pTopo;
+		if(vTopo != null) {
+			if(vTopo.getEndDateBorrow() != null && LocalDateTime.now().compareTo(vTopo.getEndDateBorrow()) > 0) {
+				vTopo.setBorrower(null);
+				vTopo.setEndDateBorrow(null);
+				try {
+					getDaoFactory().getTopoDao().updateTopo(vTopo);
+				}catch (TechnicalException pException) {
+					throw new TechnicalException("Un problème technique lors de la mise à jour de l'emprunteur du topo est survenu - Echec de la mise à jour");
+				}catch (NotFoundException pException) {
+					throw new TechnicalException("Un problème technique lors de la mise à jour de l'emprunteur du topo est survenu (Topo non trouvé) - Echec de la mise à jour");
+				}
+			}
+		}else {
+			throw new TechnicalException("Un problème lors de la mise à jour de l'emprunteur du topo est survenu (Topo vide)");
+		}
+		
+		return vTopo;
 	}
 
 }

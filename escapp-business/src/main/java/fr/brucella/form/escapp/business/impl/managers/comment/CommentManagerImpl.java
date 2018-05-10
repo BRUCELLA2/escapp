@@ -115,7 +115,7 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 	}
 	
 	@Override
-	public List<Pair<Comment, String>> getCommentsTopoListLogin(Integer pTopoId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
+	public List<Pair<Comment, String>> getCommentsTopoListWithLogin(Integer pTopoId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
 		
 		if(pTopoId == null) {
 			throw new FunctionalException("L'identifiant du topo est incorrect (Identifiant vide) - Echec de la recherche");
@@ -150,7 +150,7 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		String pTargetType = "Site";
 		
 		if(pComment.getTargetType() != null && !pComment.getTargetType().isEmpty() && !pComment.getTargetType().equals(pTargetType)) {
-			throw new FunctionalException("Le type de la cible du commentaire (Site) est différent de celui attendu - Echec de l'ajout du commentaire");
+			throw new FunctionalException("Le type de la cible du commentaire est différent de celui attendu (Site) - Echec de l'ajout du commentaire");
 		} else {
 			pComment.setTargetType(pTargetType);
 		}
@@ -176,7 +176,7 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		String pTargetType = "Sector";
 		
 		if(pComment.getTargetType() != null && !pComment.getTargetType().isEmpty() && !pComment.getTargetType().equals(pTargetType)) {
-			throw new FunctionalException("Le type de la cible du commentaire (Secteur) est différent de celui attendu - Echec de l'ajout du commentaire");
+			throw new FunctionalException("Le type de la cible du commentaire est différent de celui attendu (Secteur) - Echec de l'ajout du commentaire");
 		} else {
 			pComment.setTargetType(pTargetType);
 		}
@@ -202,7 +202,7 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		String pTargetType = "Route";
 		
 		if(pComment.getTargetType() != null && !pComment.getTargetType().isEmpty() && !pComment.getTargetType().equals(pTargetType)) {
-			throw new FunctionalException("Le type de la cible du commentaire (Voie) est différent de celui attendu - Echec de l'ajout du commentaire");
+			throw new FunctionalException("Le type de la cible du commentaire est différent de celui attendu (Voie) - Echec de l'ajout du commentaire");
 		} else {
 			pComment.setTargetType(pTargetType);
 		}
@@ -228,7 +228,7 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		String pTargetType = "Length";
 		
 		if(pComment.getTargetType() != null && !pComment.getTargetType().isEmpty() && !pComment.getTargetType().equals(pTargetType)) {
-			throw new FunctionalException("Le type de la cible du commentaire (Longueur) est différent de celui attendu - Echec de l'ajout du commentaire");
+			throw new FunctionalException("Le type de la cible du commentaire est différent de celui attendu (Longueur) - Echec de l'ajout du commentaire");
 		} else {
 			pComment.setTargetType(pTargetType);
 		}
@@ -239,6 +239,32 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 			throw new FunctionalException("La longueur cible du commentaire n'a pas été trouvée - Echec de l'ajout du commentaire.",pException);
 		} catch (TechnicalException pException) {
 			throw new TechnicalException("Un problème technique pour trouver la longueur cible est survenu - Echec de l'ajout du commentaire.", pException);
+		}
+		
+		addComment(pComment, pTargetType);
+	}
+	
+	@Override
+	public void addCommentTopo(Comment pComment) throws TechnicalException, FunctionalException{
+		
+		if(pComment == null) {
+			throw new FunctionalException("Aucun commentaire n'a été transmis (Commentaire vide) - Echec de l'ajout");
+		}
+		
+		String pTargetType = "Topo";
+		
+		if(pComment.getTargetType() != null && !pComment.getTargetType().isEmpty() && !pComment.getTargetType().equals(pTargetType)) {
+			throw new FunctionalException("Le type de la cible du commentaire est différent de celui attentdu (Topo) - Echec de l'ajout du commentaire");
+		}else {
+			pComment.setTargetType(pTargetType);
+		}
+		
+		try {
+			getDaoFactory().getTopoDao().getTopo(pComment.getIdCommentTarget());
+		}catch (NotFoundException pException) {
+			throw new FunctionalException("Le topo cible du commentaire n'a pas été trouvée - Echec de l'ajout du commentaire.",pException);
+		}catch (TechnicalException pException) {
+			throw new TechnicalException("Un problème technique pour trouver le topo est survenu - Echec de l'ajout du commentaire.", pException);
 		}
 		
 		addComment(pComment, pTargetType);

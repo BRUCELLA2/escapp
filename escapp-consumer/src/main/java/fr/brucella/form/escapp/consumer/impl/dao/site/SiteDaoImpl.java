@@ -99,10 +99,10 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
 	}
 	
 	/**
-	 * @see SiteDao#getSearchSiteLIst(SiteSearch)
+	 * @see SiteDao#getSearchSiteList(SiteSearch)
 	 */
 	@Override
-	public List<Site> getSearchSitesLIst(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException{
+	public List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException{
 		
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		

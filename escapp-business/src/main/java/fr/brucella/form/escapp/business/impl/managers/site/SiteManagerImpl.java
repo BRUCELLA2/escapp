@@ -60,10 +60,10 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager{
 			for(ConstraintViolation<SiteSearch> violation : vViolations) {
 				System.out.println(violation.getMessage());
 			}
-			throw new FunctionalException("Les critères de recherche de sont pas valides",new ConstraintViolationException(vViolations));
+			throw new FunctionalException("Les critères de recherche ne sont pas valides",new ConstraintViolationException(vViolations));
 		}
 		try {
-			return getDaoFactory().getSiteDao().getSearchSitesLIst(pSiteSearch);
+			return getDaoFactory().getSiteDao().getSearchSitesList(pSiteSearch);
 		}catch (TechnicalException pException) {
 			throw new TechnicalException(pException.getMessage(),pException);
 		}catch (NotFoundException pException) {

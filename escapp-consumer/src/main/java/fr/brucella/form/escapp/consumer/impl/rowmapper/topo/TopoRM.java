@@ -28,7 +28,12 @@ public class TopoRM implements RowMapper<Topo>{
 		vTopo.setBorrowable(rs.getBoolean("is_borrowable"));
 		vTopo.setPdfFileName(rs.getString("pdf_file_name"));
 		vTopo.setMunicipality(rs.getString("municipality"));
-		vTopo.setEndDateBorrow(rs.getTimestamp("end_date_borrow").toLocalDateTime());
+		if(rs.getTimestamp("end_date_borrow") != null) {
+			vTopo.setEndDateBorrow(rs.getTimestamp("end_date_borrow").toLocalDateTime());
+		}
+		else {
+			vTopo.setEndDateBorrow(null);
+		}
 		vTopo.setBorrower(rs.getInt("borrower_id"));
 		vTopo.setDescription(rs.getString("description"));
 		vTopo.setOwner(rs.getInt("owner_id"));

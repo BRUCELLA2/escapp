@@ -110,7 +110,7 @@ public class Topo {
      * Boolean indicating if the {@link Topo} can be borrow.
      * Can't be null.
      * 
-     * @see #getBorrowable()
+     * @see #isIsBorrowable()
      * @see #setBorrowable(Boolean)
      */
     @NotNull(message = "Il est nécessaire d'indiquer si le topo est empruntable ou non")
@@ -255,7 +255,7 @@ public class Topo {
         return borrower;
     }
 
-    
+// TODO refactor name of isBorrowable (in code and in database)
     /**
      * Indicate is the {@link Topo} is borrowable.
      * 
@@ -265,7 +265,7 @@ public class Topo {
      * @see #isBorrowable
      * @see #setBorrowable(Boolean)
      */
-    public Boolean getBorrowable() {
+    public Boolean isIsBorrowable() {
         return isBorrowable;
     }
 

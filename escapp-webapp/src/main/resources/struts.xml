@@ -48,15 +48,30 @@
 			<result name="error">/jsp/error.jsp</result>		
 		</action>
 		
-		<!--  register action -->
-		<action name="register"
-				class="fr.brucella.form.escapp.webapp.action.users.UserAction"
-				method="doRegister">
-			<result name="input">/jsp/users/register.jsp</result>
-			<result name="error">/jsp/error.jsp</result>
-			<result name="success" type="redirectAction">
-				/jsp/index.jsp
-			</result>
+		<!--  topo searching action -->
+		<action name="searching_topo"
+				class="fr.brucella.form.escapp.webapp.action.topos.ToposListAction"
+				method="doTopoSearching">
+			<result name="success">/jsp/topos/topos.jsp</result>
+			<result name="input">/jsp/topos/topos.jsp</result>
+			<result name="error">/jsp/error.jsp</result>		
+		</action>
+		
+		<!--  topo detail action -->
+		<action name="topo_details"
+				class="fr.brucella.form.escapp.webapp.action.topos.TopoDetailsAction"
+				method="doTopoDetails">
+			<result name="success">/jsp/topos/topo_details.jsp</result>
+			<result name="error">/jsp/error.jsp</result>		
+		</action>
+		
+		<!--  topo booking action -->
+		<action name="book_topo"
+				class="fr.brucella.form.escapp.webapp.action.topos.TopoDetailsAction"
+				method="doBooking">
+			<result name="success">/jsp/topos/topo_details.jsp</result>
+			<result name="input">/jsp/topos/topo_details.jsp</result>
+			<result name="error">/jsp/error.jsp</result>		
 		</action>
 		
 		<!--  comment site action -->
@@ -104,6 +119,32 @@
 			</result>		
 		</action>
 		
+		<!--  comment topo action -->
+		<action name="comment_topo"
+				class="fr.brucella.form.escapp.webapp.action.comments.CommentsAction"
+				method="doAddCommentTopo">
+			<result name="input" type="redirectAction">
+				<param name="actionName">topo_details</param>
+				<param name="id">${topoId}</param>
+			</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">topo_details</param>
+				<param name="id">${topoId}</param>
+			</result>		
+		</action>
+		
+				
+		<!--  register action -->
+		<action name="register"
+				class="fr.brucella.form.escapp.webapp.action.users.UserAction"
+				method="doRegister">
+			<result name="input">/jsp/users/register.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				/jsp/index.jsp
+			</result>
+		</action>
 		
 		<!--  logout action -->
 		<action name="logout"
@@ -120,6 +161,17 @@
 			<result name="input">/jsp/users/login.jsp</result>	
 			<result name="error">/jsp/error.jsp</result>
 			<result name="success">/jsp/index.jsp</result>	
+		</action>
+
+		<!--  download action -->
+		<action name="download"
+				class="fr.brucella.form.escapp.webapp.action.topos.TopoDetailsAction">
+			<result name="success" type="stream">
+			  <param name="contentType">application/octet-stream</param>
+			  <param name="inputName">inputStream</param>
+			  <param name="contentDisposition">attachment;filename="${fileName}"</param>
+			  <param name="bufferSize">4096</param>
+			</result>		
 		</action>
 
     </package>

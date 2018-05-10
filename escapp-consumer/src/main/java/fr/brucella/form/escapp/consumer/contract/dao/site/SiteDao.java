@@ -40,14 +40,14 @@ public interface SiteDao {
 	/**
 	 * Get the list of {@link Site} searched from the datastore.
 	 * 
-	 * @param pSiteSearch the {@link SiteSearch} wich represents the site searching criteria.
+	 * @param pSiteSearch the {@link SiteSearch} which represents the site searching criteria.
 	 * 
 	 * @return the list of {@link Site} searched.
 	 * 
 	 * @throws TechnicalException - wraps technical exception caused during data access.
-	 * @throws NotFoundException - This exception is throws if there is no technical exception and no {@link SIte} is found.
+	 * @throws NotFoundException - This exception is throws if there is no technical exception and no {@link Site} is found.
 	 */
-	List<Site> getSearchSitesLIst(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException;
+	List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException;
 	
 	/**
 	 * Update an existing {@link Site} in the datastore.

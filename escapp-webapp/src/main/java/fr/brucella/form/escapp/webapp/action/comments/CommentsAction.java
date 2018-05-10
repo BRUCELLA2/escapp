@@ -15,7 +15,6 @@ import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
-import javassist.expr.NewArray;
 
 public class CommentsAction extends ActionSupport implements ServletRequestAware {
 
@@ -23,9 +22,11 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 	private Integer siteId;
 	private Integer sectorId;
 	private Integer routeId;
+	private Integer topoId;
 	private String commentSite;
 	private String commentSector;
 	private String commentRoute;
+	private String commentTopo;
 	
 	// ----- Output
 	
@@ -50,6 +51,10 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 	    return routeId;
 	}
 	
+	public Integer getTopoId() {
+		return topoId;
+	}
+	
 	public String getCommentSite() {
 		return commentSite;
 	}
@@ -60,6 +65,10 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 	
 	public String getCommentRoute() {
 	    return commentRoute;
+	}
+	
+	public String getCommentTopo() {
+		return commentTopo;
 	}
 	
 	
@@ -76,6 +85,10 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 	  this.routeId = pRouteId;
 	}
 	
+	public void setTopoId(Integer pTopoId) {
+		this.topoId = pTopoId;
+	}
+	
 	public void setCommentSite(String pCommentSite) {
 		this.commentSite = pCommentSite;
 	}
@@ -86,6 +99,10 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 	
 	public void setCommentRoute(String pCommentRoute) {
 	  this.commentRoute = pCommentRoute;
+	}
+	
+	public void setCommentTopo(String pCommentTopo) {
+		this.commentTopo = pCommentTopo;
 	}
 	
 	@Override
@@ -212,5 +229,36 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 	  return ActionSupport.SUCCESS;
 	}
 	
+	
+	public String doAddCommentTopo() {
+		
+		if(StringUtils.isEmpty(commentTopo) || topoId == null) {
+			return ActionSupport.INPUT;
+		}
+		
+		User vUser = (User) this.servletRequest.getSession().getAttribute("user");
+		
+		if(vUser == null) {
+			addActionError("Vous n'êtes pas identifié, l'ajout du commentaire n'a pu se faire. Merci de vous reconnecter.");
+			return ActionSupport.ERROR;
+		}
+		
+		Comment vCommentTopo = new Comment();
+		vCommentTopo.setEscappUser(vUser.getId());
+		vCommentTopo.setIdCommentTarget(topoId);
+		vCommentTopo.setText(commentTopo);
+		
+		try {
+			managerFactory.getCommentManager().addCommentTopo(vCommentTopo);
+	       } catch (TechnicalException pException) {
+	           this.addActionError(pException.getMessage());
+	           return ActionSupport.ERROR;
+	       } catch (FunctionalException pException) {
+	           this.addActionError(pException.getMessage());
+	           return ActionSupport.ERROR;
+	       }
+		  
+		  return ActionSupport.SUCCESS;
+	}
 }
 
