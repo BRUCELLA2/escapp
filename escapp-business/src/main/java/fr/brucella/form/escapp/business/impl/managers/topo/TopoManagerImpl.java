@@ -1,16 +1,18 @@
 package fr.brucella.form.escapp.business.impl.managers.topo;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-
+import javax.servlet.ServletContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-
 import org.springframework.stereotype.Component;
 
 import fr.brucella.form.escapp.business.contract.managers.topo.TopoManager;
+import fr.brucella.form.escapp.business.impl.ManagerFactoryImpl;
 import fr.brucella.form.escapp.business.impl.managers.AbstractManager;
+import fr.brucella.form.escapp.model.beans.comment.Comment;
 import fr.brucella.form.escapp.model.beans.topo.Topo;
 import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
@@ -214,14 +216,8 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		
 		if(pUser == null) {
 			throw new FunctionalException("Aucun utilisateur n'est associé à la modification (Utilisateur vide) - Echec de la modification");
-		}else {
-			try {
-				if(pUser != getDaoFactory().getUserDao().getUserById(pTopo.getOwner()));
-			} catch (NotFoundException pException) {
-				throw new FunctionalException("Seul le créateur du Topo peut réaliser une modification. L'utilisateur ayant créé le topo n'a pu être trouvé - Echec de la modification",pException);
-			}catch (TechnicalException pException) {
-				throw new TechnicalException("Un problème technique empêche de vérifier quel est l'utilisateur ayant créé le commentaire - Echec de la modification",pException);
-			}
+		}else if(pUser.getId() != pTopo.getOwner()){
+			throw new FunctionalException("Seul le créateur du Topo peut réaliser une modification - Echec de la modification");
 		}
 		
 		Set<ConstraintViolation<Topo>> vViolations = getConstraintValidator().validate(pTopo);
@@ -241,6 +237,60 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 			throw new NotFoundException(pException.getMessage(),pException);
 		}
 	}
+	
+	@Override
+	public void deleteTopo(Integer pTopoId, User pUser) throws TechnicalException, FunctionalException, NotFoundException{
+	  
+	   if(pTopoId == null) {
+           throw new FunctionalException("Aucune identifiant n'a été transmis (id vide) - Echec de la suppression");
+       }
+       
+       if(pUser == null) {
+           throw new FunctionalException("Aucun utilisateur n'est associé à la suppression (Utilisateur vide) - Echec de la suppression");
+       }else {
+           try {
+               Topo vTopo = getTopoById(pTopoId);
+               if(pUser.getId() != vTopo.getOwner()) {
+                 throw new FunctionalException("Seul le créateur du Topo peut réaliser la suppression - Echec de la suppression");
+               }
+           } catch (NotFoundException pException) {
+               throw new FunctionalException("Le Topo a supprimer n'a pu être trouvé - Echec de la suppression", pException);
+           }catch (TechnicalException pException) {
+               throw new TechnicalException("Un problème technique empêche de vérifier quel est l'utilisateur ayant créé le commentaire - Echec de la suppression", pException);
+           }
+       }
+       
+       List<Comment> comments;
+       try {
+         comments = getDaoFactory().getCommentDao().getCommentsList("Topo", pTopoId);
+       }catch (TechnicalException pException) {
+         throw new TechnicalException("Un problème technique empêche la suppression d'un commentaire du topo à supprimer - Echec de la suppression.", pException);
+       }catch (NotFoundException pException) {
+         comments = null;
+       }
+       
+       try {
+         if(comments != null) {
+           for(Comment comment : comments) {
+             getDaoFactory().getCommentDao().deleteComment(comment.getId());
+           }
+         }
+       }catch (TechnicalException pException) {
+         throw new TechnicalException("Un problème technique empêche la suppression d'un commentaire du topo à supprimer - Echec de la suppression.", pException);
+       }catch (NotFoundException pException) {
+         throw new NotFoundException("Un commentaire associé au Topo n'a pas été trouvé - Echec de la suppression", pException);
+       }
+       
+       try{
+         getDaoFactory().getTopoDao().deleteTopo(pTopoId);
+       }catch (TechnicalException pException) {
+         throw new TechnicalException("Un problème technique empêche la suppression du topo - Echec de la suppression.", pException);
+       }catch (NotFoundException pException) {
+         throw new NotFoundException("Le topo à supprimer n'a pas été trouvé - Echec de la suppression.", pException);
+       }
+       
+	}
+	
 	
 	
 	private Topo clearBorrow(Topo pTopo) throws TechnicalException {

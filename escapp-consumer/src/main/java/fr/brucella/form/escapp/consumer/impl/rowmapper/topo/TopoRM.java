@@ -34,7 +34,8 @@ public class TopoRM implements RowMapper<Topo>{
 		else {
 			vTopo.setEndDateBorrow(null);
 		}
-		vTopo.setBorrower(rs.getInt("borrower_id"));
+		//vTopo.setBorrower(rs.getInt("borrower_id"));
+	    vTopo.setBorrower(rs.getObject("borrower_id",Integer.class));
 		vTopo.setDescription(rs.getString("description"));
 		vTopo.setOwner(rs.getInt("owner_id"));
 		

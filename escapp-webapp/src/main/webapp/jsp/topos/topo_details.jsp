@@ -108,12 +108,12 @@
 					<s:if test="topo.isBorrowable">
 						<s:if test="topo.endDateBorrow == null">
 							<p>Ce topo est disponible.</p>
-							<s:if test="#session.user">
+							<s:if test="#session.user && #session.user.id != ownerTopo.id">
 								<div class="col-xs-6 col-xs-offset-3">
 								<form class="form-inline" method="post" action="book_topo">
 								    <div class="form-group">
 								      <label for="nbDays">Réserver le topo pour :</label>
-								      <input type="number" min="0" max="14" class="form-control" id="nbDays" placeholder="nombre de jours" name="nbDays">
+								      <input type="number" min="0" max="14" class="form-control" id="nbDays" placeholder="XX" name="nbDays">
 								      <label for="nbDays"> jours</label>
 								      <input type="hidden" name="id" id="id" value="<s:property value='topo.id'/>"/>
 								    </div>
@@ -121,8 +121,22 @@
 							  	</form>
 							  	</div>
 						  	</s:if>
+						  	<s:elseif test="#session.user.id == ownerTopo.id">
+							  	<ul>
+							  		<li><s:a action="change_borrowable">
+											<s:param name="id" value="topo.id" />
+											<s:param name="borrowable" value="false" />
+											Ne plus prêter ce topo.
+										</s:a>
+									</li>
+									<li><s:a action="delete_topo">
+											<s:param name="id" value="topo.id"></s:param>
+										Supprimer le topo</s:a>
+									</li>
+								</ul>
+						  	</s:elseif>
 						  	<s:else>
-						  	<p>Pour réserver ce topo, il est nécessaire de vous connecter.</p>
+						  		<p>Pour réserver ce topo, il est nécessaire de vous connecter.</p>
 						  	</s:else>
 						</s:if>
 						<s:else>
@@ -137,6 +151,16 @@
 							</s:else>
 						</s:else>
 					</s:if>
+					<s:elseif test="#session.user.id == ownerTopo.id">
+						<ul>
+							<li><s:a action="change_borrowable">
+									<s:param name="id" value="topo.id" />
+									<s:param name="borrowable" value="true" />
+									Prêter ce topo.
+								</s:a>
+							</li>
+						</ul>
+					</s:elseif>
 					<s:else>
 						Ce topo ne peut être emprunté.
 					</s:else>			

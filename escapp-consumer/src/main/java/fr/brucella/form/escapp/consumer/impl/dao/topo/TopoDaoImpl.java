@@ -261,11 +261,20 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
 	public int insertTopo(Topo pTopo) throws TechnicalException {
 
 		String vSQL = "INSERT INTO topo (id, name, department, is_borrowable, pdf_file_name, municipality, end_date_borrow, borrower_id, description, owner_id) "
-				+ "VALUES (DEFAULT, :name, :department, :isBorrowable, :pdfFileName, :municipality, :endDateBorrow, :borrowerId, :description, :ownerId";
+				+ "VALUES (DEFAULT, :name, :department, :isBorrowable, :pdfFileName, :municipality, :endDateBorrow, :borrowerId, :description, :ownerId)";
 		
 		KeyHolder vKeyHolder = new GeneratedKeyHolder();
 		
-		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pTopo);
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("name", pTopo.getName());
+		vParams.addValue("department", pTopo.getDepartment());
+		vParams.addValue("isBorrowable", pTopo.isIsBorrowable());
+		vParams.addValue("pdfFileName", pTopo.getPdfFileName());
+		vParams.addValue("municipality", pTopo.getMunicipality());
+		vParams.addValue("endDateBorrow", pTopo.getEndDateBorrow());
+		vParams.addValue("borrowerId", pTopo.getBorrower());
+		vParams.addValue("description", pTopo.getDescription());
+		vParams.addValue("ownerId", pTopo.getOwner());
 		
 		try {
 			

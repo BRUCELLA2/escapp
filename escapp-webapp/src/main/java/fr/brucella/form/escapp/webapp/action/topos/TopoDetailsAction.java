@@ -8,12 +8,13 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import fr.brucella.form.escapp.business.contract.ManagerFactory;
@@ -30,6 +31,7 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 	private Integer id;
 	private String fileName;
 	private Integer nbDays;
+	private String borrowable;
 	
 	// ----- Output
 	private Topo topo;
@@ -85,6 +87,10 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 		return nbDays;
 	}
 	
+	public String getBorrowable() {
+	  return borrowable;
+	}
+	
 	// ===== Setters =====
 	public void setId(Integer pId) {
 		this.id = pId;
@@ -97,6 +103,10 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 	public void setNbDays(Integer pNbDays) {
 		this.nbDays = pNbDays;
 	}
+	
+	public void setBorrowable(String pBorrowable) {
+      this.borrowable = pBorrowable;
+    }
 	
 	@Override
 	public void setServletRequest(HttpServletRequest pServletRequest) {
@@ -116,7 +126,7 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 			if(topo.getOwner() != 0) {
 				ownerTopo = managerFactory.getUserManager().getUserById(topo.getOwner());
 			}
-			if(topo.getBorrower() != 0) {
+			if(topo.getBorrower() != null) {
 				borrowerTopo = managerFactory.getUserManager().getUserById(topo.getBorrower());
 			}
 		}catch (TechnicalException pException) {
@@ -151,7 +161,7 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 	public String execute() throws FileNotFoundException{
 		
 		ServletContext servletContext = ServletActionContext.getServletContext();
-		String path = servletContext.getRealPath("/WEB-INF/fichiers/"+getFileName());
+		String path = servletContext.getRealPath("/WEB-INF/files/"+getFileName());
 		File fileToDownLoad = new File(path);
 		
 		inputStream = new FileInputStream(fileToDownLoad);
@@ -164,7 +174,7 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 	public String doBooking() {
 		
 		if(id == null) {
-			this.addActionError("L'identifiant du topo à réserver est incorrect (Identifiant vide) - Echec de la recherche");
+			this.addActionError("L'identifiant du topo à réserver est incorrect (Identifiant vide) - Echec de la réservation");
 			return ActionSupport.ERROR;
 		}
 		
@@ -175,13 +185,14 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 		
 		User vUser = (User) this.servletRequest.getSession().getAttribute("user");
 	    if(vUser == null) {
-            addActionError("Vous n'êtes plus identifié, l'ajout du commentaire n'a pu se faire. Merci de vous reconnecter.");
+            addActionError("Vous n'êtes plus identifié, la réservation du topo n'a pu se faire. Merci de vous reconnecter.");
             return ActionSupport.ERROR;
         }
 	    
 	    try {
 	    	topo = managerFactory.getTopoManager().getTopoById(id);
 	    	topo = managerFactory.getTopoManager().borrowTopo(topo, nbDays, vUser);
+	    	borrowerTopo = vUser;
 		}catch (TechnicalException pException) {
 			this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
@@ -194,5 +205,77 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 		}  
 		
 		return ActionSupport.SUCCESS;
+	}
+	
+	
+	public String doChangeBorrowable() {
+	  
+	  if(id == null) {
+           this.addActionError("L'identifiant du topo à modifier est incorrect (Identifiant vide) - Echec de la modification");
+           return ActionSupport.ERROR;
+      }
+	     
+      User vUser = (User) this.servletRequest.getSession().getAttribute("user");
+      if(vUser == null) {
+          addActionError("Vous n'êtes plus identifié, la modification du topo n'a pu se faire. Merci de vous reconnecter.");
+          return ActionSupport.ERROR;
+      }
+      
+      try {
+          topo = managerFactory.getTopoManager().getTopoById(id);
+          topo.setBorrowable(StringUtils.equals(borrowable, "true"));
+          managerFactory.getTopoManager().modifyTopo(topo, vUser);
+      }catch (TechnicalException pException) {
+        this.addActionError(pException.getMessage());
+        return ActionSupport.ERROR;
+      }catch (FunctionalException pException) {
+        this.addActionError(pException.getMessage());
+        return ActionSupport.ERROR;
+      }catch (NotFoundException pException) {
+        this.addActionError(pException.getMessage());
+        return ActionSupport.ERROR;
+      }
+      
+      return ActionSupport.SUCCESS;
+	  
+	}
+	
+	
+	public String doDelete() {
+	  
+        if(id == null) {
+            this.addActionError("L'identifiant du topo à supprimer est incorrect (Identifiant vide) - Echec de la modification");
+            return ActionSupport.ERROR;
+        }
+        
+        User vUser = (User) this.servletRequest.getSession().getAttribute("user");
+        if(vUser == null) {
+            addActionError("Vous n'êtes plus identifié, la suppression du topo n'a pu se faire. Merci de vous reconnecter.");
+            return ActionSupport.ERROR;
+        }
+        
+        try {
+          
+          Topo vTopo = managerFactory.getTopoManager().getTopoById(id);
+          
+          ServletContext servletContext = ServletActionContext.getServletContext();
+          String path = servletContext.getRealPath("/WEB-INF/files/");
+          File topoPdf = new File(path,vTopo.getPdfFileName());
+          FileUtils.deleteQuietly(topoPdf);
+          
+          managerFactory.getTopoManager().deleteTopo(id, vUser);    
+          
+        }catch (TechnicalException pException) {
+          this.addActionError(pException.getMessage());
+          return ActionSupport.ERROR;
+        }catch (FunctionalException pException) {
+          this.addActionError(pException.getMessage());
+          return ActionSupport.ERROR;
+        }catch (NotFoundException pException) {
+          this.addActionError(pException.getMessage());
+          return ActionSupport.ERROR;
+        }
+        
+        return ActionSupport.SUCCESS;
 	}
 }

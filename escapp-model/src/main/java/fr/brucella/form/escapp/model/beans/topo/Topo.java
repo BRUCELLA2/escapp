@@ -56,7 +56,7 @@ public class Topo {
      * @see #getMunicipality()
      * @see #setMunicipality(String)
      */
-    @Size(min = 1, max = 100, message = "La commune doit contenir au maximum {max} caractères")
+    @Size(min = 0, max = 100, message = "La commune doit contenir au maximum {max} caractères")
     private String municipality;
 
     

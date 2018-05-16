@@ -32,4 +32,6 @@ public interface TopoManager {
 	public void addTopo(Topo pTopo) throws TechnicalException, FunctionalException;
 	
 	public void modifyTopo(Topo pTopo, User pUser) throws TechnicalException, FunctionalException, NotFoundException;
+	
+	public void deleteTopo(Integer pTopoId, User pUser) throws TechnicalException, FunctionalException, NotFoundException;
 }

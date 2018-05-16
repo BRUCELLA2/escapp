@@ -20,13 +20,32 @@
 
 <body>
 
+
+
 	<div class="container">
-		<header class="page-header header-site">
-		<div class="jumbotron">
-			<h1>EscApp</h1>
-			<p>L'Application des sites d'Escalade</p>
-		</div>
-		</header>
+		<s:a action="index" class="deco-none">
+			<header class="page-header header-site">
+				<div class="jumbotron">
+					<h1>EscApp</h1>
+					<p>L'Application des sites d'Escalade</p>
+				</div>
+			</header>
+		</s:a>
+		
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<s:a class="navbar-brand" action="index">EscApp</s:a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><s:a action="index">Accueil</s:a></li>
+					<li><s:a action="searching_site">Sites</s:a></li>
+					<li><s:a action="searching_topo">Topos</s:a></li>
+				</ul>
+				
+				<%@include file="/_include/jsp/navbar_right.jsp" %>
+			</div>
+		</nav>
 		
 		<header class="page-header text-center">
         	<h2>Malgré tous nos efforts, une erreur est survenue !</h2>
