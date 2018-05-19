@@ -84,6 +84,16 @@
       				</table>   
       				
       				<s:a data-toggle="collapse" href="#collapseCommentRoute">Commentaires <span class="badge"><s:property value="nbCommentsRoute"/></span></s:a>  	
+      				<s:iterator value="#session.roles" var="role">
+						<s:if test="#role.userRole == 'Admin'">
+							<s:a action="add_length">
+								<s:param name="routeId" value="route.id"/>
+								<br />
+								<br />
+								Ajouter une longueur
+							</s:a>
+						</s:if>
+					</s:iterator>
       				
       				<div class="panel-group">
 	      				<div class="panel panel-default">

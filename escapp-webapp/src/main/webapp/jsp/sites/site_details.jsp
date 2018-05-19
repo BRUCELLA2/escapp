@@ -38,7 +38,7 @@
 				</div>
 				<ul class="nav navbar-nav">
 					<li><s:a action="index">Accueil</s:a></li>
-					<li class="active"><s:a action="searching_topo">Sites</s:a></li>
+					<li class="active"><s:a action="searching_site">Sites</s:a></li>
 					<li><s:a action="searching_topo">Topos</s:a></li>
 				</ul>
 				
@@ -56,7 +56,19 @@
 	      		<div class="panel-heading"><h4>Description</h4></div>
 	      		<div class="panel-body"><s:property value="site.description"/></div>
 	      		<!-- <div class="panel-body"><s:a data-toggle="modal" href="#commentsSite">Commentaires <span class="badge"><s:property value="nbCommentsSite"/></span></s:a></div>-->
-	      		<div class="panel-body"><s:a data-toggle="collapse" href="#collapseCommentSite">Commentaires <span class="badge"><s:property value="nbCommentsSite"/></span></s:a></div> 
+	      		<div class="panel-body">
+	      			<s:a data-toggle="collapse" href="#collapseCommentSite">Commentaires <span class="badge"><s:property value="nbCommentsSite"/></span></s:a>
+	      			<s:iterator value="#session.roles" var="role">
+						<s:if test="#role.userRole == 'Admin'">
+							<br />
+	      					<br />
+							<s:a action="add_sector">
+								<s:param name="siteId" value="site.id"/>
+								Ajouter un secteur
+							</s:a>
+						</s:if>
+					</s:iterator>
+	      		</div> 
 	      		  <div class="panel-group">
 					  <div class="panel panel-default">
 					    <div id="collapseCommentSite" class="panel-collapse collapse">
@@ -93,7 +105,8 @@
 					      </div>
 					    </div>
 					  </div>
-				</div> 
+				</div>
+				 
 	      	</div>	
 	  
 	 		<s:if test="sectorsList != null"> 			
@@ -179,6 +192,15 @@
 		      								</s:if>
 	      								</s:iterator>
 	      							</ul>
+	      							
+					      			<s:iterator value="#session.roles" var="role">
+										<s:if test="#role.userRole == 'Admin'">
+											<s:a action="add_route">
+												<s:param name="sectorId" value="#sector.id"/>
+												Ajouter une voie
+											</s:a>
+										</s:if>
+									</s:iterator>
 	      						</div>
 	      					</div>
 	      				</div>

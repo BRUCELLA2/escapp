@@ -6,6 +6,12 @@ INSERT INTO public.escapp_user(id, login, email, password)
 	VALUES 
 		(DEFAULT, 'user1', 'user1@mail.fr', 'pwduser1'),
 		(DEFAULT, 'user2', 'user2@mail.fr', 'pwduser2');
+		(DEFAULT, 'admin', 'admin@mail.fr', 'admin');
+
+/* INSERT INTO role_user TABLE */
+INSERT INTO public.role_user(role, escapp_user)
+	VALUES 
+		('Admin', 3);
 
 /* INSERT INTO comment TABLE */
 

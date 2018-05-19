@@ -1,5 +1,7 @@
 package fr.brucella.form.escapp.business.contract.managers.user;
 
+import java.util.List;
+import fr.brucella.form.escapp.model.beans.user.RoleUser;
 import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
@@ -22,4 +24,6 @@ public interface UserManager {
 	public void modifyPassword(User pUser, String pNewRawPassword) throws TechnicalException, FunctionalException, NotFoundException;
 	
 	public boolean checkLoginDispo(String pLogin) throws TechnicalException;
+	
+	public List<RoleUser> getRoleUserList(Integer pUserId) throws TechnicalException, FunctionalException;
 }

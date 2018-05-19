@@ -1,5 +1,6 @@
 package fr.brucella.form.escapp.business.impl.managers.user;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import fr.brucella.form.escapp.business.contract.managers.user.UserManager;
 import fr.brucella.form.escapp.business.impl.managers.AbstractManager;
+import fr.brucella.form.escapp.model.beans.user.RoleUser;
 import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
@@ -156,6 +158,22 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 			throw new NotFoundException(pException.getMessage(),pException);
 		}
 		
+	}
+	
+	@Override
+	public List<RoleUser> getRoleUserList(Integer pUserId) throws TechnicalException, FunctionalException {
+	  
+	  if(pUserId == null) {
+	    throw new FunctionalException("L'utilisateur n'a pas été transmis (Utilisateur vide) - Echec de la récupération des roles");
+	  }
+	  
+	  try {
+	    return getDaoFactory().getRoleUserDao().getRoleUserList(pUserId);
+      }catch (TechnicalException pException) {
+        throw new TechnicalException(pException.getMessage(),pException);
+      }catch (NotFoundException pException) {
+        return null;
+      }
 	}
 
   private String encodePassword(String pRawPassword){

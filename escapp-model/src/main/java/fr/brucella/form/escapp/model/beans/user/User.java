@@ -10,9 +10,6 @@ import javax.validation.constraints.Size;
  * @author BRUCELLA2
  */
 public class User {
-
-    // @TODO check messages and write it in resource bundle
-
 	
     /**
      * id of the {@link User}.

@@ -1,5 +1,7 @@
 package fr.brucella.form.escapp.webapp.action.users;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionSupport;
 
 import fr.brucella.form.escapp.business.contract.ManagerFactory;
+import fr.brucella.form.escapp.model.beans.user.RoleUser;
 import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
@@ -161,9 +164,10 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
 		}
 		
 		User vUser = new User();
-		
+		List<RoleUser> vRoles = new ArrayList<>();
 		try {
 			vUser = managerFactory.getUserManager().getConnectUser(login, password);
+			vRoles = managerFactory.getUserManager().getRoleUserList(vUser.getId());
 		} catch (FunctionalException pException) {
 			this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
@@ -177,6 +181,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
 		}
 		
 		this.session.put("user", vUser);
+		this.session.put("roles", vRoles);
 		return ActionSupport.SUCCESS;		
 	}
 	

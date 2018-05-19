@@ -26,6 +26,9 @@ public class Comment {
     /**
      * Text of the {@link Comment} (write by an user).
      * Can't by empty and max size is 1000 characters. 
+     * 
+     * @see #getText()
+     * @see #setText(String)
      */
     @NotEmpty(message = "Le texte ne peut être vide")
     @Size(min = 1, max = 1000, message = "Le texte ne peut dépasser {max} caractères")
@@ -35,6 +38,9 @@ public class Comment {
     /**
      * id of the {@link fr.brucella.form.escapp.model.beans.user.User} who write the {@link Comment}.
      * Can't be null.
+     * 
+     * @see #getEscappUser()
+     * @see #setEscappUser(Integer)
      */
     @NotNull(message = "Un commentaire doit être associé à un utilisateur")
     private Integer escappUser;
@@ -44,6 +50,9 @@ public class Comment {
      * String that represents the target's type of the {@link Comment}
      * Value can be one of these : "Length", "Route", "Sector", "Site" or "Topo".
      * Can't be empty.
+     * 
+     * @see #getTargetType()
+     * @see #setTargetType(String)
      */
     @NotEmpty(message = "Le type de la cible du commentaire ne peut être null")
     private String targetType;
@@ -52,6 +61,9 @@ public class Comment {
     /**
      * id of the target which is commented.
      * Can't be null.
+     * 
+     * @see #getIdCommentTarget()
+     * @see #setIdCommentTarget(Integer)
      */
     @NotNull(message = "Un commentaire doit être associé à un élément à commenter")
     private Integer idCommentTarget;

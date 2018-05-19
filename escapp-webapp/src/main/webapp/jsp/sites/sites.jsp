@@ -105,6 +105,12 @@
 					</tr>
 				</s:iterator>			
 			</table>
+			
+			<s:iterator value="#session.roles" var="role">
+				<s:if test="#role.userRole == 'Admin'">
+					<s:a action="add_site">Ajouter un site</s:a>
+				</s:if>
+			</s:iterator>
 		</div>
 	</div>
 </div>

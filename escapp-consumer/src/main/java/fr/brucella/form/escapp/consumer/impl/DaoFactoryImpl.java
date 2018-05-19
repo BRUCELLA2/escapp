@@ -7,6 +7,7 @@ import fr.brucella.form.escapp.consumer.contract.dao.site.RouteDao;
 import fr.brucella.form.escapp.consumer.contract.dao.site.SectorDao;
 import fr.brucella.form.escapp.consumer.contract.dao.site.SiteDao;
 import fr.brucella.form.escapp.consumer.contract.dao.topo.TopoDao;
+import fr.brucella.form.escapp.consumer.contract.dao.user.RoleUserDao;
 import fr.brucella.form.escapp.consumer.contract.dao.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -52,6 +53,14 @@ public class DaoFactoryImpl implements DaoFactory {
      */
     @Autowired
     private UserDao vUserDao;
+    
+    /**
+     * RoleUser Data Access Object
+     * 
+     * @see RoleUserDao
+     */
+    @Autowired
+    private RoleUserDao vRoleUserDao;
     
     /**
      * Route Data Access Object
@@ -136,6 +145,13 @@ public class DaoFactoryImpl implements DaoFactory {
         return vUserDao;
     }
 
+    /**
+     * @see DaoFactory#getRoleUserDao()
+     */
+    @Override
+    public RoleUserDao getRoleUserDao() {
+    	return vRoleUserDao;
+    }
 
     // ===== Setters =====
 
@@ -193,6 +209,14 @@ public class DaoFactoryImpl implements DaoFactory {
     @Override
     public void setUserDao(UserDao pUserDao) {
         this.vUserDao = pUserDao;
+    }
+    
+    /**
+     * @see DaoFactory#setRoleUserDao(RoleUserDao)
+     */
+    @Override
+    public void setRoleUserDao(RoleUserDao pRoleUserDao) {
+    	this.vRoleUserDao = pRoleUserDao;
     }
 
 }

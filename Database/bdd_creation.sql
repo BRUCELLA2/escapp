@@ -69,6 +69,12 @@ CREATE TABLE public.escapp_user (
 
 ALTER SEQUENCE public.escapp_user_id_seq OWNED BY public.escapp_user.id;
 
+CREATE TABLE public.role_user (
+                role VARCHAR NOT NULL,
+                escapp_user INTEGER NOT NULL,
+                CONSTRAINT role_user_pk PRIMARY KEY (role, escapp_user)
+);
+
 CREATE SEQUENCE public.comment_id_seq;
 
 CREATE TABLE public.comment (
@@ -138,6 +144,13 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE public.comment ADD CONSTRAINT escapp_user_commentaire_fk
+FOREIGN KEY (escapp_user)
+REFERENCES public.escapp_user (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.role_user ADD CONSTRAINT escapp_user_role_user_fk
 FOREIGN KEY (escapp_user)
 REFERENCES public.escapp_user (id)
 ON DELETE NO ACTION

@@ -6,6 +6,7 @@ import fr.brucella.form.escapp.consumer.contract.dao.site.RouteDao;
 import fr.brucella.form.escapp.consumer.contract.dao.site.SectorDao;
 import fr.brucella.form.escapp.consumer.contract.dao.site.SiteDao;
 import fr.brucella.form.escapp.consumer.contract.dao.topo.TopoDao;
+import fr.brucella.form.escapp.consumer.contract.dao.user.RoleUserDao;
 import fr.brucella.form.escapp.consumer.contract.dao.user.UserDao;
 
 /**
@@ -59,12 +60,18 @@ public interface DaoFactory {
     TopoDao getTopoDao();
     
     /**
-     * Get the User Data Acces Object
+     * Get the User Data Access Object
      * 
-     * @return the User Data Acces Object
+     * @return the User Data Access Object
      */
     UserDao getUserDao();
 
+    /**
+     * Get the RoleUser Data Access Object
+     * 
+     * @return the RoleUser Data Access Object
+     */
+    RoleUserDao getRoleUserDao();
     
     
     /**
@@ -110,9 +117,16 @@ public interface DaoFactory {
     void setTopoDao(TopoDao pTopoDao);
     
     /**
-     * Set the User Data Acces Object
+     * Set the User Data Access Object
      * 
-     * @param pUserDao the User Data Acces Object
+     * @param pUserDao the User Data Access Object
      */
     void setUserDao(UserDao pUserDao);
+    
+    /**
+     * Set the RoleUser Data Access Object
+     * 
+     * @param pRoleUserDao the RoleUser Data Access Object
+     */
+    void setRoleUserDao(RoleUserDao pRoleUserDao);
 }

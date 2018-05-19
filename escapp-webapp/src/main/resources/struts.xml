@@ -17,14 +17,6 @@
             <result name="error">/jsp/error.jsp</result>
         </action>
         
-        <!-- sites action -->
-        <action name="sites"
-        		class="fr.brucella.form.escapp.webapp.action.sites.SitesListAction"
-        		method="doList">
-            <result name="success">/jsp/sites/sites.jsp</result>
-            <result name="error">/jsp/error.jsp</result>
-        </action>
-        
         <!--  site searching action -->
         <action name="searching_site"
         		class="fr.brucella.form.escapp.webapp.action.sites.SitesListAction"
@@ -40,6 +32,54 @@
 				method="doSiteDetails">
 			<result name="success">/jsp/sites/site_details.jsp</result>
 			<result name="error">/jsp/error.jsp</result>		
+		</action>
+		
+		<!--  site add action -->
+		<action name="add_site"
+				class="fr.brucella.form.escapp.webapp.action.sites.SiteAddAction"
+				method="doAddSite">
+			<result name="success" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+			<result name="input">jsp/sites/add_site.jsp</result>
+			<result name="error">jsp/error.jsp</result>
+		</action>
+		
+		<!--  site sector add action -->
+		<action name="add_sector"
+				class="fr.brucella.form.escapp.webapp.action.sites.SiteAddAction"
+				method="doAddSector">
+			<result name="success" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+			<result name="input">jsp/sites/add_sector.jsp</result>
+			<result name="error">jsp/error.jsp</result>
+		</action>
+		
+		<!--  site route add action -->
+		<action name="add_route"
+				class="fr.brucella.form.escapp.webapp.action.sites.SiteAddAction"
+				method="doAddRoute">
+			<result name="success" type="redirectAction">
+				<param name="actionName">route_details</param>
+				<param name="id">${routeId}</param>
+			</result>
+			<result name="input">jsp/sites/add_route.jsp</result>
+			<result name="error">jsp/error.jsp</result>
+		</action>
+		
+		<!--  site length add action -->
+		<action name="add_length"
+				class="fr.brucella.form.escapp.webapp.action.sites.SiteAddAction"
+				method="doAddLength">
+			<result name="success" type="redirectAction">
+				<param name="actionName">route_details</param>
+				<param name="id">${routeId}</param>
+			</result>
+			<result name="input">jsp/sites/add_length.jsp</result>
+			<result name="error">jsp/error.jsp</result>
 		</action>
 		
 		<!--  route detail action -->

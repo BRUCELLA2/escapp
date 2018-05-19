@@ -138,7 +138,7 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
 	@Override
 	public int insertRoute(Route pRoute) throws TechnicalException {
 		
-		String vSQL = "INSERT INTO route (id, sector_id, name, grade, points_nb, description) VALUES (DEFAULT, :sectorId, :name, :grade, :pointsNb, :description";
+		String vSQL = "INSERT INTO route (id, sector_id, name, grade, points_nb, description) VALUES (DEFAULT, :sectorId, :name, :grade, :pointsNb, :description)";
 		
 		KeyHolder vKeyHolder = new GeneratedKeyHolder();
 		

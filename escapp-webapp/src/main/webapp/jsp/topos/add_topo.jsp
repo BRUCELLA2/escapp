@@ -20,7 +20,7 @@
       		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     	<![endif]-->
-		<title>Détails du topo</title>
+		<title>Ajouter un topo</title>
 	</head>
 	
 <body>
@@ -61,7 +61,7 @@
 					      		<div class="form-group row">
 					      		<div class="col-xs-12">	      			
 					      			<label for="name">Nom du topo :</label>
-					      			<input type="text" class="form-control" id="login" name="name" value='<s:property value="name"/>'>
+					      			<input type="text" class="form-control" id="name" name="name" value='<s:property value="name"/>'>
 					      			<div class="has-error"><span class="help-block"><s:fielderror fieldName="name"/></span></div> 
 					      		</div>
 					      		</div>
