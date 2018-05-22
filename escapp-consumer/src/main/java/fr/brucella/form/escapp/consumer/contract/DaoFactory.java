@@ -17,6 +17,8 @@ import fr.brucella.form.escapp.consumer.contract.dao.user.UserDao;
  */
 public interface DaoFactory {
 
+// ===== Getters =====
+
 	/**
 	 * Get the Comment Data Access Object
 	 * 
@@ -72,7 +74,9 @@ public interface DaoFactory {
      * @return the RoleUser Data Access Object
      */
     RoleUserDao getRoleUserDao();
+
     
+// ===== Setters =====
     
     /**
      * Set the Comment Data Access Object

@@ -32,8 +32,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SiteDaoImpl extends AbstractDao implements SiteDao {
-	
-	// TODO Add log system
 
 	/**
 	 * @see SiteDao#getSite(Integer)

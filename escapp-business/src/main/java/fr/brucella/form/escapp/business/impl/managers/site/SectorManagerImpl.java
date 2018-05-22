@@ -15,9 +15,17 @@ import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
+/**
+ * The Sector Manager
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class SectorManagerImpl extends AbstractManager implements SectorManager{
 
+	/**
+	 * @see SectorManager#getSectorsSiteList(Integer)
+	 */
 	@Override
 	public List<Sector> getSectorsSiteList(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -34,6 +42,9 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager{
 		}
 	}
 
+	/**
+	 * @see SectorManager#getSectorById(Integer)
+	 */
 	@Override
 	public Sector getSectorById(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException{
 	  
@@ -50,6 +61,9 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager{
       }
 	}
 	
+	/**
+	 * @see SectorManager#modifySector(Sector)
+	 */
 	@Override
 	public void modifySector(Sector pSector) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -75,6 +89,9 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager{
 		}
 	}
 
+	/**
+	 * @see SectorManager#addSector(Sector)
+	 */
 	@Override
 	public void addSector(Sector pSector) throws TechnicalException, FunctionalException {
 		
@@ -99,6 +116,9 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager{
 		}
 	}
 	
+	/**
+	 * @see SectorManager#deleteSector(Integer)
+	 */
 	@Override
 	public void deleteSector(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException {
 		

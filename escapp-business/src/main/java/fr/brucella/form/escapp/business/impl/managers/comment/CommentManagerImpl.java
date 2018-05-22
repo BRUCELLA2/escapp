@@ -17,12 +17,18 @@ import fr.brucella.form.escapp.model.beans.user.User;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
-
+/**
+ * The Comment Manager
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class CommentManagerImpl extends AbstractManager implements CommentManager {
-	
-	// TODO improve addComment methods
 
+	/**
+	 * @see CommentManager#getCommentsSiteList(Integer)
+	 * @see #getCommentsList(Integer, String)
+	 */
 	@Override
 	public List<Comment> getCommentsSiteList(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -33,6 +39,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		return getCommentsList(pSiteId, "Site");		
 	}
 	
+	/**
+	 * @see CommentManager#getCommentsSiteListWithLogin(Integer, String)
+	 * @see #getCommentsListWithLogin(Integer, String, String)
+	 */
 	@Override
 	public List<Pair<Comment, String>> getCommentsSiteListWithLogin(Integer pSiteId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
 		
@@ -43,6 +53,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		return getCommentsListWithLogin(pSiteId, "Site", pOrder);
 	}
 
+	/**
+	 * @see CommentManager#getCommentsSectorList(Integer)
+	 * @see #getCommentsList(Integer, String)
+	 */
 	@Override
 	public List<Comment> getCommentsSectorList(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -53,6 +67,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		return getCommentsList(pSectorId, "Sector");	
 	}
 	
+	/**
+	 * @see CommentManager#getCommentsSectorListWithLogin(Integer, String)
+	 * @see #getCommentsListWithLogin(Integer, String, String)
+	 */
 	@Override
 	public List<Pair<Comment, String>> getCommentsSectorListWithLogin(Integer pSectorId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
 		
@@ -63,6 +81,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		return getCommentsListWithLogin(pSectorId, "Sector", pOrder);
 	}
 
+	/**
+	 * @see CommentManager#getCommentsRouteList(Integer)
+	 * @see #getCommentsList(Integer, String)
+	 */
 	@Override
 	public List<Comment> getCommentsRouteList(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -73,6 +95,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		return getCommentsList(pRouteId, "Route");
 	}
 	
+	/**
+	 * @see CommentManager#getCommentsRouteListWithLogin(Integer, String)
+	 * @see #getCommentsListWithLogin(Integer, String, String)
+	 */
 	@Override
 	public List<Pair<Comment, String>> getCommentsRouteListWithLogin(Integer pRouteId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
 		
@@ -83,6 +109,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		return getCommentsListWithLogin(pRouteId, "Route", pOrder);
 	}
 
+	/**
+	 * @see CommentManager#getCommentsLengthList(Integer)
+	 * @see #getCommentsList(Integer, String)
+	 */
 	@Override
 	public List<Comment> getCommentsLengthList(Integer pLengthId) throws TechnicalException, FunctionalException, NotFoundException {
 
@@ -94,6 +124,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		
 	}
 	
+	/**
+	 * @see CommentManager#getCommentsRouteListWithLogin(Integer, String)
+	 * @see #getCommentsListWithLogin(Integer, String, String)
+	 */
 	@Override
 	public List<Pair<Comment, String>> getCommentsLengthListWithLogin(Integer pLengthId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
 		
@@ -104,6 +138,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		return getCommentsListWithLogin(pLengthId, "Length", pOrder);
 	}
 	
+	/**
+	 * @see CommentManager#getCommentsTopoList(Integer)
+	 * @see #getCommentsList(Integer, String)
+	 */
 	@Override
 	public List<Comment> getCommentsTopoList(Integer pTopoId) throws TechnicalException, FunctionalException, NotFoundException {
 
@@ -114,6 +152,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		return getCommentsList(pTopoId, "Topo");
 	}
 	
+	/**
+	 * @see CommentManager#getCommentsTopoListWithLogin(Integer, String)
+	 * @see #getCommentsListWithLogin(Integer, String, String)
+	 */
 	@Override
 	public List<Pair<Comment, String>> getCommentsTopoListWithLogin(Integer pTopoId, String pOrder) throws TechnicalException, FunctionalException, NotFoundException{
 		
@@ -124,6 +166,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		return getCommentsListWithLogin(pTopoId, "Topo", pOrder);
 	}
 
+	/**
+	 * @see CommentManager#getCommentById(Integer)
+	 */
 	@Override
 	public Comment getCommentById(Integer pCommentId) throws TechnicalException, FunctionalException, NotFoundException {
 
@@ -140,6 +185,10 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		}		
 	}
 	
+	/**
+	 * @see CommentManager#addCommentSite(Comment)
+	 * @see #addComment(Comment, String)
+	 */
 	@Override
 	public void addCommentSite(Comment pComment) throws TechnicalException, FunctionalException {
 		
@@ -163,9 +212,13 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 			throw new TechnicalException("Un problème technique pour trouver le site cible est survenu - Echec de l'ajout du commentaire.", pException);
 		}
 		
-		addComment(pComment, pTargetType);
+		addComment(pComment);
 	}
 
+	/**
+	 * @see CommentManager#addCommentSector(Comment)
+	 * @see #addComment(Comment, String)
+	 */
 	@Override
 	public void addCommentSector(Comment pComment) throws TechnicalException, FunctionalException {
 		
@@ -189,9 +242,13 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 			throw new TechnicalException("Un problème technique pour trouver le secteur cible est survenu - Echec de l'ajout du commentaire.", pException);
 		}
 		
-		addComment(pComment, pTargetType);
+		addComment(pComment);
 	}
 
+	/**
+	 * @see CommentManager#addCommentRoute(Comment)
+	 * @see #addComment(Comment, String)
+	 */
 	@Override
 	public void addCommentRoute(Comment pComment) throws TechnicalException, FunctionalException {
 		
@@ -215,9 +272,13 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 			throw new TechnicalException("Un problème technique pour trouver la voie cible est survenu - Echec de l'ajout du commentaire.", pException);
 		}
 		
-		addComment(pComment, pTargetType);
+		addComment(pComment);
 	}
 
+	/**
+	 * @see CommentManager#addCommentLength(Comment)
+	 * @see #addComment(Comment, String)
+	 */
 	@Override
 	public void addCommentLength(Comment pComment) throws TechnicalException, FunctionalException {
 		
@@ -241,9 +302,13 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 			throw new TechnicalException("Un problème technique pour trouver la longueur cible est survenu - Echec de l'ajout du commentaire.", pException);
 		}
 		
-		addComment(pComment, pTargetType);
+		addComment(pComment);
 	}
 	
+	/**
+	 * @see CommentManager#addCommentTopo(Comment)
+	 * @see #addComment(Comment, String)
+	 */
 	@Override
 	public void addCommentTopo(Comment pComment) throws TechnicalException, FunctionalException{
 		
@@ -267,9 +332,12 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 			throw new TechnicalException("Un problème technique pour trouver le topo est survenu - Echec de l'ajout du commentaire.", pException);
 		}
 		
-		addComment(pComment, pTargetType);
+		addComment(pComment);
 	}
 
+	/**
+	 * @see CommentManager#deleteComment(Integer)
+	 */
 	@Override
 	public void deleteComment(Integer pCommentId) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -286,9 +354,11 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		}
 	}
 
+	/**
+	 * @see CommentManager#modifyComment(Comment, User)
+	 */
 	@Override
 	public void modifyComment(Comment pComment, User pUser) throws TechnicalException, FunctionalException, NotFoundException {
-		
 		
 		if(pComment == null) {
 			throw new FunctionalException("Aucune modification n'a été transmise (Commentaire vide) - Echec de la modification");
@@ -327,6 +397,18 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		
 	}
 	
+	/**
+	 * Get the {@link List} of the {@link Comment} for the specified Target Type and id.
+	 * 
+	 * @param pIdCommentTarget {@link Integer} id of the target which is commented.
+	 * @param pTargetType {@link String} which represents the Target Type
+     * 					  Value can be one of these : "Length", "Route", "Sector", "Site" or "Topo".
+     * 
+	 * @return a list of {@link Comment} with the specified target's type and id.
+	 * 
+	 * @throws TechnicalException - wraps technical exception caused during data access.
+	 * @throws NotFoundException - This exception is throws if there is no technical exception and no {@link Comment} is found.
+	 */
 	private List<Comment> getCommentsList(Integer pIdCommentTarget, String pTargetType) throws TechnicalException, NotFoundException{
 		
 		try {
@@ -338,6 +420,19 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		}
 	}
 	
+	/**
+	 * Get a list of {@link Pair} of {@link Comment} with the login of the user who write the comment.
+	 * 
+	 * @param pIdCommentTarget {@link Integer} id of the target which is commented.
+	 * @param pTargetType {@link String} which represents the Target Type
+     * 					  Value can be one of these : "Length", "Route", "Sector", "Site" or "Topo".
+	 * @param pOrder {@link String} "ASC" or "DESC" for a ASCENDING sort or DESCENDING sort by the id of the comment
+	 * 
+	 * @return a list of {@link Pair} of {@link Comment} with the login of the user who write the comment and sorted by id of the comment.
+	 * 
+	 * @throws TechnicalException - wraps technical exception caused during data access.
+	 * @throws NotFoundException - This exception is throws if there is no technical exception and no {@link Comment} is found.
+	 */
 	private List<Pair<Comment, String>> getCommentsListWithLogin(Integer pIdCommentTarget, String pTargetType, String pOrder) throws TechnicalException, NotFoundException{
 		
 		String vOrder;
@@ -356,7 +451,15 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		}
 	}
 	
-	private void addComment(Comment pComment, String pTargetType) throws TechnicalException, FunctionalException {
+	/**
+	 * Validate and add the {@link Comment} to the data store.
+	 * 
+	 * @param pComment the {@link Comment} to add.
+	 * 
+	 * @throws TechnicalException - wraps technical exception caused during data access.
+	 * @throws FunctionalException - this exception is throws if the data in the {@link Comment} are not valide.
+	 */
+	private void addComment(Comment pComment) throws TechnicalException, FunctionalException {
 		
 		Set<ConstraintViolation<Comment>> vViolations = getConstraintValidator().validate(pComment);
 		

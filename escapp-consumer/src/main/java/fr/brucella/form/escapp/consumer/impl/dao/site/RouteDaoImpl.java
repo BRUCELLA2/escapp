@@ -31,10 +31,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class RouteDaoImpl extends AbstractDao implements RouteDao {
 
-	
-    // TODO Complete methods
-	// TODO Add log system
-	
 	/**
 	 * @see RouteDao#getRoute(Integer)
 	 */

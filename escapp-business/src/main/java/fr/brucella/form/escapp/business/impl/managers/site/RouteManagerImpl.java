@@ -15,9 +15,17 @@ import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
+/**
+ * The Route Manager
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class RouteManagerImpl extends AbstractManager implements RouteManager{
 
+	/**
+	 * @see RouteManager#getRoutesSectorList(Integer)
+	 */
 	@Override
 	public List<Route> getRoutesSectorList(Integer pSectorId) throws TechnicalException, FunctionalException, NotFoundException {
 
@@ -34,6 +42,9 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager{
 		}
 	}
 	
+	/**
+	 * @see RouteManager#getRouteById(Integer)
+	 */
 	@Override
 	public Route getRouteById(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException {
 	  
@@ -51,6 +62,9 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager{
 	  
 	}
 
+	/**
+	 * @see RouteManager#modifyRoute(Route)
+	 */
 	@Override
 	public void modifyRoute(Route pRoute) throws TechnicalException, FunctionalException, NotFoundException {
 
@@ -76,6 +90,9 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager{
 		}
 	}
 	
+	/**
+	 * @see RouteManager#addRoute(Route)
+	 */
 	@Override
 	public void addRoute(Route pRoute) throws TechnicalException, FunctionalException {
 
@@ -100,6 +117,9 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager{
 		}
 	}	
 
+	/**
+	 * @see RouteManager#deleteRoute(Integer)
+	 */
 	@Override
 	public void deleteRoute(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException {
 

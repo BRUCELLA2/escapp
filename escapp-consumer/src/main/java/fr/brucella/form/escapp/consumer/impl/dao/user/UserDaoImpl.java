@@ -28,9 +28,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UserDaoImpl extends AbstractDao implements UserDao {
-	
-    // TODO Complete methods
-	// TODO Add log system
 
 	/**
 	 * @see UserDao#getUserById(Integer)

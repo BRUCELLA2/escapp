@@ -14,10 +14,17 @@ import fr.brucella.form.escapp.model.beans.site.Length;
 import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
-
+/**
+ * The Length Manager
+ * 
+ * @author BRUCELL2
+ */
 @Component
 public class LengthManagerImpl extends AbstractManager implements LengthManager{
 
+	/**
+	 * @see LengthManager#getLengthsRouteList(Integer)
+	 */
 	@Override
 	public List<Length> getLengthsRouteList(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException {
 
@@ -35,6 +42,9 @@ public class LengthManagerImpl extends AbstractManager implements LengthManager{
 		
 	}
 
+	/**
+	 * @see LengthManager#modifyLength(Length)
+	 */
 	@Override
 	public void modifyLength(Length pLength) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -60,6 +70,9 @@ public class LengthManagerImpl extends AbstractManager implements LengthManager{
 		}
 	}
 	
+	/**
+	 * @see LengthManager#addLength(Length)
+	 */
 	@Override
 	public void addLength(Length pLength) throws TechnicalException, FunctionalException {
 
@@ -84,6 +97,9 @@ public class LengthManagerImpl extends AbstractManager implements LengthManager{
 		}
 	}
 
+	/**
+	 * @see LengthManager#deleteLength(Integer)
+	 */
 	@Override
 	public void deleteLength(Integer pLengthId) throws TechnicalException, FunctionalException, NotFoundException {
 

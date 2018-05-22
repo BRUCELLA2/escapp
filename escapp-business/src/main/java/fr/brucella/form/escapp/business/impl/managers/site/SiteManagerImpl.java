@@ -16,9 +16,17 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.model.search.SiteSearch;
 
+/**
+ * The Site Manager
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class SiteManagerImpl extends AbstractManager implements SiteManager{
 	
+	/**
+	 * @see SiteManager#getAllSitesList()
+	 */
 	@Override
 	public List<Site> getAllSitesList() throws TechnicalException, NotFoundException {
 		try {
@@ -30,6 +38,9 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager{
 		}
 	}
 
+	/**
+	 * @see SiteManager#getSiteById(Integer)
+	 */
 	@Override
 	public Site getSiteById(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -48,6 +59,9 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager{
 		}
 	}
 	
+	/**
+	 * @see SiteManager#getSearchSitesList(SiteSearch)
+	 */
 	@Override
 	public List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException, FunctionalException {
 		
@@ -72,6 +86,9 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager{
 		
 	}
 
+	/**
+	 * @see SiteManager#modifySite(Site)
+	 */
 	@Override
 	public void modifySite(Site pSite) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -97,6 +114,9 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager{
 		}
 	}
 
+	/**
+	 * @see SiteManager#addSite(Site)
+	 */
 	@Override
 	public void addSite(Site pSite) throws TechnicalException, FunctionalException {
 		
@@ -121,6 +141,9 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager{
 		}
 	}
 
+	/**
+	 * @see SiteManager#deleteSite(Integer)
+	 */
 	@Override
 	public void deleteSite(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException {
 

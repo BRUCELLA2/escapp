@@ -33,9 +33,6 @@ import java.util.List;
 @Component
 public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
-    // TODO Complete methods
-	// TODO Add log system
-
 	/**
 	 * @see CommentDao#getComment(Integer)
 	 */
@@ -118,7 +115,6 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
     	MapSqlParameterSource vParams = new MapSqlParameterSource();
     	vParams.addValue("targetType", pTargetType);
     	vParams.addValue("idCommentTarget", pIdCommentTarget);
-    //	vParams.addValue("order", pOrder);
     	
     	RowMapper<Pair<Comment, String>> vRowMapper = new CommentWithLoginRM();
     	

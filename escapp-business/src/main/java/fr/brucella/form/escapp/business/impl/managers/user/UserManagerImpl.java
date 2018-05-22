@@ -18,11 +18,19 @@ import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
+/**
+ * The User Manager
+ * 
+ * @author BRUCELL2
+ */
 @Component
 public class UserManagerImpl extends AbstractManager implements UserManager{
 
 	BCryptPasswordEncoder vPasswordEncoder = new BCryptPasswordEncoder();
 	
+	/**
+	 * @see UserManager#getUserByLogin(String)
+	 */
 	@Override
 	public User getUserByLogin(String pUserLogin) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -39,6 +47,9 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 		}
 	}
 
+	/**
+	 * @see UserManager#getUserById(Integer)
+	 */
 	@Override
 	public User getUserById(Integer pUserId) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -55,6 +66,9 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 		}
 	}
 
+	/**
+	 * @see UserManager#getConnectUser(String, String)
+	 */
 	@Override
 	public User getConnectUser(String pUserLogin, String pRawUserPassword) throws TechnicalException, FunctionalException, NotFoundException {
 
@@ -84,6 +98,9 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 		}
 	}
 
+	/**
+	 * @see UserManager#addUser(User)
+	 */
 	@Override
 	public User addUser(User pUser) throws TechnicalException, FunctionalException {
 		
@@ -127,6 +144,9 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 		
 	}
 
+	/**
+	 * @see UserManager#modifyPassword(User, String)
+	 */
 	@Override
 	public void modifyPassword(User pUser, String pNewRawPassword) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -160,6 +180,9 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
 		
 	}
 	
+	/**
+	 * @see UserManager#getRoleUserList(Integer)
+	 */
 	@Override
 	public List<RoleUser> getRoleUserList(Integer pUserId) throws TechnicalException, FunctionalException {
 	  
@@ -175,34 +198,54 @@ public class UserManagerImpl extends AbstractManager implements UserManager{
         return null;
       }
 	}
-
-  private String encodePassword(String pRawPassword){
-    
-    String vHashedPassword = vPasswordEncoder.encode(pRawPassword);
-    return vHashedPassword;
-    
-  }
-
-  private boolean checkPassword(String pRawPassword,String pEncodePassword){
+  
+	/**
+	 * @see UserManager#checkLoginDispo(String)
+	 */
+	@Override
+	public boolean checkLoginDispo(String pLogin) throws TechnicalException {
+		  
+		try {
+			if(getDaoFactory().getUserDao().countUserByLogin(pLogin) > 0) {
+				return false;
+			}
+		} catch (TechnicalException pException) {
+			throw new TechnicalException(pException.getMessage(),pException);
+		}
+		
+		return true;
+	 }
+  
+	/**
+	 * This method encrypte a raw password with the password encoder {@link #vPasswordEncoder}
+	 * 
+	 * @param pRawPassword the raw password to encrypte
+	 * 
+	 * @return the password encrypted
+	 */
+	private String encodePassword(String pRawPassword){
+		    
+		String vHashedPassword = vPasswordEncoder.encode(pRawPassword);
+		return vHashedPassword;
+		    
+	}
+	
+	/**
+	 * This method check if a raw password is the same than the encrypted password.
+	 * This method use the password encoder {@link #vPasswordEncoder}
+	 * 
+	 * @param pRawPassword The raw password
+	 * @param pEncodePassword the encrypted password
+	 * 
+	 * @return true if the raw password and the encrypted password match, false otherwise.
+	 */
+	private boolean checkPassword(String pRawPassword,String pEncodePassword){
     
 		if(vPasswordEncoder.matches(pRawPassword, pEncodePassword)) {
 			return true;
 		}else {
 			return false;
 		}
-  }
-  
-  public boolean checkLoginDispo(String pLogin) throws TechnicalException {
-	  
-	try {
-		if(getDaoFactory().getUserDao().countUserByLogin(pLogin) > 0) {
-			return false;
-		}
-	} catch (TechnicalException pException) {
-		throw new TechnicalException(pException.getMessage(),pException);
 	}
-	
-	return true;
-  }
 
 }

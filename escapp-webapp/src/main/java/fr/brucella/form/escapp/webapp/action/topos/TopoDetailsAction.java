@@ -14,7 +14,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import fr.brucella.form.escapp.business.contract.ManagerFactory;

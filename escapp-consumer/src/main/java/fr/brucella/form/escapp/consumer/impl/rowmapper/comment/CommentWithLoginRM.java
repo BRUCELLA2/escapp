@@ -17,7 +17,7 @@ import fr.brucella.form.escapp.model.beans.comment.Comment;
 public class CommentWithLoginRM  implements RowMapper<Pair<Comment, String>> {
 
 	/**
-	 * 
+	 * @see RowMapper#mapRow(ResultSet, int)
 	 */
 	@Override
 	public Pair<Comment, String> mapRow(ResultSet rs, int rowNum) throws SQLException {

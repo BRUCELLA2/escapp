@@ -26,7 +26,6 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
  */
 @Component
 public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao{
-
 	
 	/**
 	 * @see RoleUseDaor#getRoleUserList(Integer)

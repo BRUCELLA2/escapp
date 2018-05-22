@@ -79,9 +79,6 @@ public class SitesListAction extends ActionSupport{
 		} catch (NotFoundException pException) {
 	         this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
-		} catch (FunctionalException pException) {
-	         this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
 		}
 		return ActionSupport.SUCCESS;		
 	}

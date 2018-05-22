@@ -2,9 +2,9 @@
 
 <Configuration status="info">
     <Properties>
-        <Property name="filename">target/escapp.log</Property>
+        <Property name="filename">escapp.log</Property>
     </Properties>
-    <ThresholdFilter level="trace"/>
+    <ThresholdFilter level="debug"/>
 
     <Appenders>
         <Console name="STDOUT">

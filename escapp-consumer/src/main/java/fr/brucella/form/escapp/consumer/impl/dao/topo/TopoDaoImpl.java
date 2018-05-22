@@ -18,9 +18,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
@@ -33,9 +31,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class TopoDaoImpl extends AbstractDao implements TopoDao {
 	
-    // TODO Complete methods
-	// TODO Add log system
-
 	/**
 	 * @see TopoDao#getTopo(Integer)
 	 */

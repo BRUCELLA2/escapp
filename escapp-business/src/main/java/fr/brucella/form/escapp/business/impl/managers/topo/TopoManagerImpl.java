@@ -1,16 +1,13 @@
 package fr.brucella.form.escapp.business.impl.managers.topo;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import javax.servlet.ServletContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.springframework.stereotype.Component;
 
 import fr.brucella.form.escapp.business.contract.managers.topo.TopoManager;
-import fr.brucella.form.escapp.business.impl.ManagerFactoryImpl;
 import fr.brucella.form.escapp.business.impl.managers.AbstractManager;
 import fr.brucella.form.escapp.model.beans.comment.Comment;
 import fr.brucella.form.escapp.model.beans.topo.Topo;
@@ -20,11 +17,19 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.model.search.TopoSearch;
 
+/**
+ * The Topo Manager
+ * 
+ * @author BRUCELLA2
+ */
 @Component
 public class TopoManagerImpl extends AbstractManager implements TopoManager{
 
+	/**
+	 * @see TopoManager#getAllToposList()
+	 */
 	@Override
-	public List<Topo> getAllToposList() throws TechnicalException, FunctionalException, NotFoundException {
+	public List<Topo> getAllToposList() throws TechnicalException, NotFoundException {
 		
 		try {
 			return getDaoFactory().getTopoDao().getAllToposList();
@@ -35,6 +40,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}
 	}
 	
+	/**
+	 * @see TopoManager#getSearchToposList(TopoSearch)
+	 */
 	@Override
 	public List<Topo> getSearchToposList(TopoSearch pTopoSearch) throws TechnicalException, NotFoundException, FunctionalException{
 		
@@ -59,6 +67,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		
 	}
 
+	/**
+	 * @see TopoManager#getOwnerToposList(Integer)
+	 */
 	@Override
 	public List<Topo> getOwnerToposList(Integer pOwnerId) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -75,6 +86,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}
 	}
 
+	/**
+	 * @see TopoManager#getBorrowerToposList(Integer)
+	 */
 	@Override
 	public List<Topo> getBorrowerToposList(Integer pBorrowerId) throws TechnicalException, FunctionalException, NotFoundException {
 
@@ -92,6 +106,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		
 	}
 
+	/**
+	 * @see TopoManager#getTopoById(Integer)
+	 */
 	@Override
 	public Topo getTopoById(Integer pTopoId) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -109,6 +126,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}
 	}
 
+	/**
+	 * @see TopoManager#setBorrowable(Boolean, Integer, Topo)
+	 */
 	@Override
 	public void setBorrowable(Boolean pBorrowable, Integer pUserId,  Topo pTopo) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -139,6 +159,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}
 	}
 
+	/**
+	 * @see TopoManager#borrowTopo(Topo, Integer, User)
+	 */
 	@Override
 	public Topo borrowTopo(Topo pTopo, Integer pNbDays, User pBorrower) throws TechnicalException, FunctionalException, NotFoundException {
 		
@@ -162,9 +185,7 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}
 		if(pTopo.isIsBorrowable() != true || (pTopo.getEndDateBorrow() != null && LocalDateTime.now().compareTo(pTopo.getEndDateBorrow()) < 0)) {
 			throw new FunctionalException("Ce topo ne peut être emprunté - Echec de l'emprunt");
-		}/*
-		else if (pTopo.getEndDateBorrow() != null && LocalDateTime.now().compareTo(pTopo.getEndDateBorrow()) < 0) {
-		}*/
+		}
 		
 	 	LocalDateTime date = LocalDateTime.now();
 	 	date = date.plusDays(pNbDays);
@@ -183,6 +204,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}
 	}
 
+	/**
+	 * @see TopoManager#addTopo(Topo)
+	 */
 	@Override
 	public void addTopo(Topo pTopo) throws TechnicalException, FunctionalException {
 		
@@ -207,6 +231,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}
 	}
 
+	/**
+	 * @see TopoManager#modifyTopo(Topo, User)
+	 */
 	@Override
 	public void modifyTopo(Topo pTopo, User pUser) throws TechnicalException, FunctionalException, NotFoundException {
 
@@ -238,6 +265,9 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 		}
 	}
 	
+	/**
+	 * @see TopoManager#deleteTopo(Integer, User)
+	 */
 	@Override
 	public void deleteTopo(Integer pTopoId, User pUser) throws TechnicalException, FunctionalException, NotFoundException{
 	  
@@ -278,7 +308,7 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
        }catch (TechnicalException pException) {
          throw new TechnicalException("Un problème technique empêche la suppression d'un commentaire du topo à supprimer - Echec de la suppression.", pException);
        }catch (NotFoundException pException) {
-         throw new NotFoundException("Un commentaire associé au Topo n'a pas été trouvé - Echec de la suppression", pException);
+         throw new TechnicalException("Un commentaire associé au Topo n'a pas été trouvé - Echec de la suppression", pException);
        }
        
        try{
@@ -292,7 +322,16 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager{
 	}
 	
 	
-	
+	/**
+	 * This method check the {@link Topo} if the {@link Topo} is borrow by someone. 
+	 * If the date of end of borrow has passed, end date of borrow and borrower are clear (modify to null).
+	 * 
+	 * @param pTopo the {@link Topo} to check and clear if needed.
+	 * 
+	 * @return the {@link Topo} checked and cleared if needed.
+	 * 
+	 * @throws TechnicalException - - wraps technical exception caused during data access.
+	 */
 	private Topo clearBorrow(Topo pTopo) throws TechnicalException {
 		
 		Topo vTopo = pTopo;

@@ -31,9 +31,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class SectorDaoImpl extends AbstractDao implements SectorDao {
 
-    // TODO Complete methods
-	// TODO Add log system
-	
 	/**
 	 * @see SectorDao#getSector(Integer)
 	 */

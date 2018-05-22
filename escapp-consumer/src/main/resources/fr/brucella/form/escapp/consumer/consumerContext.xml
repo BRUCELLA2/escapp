@@ -3,16 +3,9 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd">
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 
-    <!-- ===== AbstractDao =====
-    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="targetClass" value="fr.brucella.form.escapp.consumer.impl.dao.AbstractDao"/>
-        <property name="targetMethod" value="setDataSource"/>
-        <property name="arguments" value="dataSourceEscapp"/>
-    </bean>
-    -->
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSourceEscapp"/>
     </bean>

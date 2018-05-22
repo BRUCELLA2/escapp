@@ -30,9 +30,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class LengthDaoImpl extends AbstractDao implements LengthDao {
-	
-    // TODO Complete methods
-	// TODO Add log system
 
 	/**
 	 * @see LengthDao#getLength(Integer)

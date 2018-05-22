@@ -1,12 +1,10 @@
 package fr.brucella.form.escapp.webapp.action.topos;
 
-import java.sql.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import fr.brucella.form.escapp.business.contract.ManagerFactory;
@@ -97,9 +95,6 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
 	         this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
 		} catch (NotFoundException pException) {
-	         this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
-		} catch (FunctionalException pException) {
 	         this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
 		}
