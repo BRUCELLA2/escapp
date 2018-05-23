@@ -4,9 +4,9 @@
 
 INSERT INTO public.escapp_user(id, login, email, password)
 	VALUES 
-		(DEFAULT, 'user1', 'user1@mail.fr', 'pwduser1'),
-		(DEFAULT, 'user2', 'user2@mail.fr', 'pwduser2');
-		(DEFAULT, 'admin', 'admin@mail.fr', 'admin');
+		(DEFAULT, 'user1', 'user1@mail.fr', '$2a$10$b38C6Bz41bFlDJPJBXuC8.ESB57HjTEqZHmlDR8FLD4VvJieRp86G'),
+		(DEFAULT, 'user2', 'user2@mail.fr', '$2a$10$b38C6Bz41bFlDJPJBXuC8.ESB57HjTEqZHmlDR8FLD4VvJieRp86G'),
+		(DEFAULT, 'admin', 'admin@mail.fr', '$2a$10$b38C6Bz41bFlDJPJBXuC8.ESB57HjTEqZHmlDR8FLD4VvJieRp86G');
 
 /* INSERT INTO role_user TABLE */
 INSERT INTO public.role_user(role, escapp_user)
@@ -17,9 +17,9 @@ INSERT INTO public.role_user(role, escapp_user)
 
 INSERT INTO public.comment(id, text, target_type, id_comment_target, escapp_user)
 	VALUES 
-		(DEFAULT, 'Premier commentaire site1, target_type = site, id_comment_target = 1, user = user1', 'Site', 1, 1),
-		(DEFAULT, 'Premier commentaire secteur 1, target_type = sector, id_comment_target = 1, user = user2', 'Sector', 1, 2 ),
-		(DEFAULT, '2nd commentaire site 1, target_type = site, id_comment_target = 1, user = user1', 'Site', 1, 1);
+		(DEFAULT, 'Premier commentaire site1', 'Site', 1, 1),
+		(DEFAULT, 'Premier commentaire secteur 1', 'Sector', 1, 2 ),
+		(DEFAULT, '2nd commentaire site 1', 'Site', 1, 1);
 
 /* INSERT INTO site TABLE */
 
@@ -51,12 +51,12 @@ INSERT INTO public.route(id, sector_id, name, grade, points_nb, description)
 
 INSERT INTO public.length(id, length, grade, points_nb, description, route_id)
 	VALUES 
-		(DEFAULT, 25, '5a', 1, 'Première longueur de la route 1 du secteur 1 site 1 de 25m et difficulté 5a - 1 point', 1),
-		(DEFAULT, 20, '5a', 1, 'Seconde longueur de la route 1 du secteur 1 site 1 de 20m et difficulté 5a - 1 point', 1),
-		(DEFAULT, 100, '4a', 1, 'Première longueur de la route 2 du secteur 1 site 1 de 100m et difficulté 4a - 1 point', 2),
-		(DEFAULT, 50, '6b', 1, 'Première longueur de la route 1 du secteur 2 site 1 de 50m et difficulté 6b - 1 point', 3),
-		(DEFAULT, 250, '3d', 2, 'Première longueur de la route 1 du secteur 1 site 3 de 250m et difficulté 3d - 2 points', 4),
-		(DEFAULT, 75, '3b', 1, 'Seconde longueur de la route 1 du secteur 1 site 3 de 75m et difficulté 3b - 1 point', 4);
+		(DEFAULT, 25, '5a', 1, 'Première longueur', 1),
+		(DEFAULT, 20, '5a', 1, 'Seconde longueur', 1),
+		(DEFAULT, 100, '4a', 1, 'Première longueur', 2),
+		(DEFAULT, 50, '6b', 1, 'Première longueur', 3),
+		(DEFAULT, 250, '3d', 2, 'Première longueur', 4),
+		(DEFAULT, 75, '3b', 1, 'Seconde longueur', 4);
 
 
 /* INSERT INTO topo TABLE */
