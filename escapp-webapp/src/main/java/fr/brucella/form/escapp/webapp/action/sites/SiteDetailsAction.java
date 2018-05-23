@@ -110,8 +110,14 @@ public class SiteDetailsAction extends ActionSupport {
 	
 	
 	
-	
 	// ===== Methods =====
+	
+	/**
+	 * Get Site details with comments
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doSiteDetails() {
 		
 		if(id == null) {
@@ -133,6 +139,9 @@ public class SiteDetailsAction extends ActionSupport {
 			}
 		}
 		
+		/*
+		 * Get comment for the site
+		 */
 		try {
 			commentsSiteList = managerFactory.getCommentManager().getCommentsSiteListWithLogin(id, "ASC");
 			nbCommentsSite = commentsSiteList.size();
@@ -147,7 +156,11 @@ public class SiteDetailsAction extends ActionSupport {
 			this.addActionMessage("Aucun commentaire");
 		}
 		
-		
+		/*
+		 * Get all sector list for the site
+		 * Get all route list for the site
+		 * Get comments list for the sector
+		 */
 		try {
 		  sectorsList = managerFactory.getSectorManager().getSectorsSiteList(site.getId());
 		  routesList = new ArrayList<>();
@@ -173,6 +186,12 @@ public class SiteDetailsAction extends ActionSupport {
 		
 	}
 	
+	/**
+	 * Get route details with comments
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doRouteDetails() {
 	  
 	   if(id == null) {
@@ -182,6 +201,7 @@ public class SiteDetailsAction extends ActionSupport {
 	   else {
 	     try {
 	       route = managerFactory.getRouteManager().getRouteById(id);
+	       // Sector and site are needed to have full details on the route.
 	       sector = managerFactory.getSectorManager().getSectorById(route.getSectorId());
 	       site = managerFactory.getSiteManager().getSiteById(sector.getSiteId());
          }catch (TechnicalException pException) {
@@ -196,6 +216,9 @@ public class SiteDetailsAction extends ActionSupport {
          }
 	   }
 	   
+	   /*
+	    * Get length list
+	    */
 	   try {
 	     lengthsList = managerFactory.getLengthManager().getLengthsRouteList(route.getId());
        }catch (TechnicalException pException) {
@@ -208,26 +231,39 @@ public class SiteDetailsAction extends ActionSupport {
          return ActionSupport.SUCCESS;    
        }
 	   
+	   /*
+	    * Calculate number of points for the route
+	    */
 	   nbPoints = nbPoints(lengthsList);
 	   
+	   /*
+	    * Get comments list for the route
+	    */
        try {
-         commentsRouteList = managerFactory.getCommentManager().getCommentsRouteListWithLogin(id, "ASC");
-     }catch (TechnicalException pException) {
-         this.addActionError(pException.getMessage());
-         return ActionSupport.ERROR;
-     }catch (FunctionalException pException) {
-         this.addActionError(pException.getMessage());
-         return ActionSupport.ERROR;
-     }catch (NotFoundException pException) {
-         this.addActionMessage("Aucun commentaire");
-         return ActionSupport.SUCCESS;
-     }
+	         commentsRouteList = managerFactory.getCommentManager().getCommentsRouteListWithLogin(id, "ASC");
+	     }catch (TechnicalException pException) {
+	         this.addActionError(pException.getMessage());
+	         return ActionSupport.ERROR;
+	     }catch (FunctionalException pException) {
+	         this.addActionError(pException.getMessage());
+	         return ActionSupport.ERROR;
+	     }catch (NotFoundException pException) {
+	         this.addActionMessage("Aucun commentaire");
+	         return ActionSupport.SUCCESS;
+	     }
        
-	  nbCommentsRoute = commentsRouteList.size();
+       nbCommentsRoute = commentsRouteList.size();
        
-	  return(this.hasErrors()) ? ActionSupport.ERROR : ActionSupport.SUCCESS; 
+       return(this.hasErrors()) ? ActionSupport.ERROR : ActionSupport.SUCCESS; 
 	}
 	
+	/**
+	 * Calculate the number of points for the route.
+	 * 
+	 * @param pLengthsList the list of length of the route
+	 * 
+	 * @return the number of points for the route.
+	 */
 	private int nbPoints(List<Length> pLengthsList) {
 	  int nbPoins = 0;
 	  

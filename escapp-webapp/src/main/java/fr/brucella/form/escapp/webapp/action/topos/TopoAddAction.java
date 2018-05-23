@@ -116,6 +116,16 @@ public class TopoAddAction extends ActionSupport implements ServletRequestAware 
   
   // ===== Methods =====
   
+  /**
+   * Add the topo.
+   * Only connected user can add a topo.
+   * 
+   * Topo pdf file is add in /WEB-INF/files/
+   * 
+   * @return ERROR if error occurred
+   * 		 INPUT if name, department, isBorrowable, municipality and description, topoFile are null or empty.
+   * 		 SUCCESS otherwise.
+   */
   public String execute() throws Exception {
 	  
 	    if(StringUtils.isAllEmpty(name, department, isBorrowable, municipality, description)) {

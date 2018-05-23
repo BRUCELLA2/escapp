@@ -115,8 +115,13 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 	
 	// ===== Methods =====
 	
-	// TODO refactoring duplicate parts of code in methods.
-	
+	/**
+	 * Add a comment to a site
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   INPUT if the comment of the site or the site id are null
+	 * 		   SUCCESS otherwise
+	 */
 	public String doAddCommentSite() {
 		
 		if(StringUtils.isEmpty(commentSite) || siteId == null) {
@@ -148,7 +153,13 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 		return ActionSupport.SUCCESS;
 	}
 	
-	
+	/**
+	 * Add a comment to a sector
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   INPUT if the comment of the sector or the sector id are null
+	 * 		   SUCCESS otherwise
+	 */
 	public String doAddCommentSector() {
 		
 		if(StringUtils.isEmpty(commentSector) || sectorId == null) {
@@ -159,6 +170,7 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 		
 		try {
 			vSector = managerFactory.getSectorManager().getSectorById(sectorId);
+			// siteId is need for the redirection to the site details
 			siteId = vSector.getSiteId();
 		} catch (TechnicalException pException) {
 			this.addActionError(pException.getMessage());
@@ -196,7 +208,13 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 		return ActionSupport.SUCCESS;
 	}
 	
-	
+	/**
+	 * Add a comment to a route
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   INPUT if the comment of the route or the route id are null
+	 * 		   SUCCESS otherwise
+	 */
 	public String doAddCommentRoute() {
 	  
 	     if(StringUtils.isEmpty(commentRoute) || routeId == null) {
@@ -229,7 +247,13 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
 	  return ActionSupport.SUCCESS;
 	}
 	
-	
+	/**
+	 * Add a comment to a topo
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   INPUT if the comment of the topo or the topo id are null
+	 * 		   SUCCESS otherwise
+	 */
 	public String doAddCommentTopo() {
 		
 		if(StringUtils.isEmpty(commentTopo) || topoId == null) {

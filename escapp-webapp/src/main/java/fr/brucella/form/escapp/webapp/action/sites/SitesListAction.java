@@ -69,6 +69,13 @@ public class SitesListAction extends ActionSupport{
 	
 	
 	// ===== Methods =====
+	
+	/**
+	 * Get a list of all sites
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doList() {
 		
 		try {
@@ -83,6 +90,12 @@ public class SitesListAction extends ActionSupport{
 		return ActionSupport.SUCCESS;		
 	}
 	
+	/**
+	 * Get a list of sites that match to the searching criteria
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doSiteSearching() {
 		
 	  SiteSearch vSiteSearch;
@@ -91,24 +104,25 @@ public class SitesListAction extends ActionSupport{
 	    vSiteSearch = null;
 	  } else {
 	    vSiteSearch = new SiteSearch();
-        vSiteSearch.setDepartmentSite(departmentSite);
-        vSiteSearch.setMunicipalitySite(municipalitySite);
-        vSiteSearch.setMinGradeRoute(minGrade);
-        vSiteSearch.setMaxGradeRoute(maxGrade);
+	    vSiteSearch.setDepartmentSite(departmentSite);
+	    vSiteSearch.setMunicipalitySite(municipalitySite);
+	    vSiteSearch.setMinGradeRoute(minGrade);
+	    vSiteSearch.setMaxGradeRoute(maxGrade);
 	  }
 		
 		try {
 			sitesList = managerFactory.getSiteManager().getSearchSitesList(vSiteSearch);
 		} catch (TechnicalException pException) {
-	         this.addActionError(pException.getMessage());
+		     this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
 		} catch (NotFoundException pException) {
-	         this.addActionError(pException.getMessage());
+		     this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
 		} catch (FunctionalException pException) {
-	         this.addActionError(pException.getMessage());
+		     this.addActionError(pException.getMessage());
 			return ActionSupport.ERROR;
 		}
+		
 		return ActionSupport.SUCCESS;		
 	}
 }

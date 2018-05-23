@@ -85,6 +85,15 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
 	
 	// ===== Methods =====
 	
+	/**
+	 * Register a user.
+	 * After registration, user is add to session.
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   INPUT if the login, password, password confirmaiton and email are emtpy or null
+	 * 				 if login is already used by another user.
+	 * 		   SUCCESS otherwise
+	 */
 	public String doRegister() {
 		
 		if(StringUtils.isAllEmpty(login, password, confPwd, email)){
@@ -144,7 +153,15 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
 		return ActionSupport.SUCCESS;
 	}
 	
-	
+	/**
+	 * Log a user.
+	 * After login, user is add to session.
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   INPUT if the login, password are null or empty.
+	 * 				 if the login and password don't match.
+	 * 		   SUCCESS otherwise
+	 */
 	public String doLogin() {
 		
 		if(StringUtils.isAllEmpty(login, password)) {
@@ -185,6 +202,12 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
 		return ActionSupport.SUCCESS;		
 	}
 	
+	/**
+	 * Log out the user.
+	 * Session is invalidate.
+	 * 
+	 * @return SUCCESS
+	 */
 	public String doLogout() {
 		
 		this.servletRequest.getSession().invalidate();

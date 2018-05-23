@@ -113,6 +113,12 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 	}
 	
 	// ===== Methods =====
+	/**
+	 * Get Topo details with comments
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doTopoDetails() {
 	
 		if(id == null) {
@@ -156,7 +162,12 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 		return ActionSupport.SUCCESS;
 	}
 	
-	
+	/**
+	 * Topo pdf downloading
+	 * 
+	 * @return SUCCESS
+	 */
+	@Override
 	public String execute() throws FileNotFoundException{
 		
 		ServletContext servletContext = ServletActionContext.getServletContext();
@@ -169,7 +180,15 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 		return ActionSupport.SUCCESS;
 	}
 	
-	
+	/**
+	 * Books the topo for the user.
+	 * Number of days of booking is provide in a form by user (Can't be more than 14 days, check is make in the form).
+	 * Only connected user can books topo.
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   INPUT if number of days is null
+	 * 		   SUCCESS otherwise
+	 */
 	public String doBooking() {
 		
 		if(id == null) {
@@ -206,7 +225,13 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 		return ActionSupport.SUCCESS;
 	}
 	
-	
+	/**
+	 * Change the borrowable property of the Topo.
+	 * Only owner of the Topo can make this change. Check if user is owner of the topo is make in the jsp.
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doChangeBorrowable() {
 	  
 	  if(id == null) {
@@ -239,7 +264,12 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
 	  
 	}
 	
-	
+	/**
+	 * Delete the topo
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doDelete() {
 	  
         if(id == null) {

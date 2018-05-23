@@ -87,6 +87,13 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
 	
 	
 	// ===== Methods =====
+	
+	/**
+	 * Get a list of all topo
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doList() {
 		
 		try {
@@ -102,7 +109,12 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
 		return ActionSupport.SUCCESS;
 	}
 	
-	
+	/**
+	 * Get a list of topo that match to the searching criteria
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doTopoSearching() {
 		
 		TopoSearch vTopoSearch;
@@ -137,6 +149,12 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
 	
 	}
 	
+	/**
+	 * Get the list of topos owned by the user and the list of topos borrowed by the user
+	 * 
+	 * @return ERROR if error occurred
+	 * 		   SUCCESS otherwise
+	 */
 	public String doMyToposList() {
 		
       User vUser = (User) this.servletRequest.getSession().getAttribute("user");
