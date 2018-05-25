@@ -1,5 +1,8 @@
 package fr.brucella.form.escapp.consumer.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import fr.brucella.form.escapp.consumer.contract.DaoFactory;
 import fr.brucella.form.escapp.consumer.contract.dao.comment.CommentDao;
 import fr.brucella.form.escapp.consumer.contract.dao.site.LengthDao;
@@ -9,153 +12,151 @@ import fr.brucella.form.escapp.consumer.contract.dao.site.SiteDao;
 import fr.brucella.form.escapp.consumer.contract.dao.topo.TopoDao;
 import fr.brucella.form.escapp.consumer.contract.dao.user.RoleUserDao;
 import fr.brucella.form.escapp.consumer.contract.dao.user.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * The Data Access Object Factory.
- * 
+ *
  * @author BRUCELLA2
  *
  */
 @Component
 public class DaoFactoryImpl implements DaoFactory {
-
-	
-
-	/**
-	 * Comment Data Access Object
-	 * 
-	 * @see CommentDao
-	 */
-    @Autowired
-    private CommentDao vCommentDao;
+    
+    
     
     /**
-     * Site Data Access Object
+     * Comment Data Access Object
      * 
+     * @see CommentDao
+     */
+    @Autowired
+    private CommentDao  vCommentDao;
+
+    /**
+     * Site Data Access Object
+     *
      * @see SiteDao
      */
     @Autowired
-    private SiteDao vSiteDao;
-    
+    private SiteDao     vSiteDao;
+
     /**
      * Topo Data Access Object
-     * 
+     *
      * @see TopoDao
      */
     @Autowired
-    private TopoDao vTopoDao;
-    
+    private TopoDao     vTopoDao;
+
     /**
      * User Data Access Object
-     * 
+     *
      * @see UserDao
      */
     @Autowired
-    private UserDao vUserDao;
-    
+    private UserDao     vUserDao;
+
     /**
      * RoleUser Data Access Object
-     * 
+     *
      * @see RoleUserDao
      */
     @Autowired
     private RoleUserDao vRoleUserDao;
-    
+
     /**
      * Route Data Access Object
-     * 
+     *
      * @see RouteDao
      */
     @Autowired
-    private RouteDao vRouteDao;
-    
+    private RouteDao    vRouteDao;
+
     /**
      * Sector Data Access Object
-     * 
+     *
      * @see SectorDao
      */
     @Autowired
-    private SectorDao vSectorDao;
-    
+    private SectorDao   vSectorDao;
+
     /**
      * Length Data Access Object
-     * 
+     *
      * @see LengthDao
      */
     @Autowired
-    private LengthDao vLengthDao;
-
-
+    private LengthDao   vLengthDao;
+    
+    
     // ===== Getters =====
-
+    
     /**
      * @see DaoFactory#getCommentDao()
      */
     @Override
     public CommentDao getCommentDao() {
-        return vCommentDao;
+        return this.vCommentDao;
     }
-
+    
     /**
      * @see DaoFactory#getSiteDao()
      */
     @Override
     public SiteDao getSiteDao() {
-        return vSiteDao;
+        return this.vSiteDao;
     }
-
+    
     /**
      * @see DaoFactory#getRouteDao()
      */
     @Override
     public RouteDao getRouteDao() {
-        return vRouteDao;
+        return this.vRouteDao;
     }
-
+    
     /**
      * @see DaoFactory#getSectorDao()
      */
     @Override
     public SectorDao getSectorDao() {
-        return vSectorDao;
+        return this.vSectorDao;
     }
-
+    
     /**
      * @see DaoFactory#getLengthDao()
      */
     @Override
     public LengthDao getLengthDao() {
-        return vLengthDao;
+        return this.vLengthDao;
     }
-
+    
     /**
      * @see DaoFactory#getTopoDao()
      */
     @Override
     public TopoDao getTopoDao() {
-        return vTopoDao;
+        return this.vTopoDao;
     }
-
+    
     /**
      * @see DaoFactory#getUserDao()
      */
     @Override
     public UserDao getUserDao() {
-        return vUserDao;
+        return this.vUserDao;
     }
-
+    
     /**
      * @see DaoFactory#getRoleUserDao()
      */
     @Override
     public RoleUserDao getRoleUserDao() {
-    	return vRoleUserDao;
+        return this.vRoleUserDao;
     }
-
+    
     // ===== Setters =====
-
+    
     /**
      * @see DaoFactory#setCommentDao(CommentDao)
      */
@@ -163,7 +164,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setCommentDao(CommentDao pCommentDao) {
         this.vCommentDao = pCommentDao;
     }
-
+    
     /**
      * @see DaoFactory#setSiteDao(SiteDao)
      */
@@ -171,7 +172,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setSiteDao(SiteDao pSiteDao) {
         this.vSiteDao = pSiteDao;
     }
-
+    
     /**
      * @see DaoFactory#setRouteDao(RouteDao)
      */
@@ -179,7 +180,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setRouteDao(RouteDao pRouteDao) {
         this.vRouteDao = pRouteDao;
     }
-
+    
     /**
      * @see DaoFactory#setSectorDao(SectorDao)
      */
@@ -187,7 +188,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setSectorDao(SectorDao pSectorDao) {
         this.vSectorDao = pSectorDao;
     }
-
+    
     /**
      * @see DaoFactory#setLengthDao(LengthDao)
      */
@@ -195,7 +196,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setLengthDao(LengthDao pLengthDao) {
         this.vLengthDao = pLengthDao;
     }
-
+    
     /**
      * @see DaoFactory#setTopoDao(TopoDao)
      */
@@ -203,7 +204,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setTopoDao(TopoDao pTopoDao) {
         this.vTopoDao = pTopoDao;
     }
-
+    
     /**
      * @see DaoFactory#setUserDao(UserDao)
      */
@@ -211,13 +212,13 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setUserDao(UserDao pUserDao) {
         this.vUserDao = pUserDao;
     }
-    
+
     /**
      * @see DaoFactory#setRoleUserDao(RoleUserDao)
      */
     @Override
     public void setRoleUserDao(RoleUserDao pRoleUserDao) {
-    	this.vRoleUserDao = pRoleUserDao;
+        this.vRoleUserDao = pRoleUserDao;
     }
-
+    
 }

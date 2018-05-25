@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/">
-    <Resource name="jdbc/DB_ESCAPP"
-              auth="Container"
-              type="javax.sql.DataSource"
+	<Resource name="jdbc/DB_ESCAPP" auth="Container"
+		type="javax.sql.DataSource"
 
-              url="jdbc:postgresql://localhost:5434/escapp"
-              driverClassName="org.postgresql.Driver"
-              username="adm_escapp"
-              password="adm_escapp"
-              defaultAutoCommit="true"
-              defaultTransactionIsolation="READ_COMMITTED"
-
-              initialSize="1"
-              maxTotal="30"
-              maxIdle="10"
-              maxWaitMillis="60000"
-              minIdle="1"
-              removeAbandonedTimeout="60"
-              removeAbandonedOnBorrow="true"
-              logAbandoned="true"
-              minEvictableIdleTimeMillis="10000"
-              timeBetweenEvictionRunsMillis="30000"
-              validationQuery="SELECT 1"
-              testWhileIdle="true"
-              testOnBorrow="true"
-    />
+		url="jdbc:postgresql://localhost:5434/escapp"
+		driverClassName="org.postgresql.Driver" username="adm_escapp"
+		password="adm_escapp" defaultAutoCommit="true"
+		defaultTransactionIsolation="READ_COMMITTED" initialSize="1"
+		maxTotal="30" maxIdle="10" maxWaitMillis="60000" minIdle="1"
+		removeAbandonedTimeout="60" removeAbandonedOnBorrow="true"
+		logAbandoned="true" minEvictableIdleTimeMillis="10000"
+		timeBetweenEvictionRunsMillis="30000" validationQuery="SELECT 1"
+		testWhileIdle="true" testOnBorrow="true" />
 </Context>

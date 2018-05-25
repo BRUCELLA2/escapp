@@ -1,263 +1,265 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <!-- =============================================================== -->
-  <!-- PROJECT INFORMATIONS -->
-  <!-- =============================================================== -->
-  <groupId>fr.brucella.form</groupId>
-  <artifactId>escapp</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+	<!-- =============================================================== -->
+	<!-- PROJECT INFORMATIONS -->
+	<!-- =============================================================== -->
+	<groupId>fr.brucella.form</groupId>
+	<artifactId>escapp</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-  <!-- =============================================================== -->
-  <!-- GENERAL INFORMATIONS -->
-  <!-- =============================================================== -->
-  <name>escapp</name>
-  <url>http://form.brucella.org</url>
+	<!-- =============================================================== -->
+	<!-- GENERAL INFORMATIONS -->
+	<!-- =============================================================== -->
+	<name>escapp</name>
+	<url>http://form.brucella.org</url>
 
-  <!-- =============================================================== -->
-  <!-- PROPERTIES -->
-  <!-- =============================================================== -->
-  <properties>
-    <projectName>Escapp</projectName>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <log4j.version>2.11.0</log4j.version>
-    <spring.version>4.3.11.RELEASE</spring.version>
-    <spring.security.version>4.1.4.RELEASE</spring.security.version>
-    <struts.version>2.5.14.1</struts.version>
-  </properties>
+	<!-- =============================================================== -->
+	<!-- PROPERTIES -->
+	<!-- =============================================================== -->
+	<properties>
+		<projectName>Escapp</projectName>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<log4j.version>2.11.0</log4j.version>
+		<spring.version>4.3.11.RELEASE</spring.version>
+		<spring.security.version>4.1.4.RELEASE</spring.security.version>
+		<struts.version>2.5.14.1</struts.version>
+	</properties>
 
-  <!-- =============================================================== -->
-  <!-- DEPENDENCY MANAGEMENT -->
-  <!-- =============================================================== -->
-  <dependencyManagement>
+	<!-- =============================================================== -->
+	<!-- DEPENDENCY MANAGEMENT -->
+	<!-- =============================================================== -->
+	<dependencyManagement>
 
-    <dependencies>
-      <!-- ===== Modules ===== -->
-      <dependency>
-        <groupId>fr.brucella.form</groupId>
-        <artifactId>escapp-batch</artifactId>
-        <version>1.0-SNAPSHOT</version>
-      </dependency>
+		<dependencies>
+			<!-- ===== Modules ===== -->
+			<dependency>
+				<groupId>fr.brucella.form</groupId>
+				<artifactId>escapp-batch</artifactId>
+				<version>1.0-SNAPSHOT</version>
+			</dependency>
 
-      <dependency>
-        <groupId>fr.brucella.form</groupId>
-        <artifactId>escapp-business</artifactId>
-        <version>1.0-SNAPSHOT</version>
-      </dependency>
+			<dependency>
+				<groupId>fr.brucella.form</groupId>
+				<artifactId>escapp-business</artifactId>
+				<version>1.0-SNAPSHOT</version>
+			</dependency>
 
-      <dependency>
-        <groupId>fr.brucella.form</groupId>
-        <artifactId>escapp-consumer</artifactId>
-        <version>1.0-SNAPSHOT</version>
-      </dependency>
+			<dependency>
+				<groupId>fr.brucella.form</groupId>
+				<artifactId>escapp-consumer</artifactId>
+				<version>1.0-SNAPSHOT</version>
+			</dependency>
 
-      <dependency>
-        <groupId>fr.brucella.form</groupId>
-        <artifactId>escapp-model</artifactId>
-        <version>1.0-SNAPSHOT</version>
-      </dependency>
+			<dependency>
+				<groupId>fr.brucella.form</groupId>
+				<artifactId>escapp-model</artifactId>
+				<version>1.0-SNAPSHOT</version>
+			</dependency>
 
-      <dependency>
-        <groupId>fr.brucella.form</groupId>
-        <artifactId>escapp-webapp</artifactId>
-        <version>1.0-SNAPSHOT</version>
-      </dependency>
+			<dependency>
+				<groupId>fr.brucella.form</groupId>
+				<artifactId>escapp-webapp</artifactId>
+				<version>1.0-SNAPSHOT</version>
+			</dependency>
 
-      <dependency>
-        <groupId>fr.brucella.form</groupId>
-        <artifactId>escapp-technical</artifactId>
-        <version>1.0-SNAPSHOT</version>
-      </dependency>
+			<dependency>
+				<groupId>fr.brucella.form</groupId>
+				<artifactId>escapp-technical</artifactId>
+				<version>1.0-SNAPSHOT</version>
+			</dependency>
 
-      <!-- ===== Third party libraries ===== -->
+			<!-- ===== Third party libraries ===== -->
 
-      <!-- Apache commons logging -->
-      <dependency>
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging</artifactId>
-        <version>1.2</version>
-      </dependency>
+			<!-- Apache commons logging -->
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.2</version>
+			</dependency>
 
-      <!-- Apache Log4j 2 -->
-      <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-bom</artifactId>
-        <version>${log4j.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+			<!-- Apache Log4j 2 -->
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-bom</artifactId>
+				<version>${log4j.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 
-	<!-- Apache Commons Lang -->
-	<dependency>
-	    <groupId>org.apache.commons</groupId>
-	    <artifactId>commons-lang3</artifactId>
-	    <version>3.6</version>
-	</dependency>
+			<!-- Apache Commons Lang -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.6</version>
+			</dependency>
 
-      <!-- Validation API JSR 380 -->
-      <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>2.0.1.Final</version>
-      </dependency>
+			<!-- Validation API JSR 380 -->
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>2.0.1.Final</version>
+			</dependency>
 
-      <dependency>
-        <groupId>org.hibernate.validator</groupId>
-        <artifactId>hibernate-validator</artifactId>
-        <version>6.0.9.Final</version>
-      </dependency>
+			<dependency>
+				<groupId>org.hibernate.validator</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>6.0.9.Final</version>
+			</dependency>
 
-      <dependency>
-        <groupId>org.hibernate.validator</groupId>
-        <artifactId>hibernate-validator-annotation-processor</artifactId>
-        <version>6.0.9.Final</version>
-      </dependency>
+			<dependency>
+				<groupId>org.hibernate.validator</groupId>
+				<artifactId>hibernate-validator-annotation-processor</artifactId>
+				<version>6.0.9.Final</version>
+			</dependency>
 
-      <dependency>
-        <groupId>javax.el</groupId>
-        <artifactId>javax.el-api</artifactId>
-        <version>3.0.0</version>
-      </dependency>
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>javax.el-api</artifactId>
+				<version>3.0.0</version>
+			</dependency>
 
-      <dependency>
-        <groupId>org.glassfish.web</groupId>
-        <artifactId>javax.el</artifactId>
-        <version>2.2.6</version>
-      </dependency>
-
-
-      <!-- Spring Framework -->
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-framework-bom</artifactId>
-        <version>${spring.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      
-      <!-- Spring Security -->
-		<dependency>
-	    	<groupId>org.springframework.security</groupId>
-	    	<artifactId>spring-security-core</artifactId>
-	    	<version>${spring.security.version}</version>
-	    </dependency>
-	    
-      <!-- Apache Struts Framework  -->
-      <dependency>
-        <groupId>org.apache.struts</groupId>
-        <artifactId>struts2-bom</artifactId>
-        <version>${struts.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <!-- JDBC PostgreSQL Drivers -->
-      <dependency>
-        <groupId>org.postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>42.2.2</version>
-        <scope>runtime</scope>
-      </dependency>
-
-	<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
-	<dependency>
-	    <groupId>javax.servlet</groupId>
-	    <artifactId>jstl</artifactId>
-	    <version>1.2</version>
-	</dependency>
-
-	<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-	<dependency>
-	    <groupId>javax.servlet</groupId>
-	    <artifactId>javax.servlet-api</artifactId>
-	    <version>4.0.1</version>
-	    <scope>provided</scope>
-	</dependency>
-	
-
-    </dependencies>
-  </dependencyManagement>
+			<dependency>
+				<groupId>org.glassfish.web</groupId>
+				<artifactId>javax.el</artifactId>
+				<version>2.2.6</version>
+			</dependency>
 
 
-  <!-- =============================================================== -->
-  <!-- Build -->
-  <!-- =============================================================== -->
-  <build>
-    <!-- ===== Gestion des plugins ===== -->
-    <pluginManagement>
-      <plugins>
-        <!-- Packaging JAR -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
+			<!-- Spring Framework -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>${spring.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 
-        <!-- Compilation des sources Java -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.1</version>
-          <configuration>
-            <showDeprecation>true</showDeprecation>
-            <showWarnings>true</showWarnings>
-          </configuration>
-        </plugin>
+			<!-- Spring Security -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
 
-        <!-- Packaging WAR -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
+			<!-- Apache Struts Framework -->
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-bom</artifactId>
+				<version>${struts.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 
-        <!-- Assemblage -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
-        
-        <plugin>
-			<groupId>org.apache.tomcat.maven</groupId>
-			<artifactId>tomcat7-maven-plugin</artifactId>
-			<version>2.2</version>
-			<configuration>
-				<url>http://localhost:8080/manager/text</url>
-				<server>tomcat</server>
-				<path>/escapp</path>
-				<source>${maven.compiler.source}</source>
-				<target>${maven.compiler.target}</target>
-			</configuration>
-		</plugin>
-        
+			<!-- JDBC PostgreSQL Drivers -->
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>42.2.2</version>
+				<scope>runtime</scope>
+			</dependency>
 
-        <!-- Site -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.6</version>
-          <configuration>
-            <locales>fr</locales>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+			<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+			</dependency>
 
-  <!-- =============================================================== -->
-  <!-- MODULES -->
-  <!-- =============================================================== -->
-  <modules>
-    <module>escapp-batch</module>
-    <module>escapp-webapp</module>
-    <module>escapp-business</module>
-    <module>escapp-consumer</module>
-    <module>escapp-model</module>
-    <module>escapp-technical</module>
-  </modules>
+			<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>4.0.1</version>
+				<scope>provided</scope>
+			</dependency>
+
+
+		</dependencies>
+	</dependencyManagement>
+
+
+	<!-- =============================================================== -->
+	<!-- Build -->
+	<!-- =============================================================== -->
+	<build>
+		<!-- ===== Gestion des plugins ===== -->
+		<pluginManagement>
+			<plugins>
+				<!-- Packaging JAR -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.0.2</version>
+				</plugin>
+
+				<!-- Compilation des sources Java -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<showDeprecation>true</showDeprecation>
+						<showWarnings>true</showWarnings>
+					</configuration>
+				</plugin>
+
+				<!-- Packaging WAR -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+
+				<!-- Assemblage -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<url>http://localhost:8080/manager/text</url>
+						<server>tomcat</server>
+						<path>/escapp</path>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
+					</configuration>
+				</plugin>
+
+
+				<!-- Site -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.6</version>
+					<configuration>
+						<locales>fr</locales>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<!-- =============================================================== -->
+	<!-- MODULES -->
+	<!-- =============================================================== -->
+	<modules>
+		<module>escapp-batch</module>
+		<module>escapp-webapp</module>
+		<module>escapp-business</module>
+		<module>escapp-consumer</module>
+		<module>escapp-model</module>
+		<module>escapp-technical</module>
+	</modules>
 </project>

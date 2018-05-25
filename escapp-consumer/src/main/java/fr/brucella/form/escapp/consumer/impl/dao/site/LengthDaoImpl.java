@@ -1,14 +1,9 @@
 package fr.brucella.form.escapp.consumer.impl.dao.site;
 
-import fr.brucella.form.escapp.consumer.contract.dao.site.LengthDao;
-import fr.brucella.form.escapp.consumer.impl.dao.AbstractDao;
-import fr.brucella.form.escapp.consumer.impl.rowmapper.site.LengthRM;
-import fr.brucella.form.escapp.model.beans.site.Length;
-import fr.brucella.form.escapp.model.exceptions.NotFoundException;
-import fr.brucella.form.escapp.model.exceptions.TechnicalException;
-
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,172 +18,185 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import fr.brucella.form.escapp.consumer.contract.dao.site.LengthDao;
+import fr.brucella.form.escapp.consumer.impl.dao.AbstractDao;
+import fr.brucella.form.escapp.consumer.impl.rowmapper.site.LengthRM;
+import fr.brucella.form.escapp.model.beans.site.Length;
+import fr.brucella.form.escapp.model.exceptions.NotFoundException;
+import fr.brucella.form.escapp.model.exceptions.TechnicalException;
+
 /**
  * Length Data Access Object
- * 
+ *
  * @author BRUCELLA2
  */
 @Component
 public class LengthDaoImpl extends AbstractDao implements LengthDao {
-
-	/**
-	 * @see LengthDao#getLength(Integer)
-	 */
-	@Override
-	public Length getLength(Integer pLengthId) throws TechnicalException, NotFoundException {
-		
-		String vSQL = "SELECT * FROM length WHERE id = :id";
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("id", pLengthId);
-		
-		RowMapper<Length> vRowMapper = new LengthRM();
-		
-		try {
-			
-			return getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
-			
-		} catch (EmptyResultDataAccessException pException) {
-			pException.printStackTrace();
-			throw new NotFoundException("La longueur demandée n'a pas été trouvée", pException);
-		} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} 
-	}
-	
-	/**
-	 * @see LengthDao#getLengthsList(Integer)
-	 */
-	@Override
-	public List<Length> getLengthsList(Integer pRouteId) throws TechnicalException, NotFoundException {
-
-		String vSQL = "SELECT * FROM length WHERE route_id = :routeId";
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("routeId", pRouteId);
-		
-		RowMapper<Length> vRowMapper = new LengthRM();
-		
-		try {
-			
-			List<Length> lengthsList = getNamedJdbcTemplate().query(vSQL, vParams,vRowMapper);
-			if(lengthsList.isEmpty()) {
-				throw new NotFoundException("Aucune longueur n'a été trouvée.");
-			} else {
-				return lengthsList;
-			}
-			
-		} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}
-	}
-
-	/**
-	 * @see LengthDao#updateLength(Length)
-	 */
-	@Override
-	public void updateLength(Length pLength) throws TechnicalException, NotFoundException {
-		
-		String vSQL = "UPDATE length SET length = :length, grade = :grade, points_nb = :pointsNb, description = :description, route_id = :routeId WHERE id = :id";
-		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pLength);
-		
-		try {
-			
-			int result = getNamedJdbcTemplate().update(vSQL, vParams);
-			if(result == 0) {
-				throw new NotFoundException("La longueur à modifier n'a pas été trouvée. La mise à jour n'a pas été faite.");
-			}
-			
-		} catch (DataIntegrityViolationException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de la longueur n'a pu être réalisée.", pException);
-    	} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}
-	}
-
-	/**
-	 * @see LengthDao#insertLength(Length)
-	 */
-	@Override
-	public int insertLength(Length pLength) throws TechnicalException {
-		
-		String vSQL = "INSERT INTO length (id, length, grade, points_nb, description, route_id) VALUES (DEFAULT, :length, :grade, :pointsNb, :description, :routeId)";
-		
-		KeyHolder vKeyHolder = new GeneratedKeyHolder();
-		
-		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pLength);
-		
-		try {
-			
-			getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] { "id" });
-			return vKeyHolder.getKey().intValue();
-			
-		} catch (DuplicateKeyException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException("Une longueur existe déjà avec cet identifiant", pException);
-		} catch (DataIntegrityViolationException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException("Les données n'étant pas conformes, la création de la longueur n'a pu être réalisée", pException);	
-    	} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}	
-	}
-
-	/**
-	 * @see LengthDao#deleteLength(Integer)
-	 */
-	@Override
-	public void deleteLength(Integer pLengthId) throws TechnicalException, NotFoundException {
-		
-		String vSQL = "DELETE FROM lenght WHERE id = :id";
-		
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("id", pLengthId);
-		
-		try {
-			
-			int result = getNamedJdbcTemplate().update(vSQL, vParams);
-			if(result == 0) {
-				throw new NotFoundException("La longueur à supprimer n'a pas été trouvée. La suppression n'a pas été réalisée.");
-			}
-			
-    	} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}
-	}
-	
+    
+    // ----- Logger
+    private Log log = LogFactory.getLog(LengthDaoImpl.class);
+    
+    /**
+     * @see LengthDao#getLength(Integer)
+     */
+    @Override
+    public Length getLength(Integer pLengthId) throws TechnicalException, NotFoundException {
+        
+        String vSQL = "SELECT * FROM length WHERE id = :id";
+        MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id", pLengthId);
+        
+        RowMapper<Length> vRowMapper = new LengthRM();
+        
+        try {
+            
+            return this.getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
+            
+        } catch (EmptyResultDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new NotFoundException("La longueur demandée n'a pas été trouvée", pException);
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
+    /**
+     * @see LengthDao#getLengthsList(Integer)
+     */
+    @Override
+    public List<Length> getLengthsList(Integer pRouteId) throws TechnicalException, NotFoundException {
+        
+        String vSQL = "SELECT * FROM length WHERE route_id = :routeId";
+        MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("routeId", pRouteId);
+        
+        RowMapper<Length> vRowMapper = new LengthRM();
+        
+        try {
+            
+            List<Length> lengthsList = this.getNamedJdbcTemplate().query(vSQL, vParams, vRowMapper);
+            if (lengthsList.isEmpty()) {
+                throw new NotFoundException("Aucune longueur n'a été trouvée.");
+            }
+            else {
+                return lengthsList;
+            }
+            
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
+    /**
+     * @see LengthDao#updateLength(Length)
+     */
+    @Override
+    public void updateLength(Length pLength) throws TechnicalException, NotFoundException {
+        
+        String vSQL =
+                "UPDATE length SET length = :length, grade = :grade, points_nb = :pointsNb, description = :description, route_id = :routeId WHERE id = :id";
+        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pLength);
+        
+        try {
+            
+            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            if (result == 0) {
+                throw new NotFoundException("La longueur à modifier n'a pas été trouvée. La mise à jour n'a pas été faite.");
+            }
+            
+        } catch (DataIntegrityViolationException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de la longueur n'a pu être réalisée.", pException);
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
+    /**
+     * @see LengthDao#insertLength(Length)
+     */
+    @Override
+    public int insertLength(Length pLength) throws TechnicalException {
+        
+        String vSQL =
+                "INSERT INTO length (id, length, grade, points_nb, description, route_id) VALUES (DEFAULT, :length, :grade, :pointsNb, :description, :routeId)";
+        
+        KeyHolder vKeyHolder = new GeneratedKeyHolder();
+        
+        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pLength);
+        
+        try {
+            
+            this.getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] {"id"});
+            return vKeyHolder.getKey().intValue();
+            
+        } catch (DuplicateKeyException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException("Une longueur existe déjà avec cet identifiant", pException);
+        } catch (DataIntegrityViolationException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException("Les données n'étant pas conformes, la création de la longueur n'a pu être réalisée", pException);
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
+    /**
+     * @see LengthDao#deleteLength(Integer)
+     */
+    @Override
+    public void deleteLength(Integer pLengthId) throws TechnicalException, NotFoundException {
+        
+        String vSQL = "DELETE FROM lenght WHERE id = :id";
+        
+        MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id", pLengthId);
+        
+        try {
+            
+            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            if (result == 0) {
+                throw new NotFoundException("La longueur à supprimer n'a pas été trouvée. La suppression n'a pas été réalisée.");
+            }
+            
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
 }

@@ -1,12 +1,7 @@
 package fr.brucella.form.escapp.consumer.impl.dao.user;
 
-import fr.brucella.form.escapp.consumer.contract.dao.user.UserDao;
-import fr.brucella.form.escapp.consumer.impl.dao.AbstractDao;
-import fr.brucella.form.escapp.consumer.impl.rowmapper.user.UserRM;
-import fr.brucella.form.escapp.model.beans.user.User;
-import fr.brucella.form.escapp.model.exceptions.NotFoundException;
-import fr.brucella.form.escapp.model.exceptions.TechnicalException;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,195 +16,205 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import fr.brucella.form.escapp.consumer.contract.dao.user.UserDao;
+import fr.brucella.form.escapp.consumer.impl.dao.AbstractDao;
+import fr.brucella.form.escapp.consumer.impl.rowmapper.user.UserRM;
+import fr.brucella.form.escapp.model.beans.user.User;
+import fr.brucella.form.escapp.model.exceptions.NotFoundException;
+import fr.brucella.form.escapp.model.exceptions.TechnicalException;
+
 /**
  * User Data Access Object
- * 
+ *
  * @author BRUCELLA2
  */
 @Component
 public class UserDaoImpl extends AbstractDao implements UserDao {
-
-	/**
-	 * @see UserDao#getUserById(Integer)
-	 */
-	@Override
-	public User getUserById(Integer pUserId) throws TechnicalException, NotFoundException {
-		
-		String vSQL = "SELECT * FROM escapp_user WHERE id = :id";
-		
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("id", pUserId);
-		
-		RowMapper<User> vRowMapper = new UserRM();
-		
-		try {
-			
-			return getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
-			
-		} catch (EmptyResultDataAccessException pException) {
-			pException.printStackTrace();
-			throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", pException);
-		} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}	
-	}
-	
-	/**
-	 * @see UserDao#getUserByLogin(String)
-	 */
-	@Override
-	public User getUserByLogin(String pUserLogin) throws TechnicalException, NotFoundException {
-		
-		String vSQL = "SELECT * FROM escapp_user WHERE login = :login";
-		
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("login", pUserLogin);
-		
-		RowMapper<User> vRowMapper = new UserRM();
-		
-		try {
-			return getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
-		} catch (EmptyResultDataAccessException pException) {
-			pException.printStackTrace();
-			throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", pException);
-		} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}
-	}
-	
-	/**
-	 * @see UserDao#countUserByLogin(String)
-	 */
-	@Override
-	public Integer countUserByLogin(String pUserLogin) throws TechnicalException {
-		
-		String vSQL = "SELECT COUNT(login) FROM escapp_user WHERE login = :login";
-		
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("login", pUserLogin);
-		
-		try {
-			return getNamedJdbcTemplate().queryForObject(vSQL, vParams,Integer.class);
-		} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}
-	}
-	
-	/**
-	 * @see UserDao#updateUser(User)
-	 */
-	@Override
-	public void updateUser(User pUser) throws TechnicalException, NotFoundException {
-
-		String vSQL = "UPDATE escapp_user SET login = :login, email = :email, password = :password WHERE id = :id";
-		
-		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pUser);
-		
-		try {
-			
-			int result = getNamedJdbcTemplate().update(vSQL, vParams);
-			if(result == 0) {
-				throw new NotFoundException("L'utilisateur à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
-			}
-			
-		} catch (DataIntegrityViolationException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de l'utilisateur n'a pu être réalisée.", pException);
-    	} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}
-	}
-
-	/**
-	 * @see UserDao#insertUser(User)
-	 */
-	@Override
-	public int insertUser(User pUser) throws TechnicalException {
-
-		String vSQL = "INSERT INTO escapp_user (id, login, email, password) VALUES (DEFAULT, :login, :email, :password)";
-		
-		KeyHolder vKeyHolder = new GeneratedKeyHolder();
-		
-		SqlParameterSource vParams = new BeanPropertySqlParameterSource(pUser);
-		
-		try {
-			
-			getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] { "id" });
-			return vKeyHolder.getKey().intValue();
-			
-		} catch (DuplicateKeyException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException("Un utilisateur existe déjà avec cet identifiant technique.", pException);
-		} catch (DataIntegrityViolationException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException("Les données n'étant pas conformes, la création de l'utilisateur n'a pu être réalisée", pException);	
-    	} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}
-	}
-
-	/**
-	 * @see UserDao#deleteUser(Integer)
-	 */
-	@Override
-	public void deleteUser(Integer pUserId) throws TechnicalException, NotFoundException {
-		
-		String vSQL = "DELETE FROM escapp_user WHERE id = :id";
-		
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("id", pUserId);
-		
-		try {
-			
-			int result = getNamedJdbcTemplate().update(vSQL, vParams);
-			if(result == 0) {
-				throw new NotFoundException("L'utilisateur à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
-			}
-			
-    	} catch (PermissionDeniedDataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		} catch (DataAccessResourceFailureException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
-		} catch (DataAccessException pException) {
-			pException.printStackTrace();
-			throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
-		}
-	}
+    
+    // ----- Logger
+    private Log log = LogFactory.getLog(UserDaoImpl.class);
+    
+    /**
+     * @see UserDao#getUserById(Integer)
+     */
+    @Override
+    public User getUserById(Integer pUserId) throws TechnicalException, NotFoundException {
+        
+        String vSQL = "SELECT * FROM escapp_user WHERE id = :id";
+        
+        MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id", pUserId);
+        
+        RowMapper<User> vRowMapper = new UserRM();
+        
+        try {
+            
+            return this.getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
+            
+        } catch (EmptyResultDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", pException);
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
+    /**
+     * @see UserDao#getUserByLogin(String)
+     */
+    @Override
+    public User getUserByLogin(String pUserLogin) throws TechnicalException, NotFoundException {
+        
+        String vSQL = "SELECT * FROM escapp_user WHERE login = :login";
+        
+        MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("login", pUserLogin);
+        
+        RowMapper<User> vRowMapper = new UserRM();
+        
+        try {
+            return this.getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
+        } catch (EmptyResultDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", pException);
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
+    /**
+     * @see UserDao#countUserByLogin(String)
+     */
+    @Override
+    public Integer countUserByLogin(String pUserLogin) throws TechnicalException {
+        
+        String vSQL = "SELECT COUNT(login) FROM escapp_user WHERE login = :login";
+        
+        MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("login", pUserLogin);
+        
+        try {
+            return this.getNamedJdbcTemplate().queryForObject(vSQL, vParams, Integer.class);
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
+    /**
+     * @see UserDao#updateUser(User)
+     */
+    @Override
+    public void updateUser(User pUser) throws TechnicalException, NotFoundException {
+        
+        String vSQL = "UPDATE escapp_user SET login = :login, email = :email, password = :password WHERE id = :id";
+        
+        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pUser);
+        
+        try {
+            
+            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            if (result == 0) {
+                throw new NotFoundException("L'utilisateur à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
+            }
+            
+        } catch (DataIntegrityViolationException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de l'utilisateur n'a pu être réalisée.", pException);
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
+    /**
+     * @see UserDao#insertUser(User)
+     */
+    @Override
+    public int insertUser(User pUser) throws TechnicalException {
+        
+        String vSQL = "INSERT INTO escapp_user (id, login, email, password) VALUES (DEFAULT, :login, :email, :password)";
+        
+        KeyHolder vKeyHolder = new GeneratedKeyHolder();
+        
+        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pUser);
+        
+        try {
+            
+            this.getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] {"id"});
+            return vKeyHolder.getKey().intValue();
+            
+        } catch (DuplicateKeyException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException("Un utilisateur existe déjà avec cet identifiant technique.", pException);
+        } catch (DataIntegrityViolationException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException("Les données n'étant pas conformes, la création de l'utilisateur n'a pu être réalisée", pException);
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
+    
+    /**
+     * @see UserDao#deleteUser(Integer)
+     */
+    @Override
+    public void deleteUser(Integer pUserId) throws TechnicalException, NotFoundException {
+        
+        String vSQL = "DELETE FROM escapp_user WHERE id = :id";
+        
+        MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id", pUserId);
+        
+        try {
+            
+            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            if (result == 0) {
+                throw new NotFoundException("L'utilisateur à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
+            }
+            
+        } catch (PermissionDeniedDataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        } catch (DataAccessResourceFailureException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+        } catch (DataAccessException pException) {
+            this.log.debug(pException.getStackTrace());
+            throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+        }
+    }
 }

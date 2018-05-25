@@ -8,10 +8,12 @@ This application being community-based, each user can comment on sites and topos
 
 ## Requirement
 
-This project need : 
+This project needs : 
 
-	* Apache Tomcat 9 server
-	* PostgreSQL 10.x
+* Apache Tomcat 9 server
+* PostgreSQL 10.x
+* Maven 3.5.3
+* Java 1.8
 
 ## Set-up
 ### Database
@@ -25,6 +27,7 @@ Scripts for database and data creation are in Database folder.
 
 Database user and Database configuration can be change in context.xml in META-INF
 
+With demo data, password for all users already created in the application is "escapp".
 
 ### Maven
 
@@ -60,6 +63,6 @@ In ${maven.home}/conf/settings.xml (or ${user.home}/.m2/settings.xml):
 
 ## Post-deploiement modifications
 
-* If you use the demos data, you need to add some pdf files in the folder : WEB-INF/files/
+* If you use the demos data, you need to copy the pdf files located in Database/pdf/ to the folder : WEB-INF/files/ in Tomcat server
 * If you run the application in production, you need to defined administrator user of escapp. To do this, after the creation of the user in EscApp, you need to execute this request on database :
 `INSERT INTO public.role_user(role, escapp_user)VALUES ('Admin', X);` where X is the id of the administrator user. 

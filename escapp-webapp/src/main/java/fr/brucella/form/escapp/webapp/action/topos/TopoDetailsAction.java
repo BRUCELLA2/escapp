@@ -8,12 +8,17 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import fr.brucella.form.escapp.business.contract.ManagerFactory;
@@ -24,287 +29,260 @@ import fr.brucella.form.escapp.model.exceptions.FunctionalException;
 import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
-public class TopoDetailsAction extends ActionSupport implements ServletRequestAware{
-
-	// ----- Input
-	private Integer id;
-	private String fileName;
-	private Integer nbDays;
-	private String borrowable;
-	
-	// ----- Output
-	private Topo topo;
-	private Integer nbCommentsTopo;
-	private List<Pair<Comment,String>> commentsTopoList;
-	private User ownerTopo;
-	private User borrowerTopo;
-	
-	
-	// ----- Manager
-	@Autowired
-	private ManagerFactory managerFactory;
-	
-	// ----- Struts Elements
-	private InputStream inputStream;
-	private HttpServletRequest servletRequest;
-
-	
-	// ===== Getters =====
-	public Integer getId() {
-		return id;
-	}
-	
-	public Topo getTopo() {
-		return topo;
-	}
-	
-	public Integer getNbCommentsTopo() {
-		return nbCommentsTopo;
-	}
-	
-	public List<Pair<Comment, String>> getCommentsTopoList(){
-		return commentsTopoList;
-	}
-	
-	public User getOwnerTopo() {
-		return ownerTopo;
-	}
-	
-	public User getBorrowerTopo() {
-		return borrowerTopo;
-	}
-	
-	public InputStream getInputStream() {
-		return inputStream;
-	}
-	
-	public String getFileName() {
-		return fileName;
-	}
-	
-	public Integer getNbDays() {
-		return nbDays;
-	}
-	
-	public String getBorrowable() {
-	  return borrowable;
-	}
-	
-	// ===== Setters =====
-	public void setId(Integer pId) {
-		this.id = pId;
-	}
-	
-	public void setFileName(String pFileName) {
-		this.fileName = pFileName;
-	}
-	
-	public void setNbDays(Integer pNbDays) {
-		this.nbDays = pNbDays;
-	}
-	
-	public void setBorrowable(String pBorrowable) {
-      this.borrowable = pBorrowable;
+public class TopoDetailsAction extends ActionSupport implements ServletRequestAware {
+    
+    private static final long           serialVersionUID = 6745173617900744958L;
+    
+    Log                                 log              = LogFactory.getLog(TopoDetailsAction.class);
+    
+    
+    // ----- Input
+    private Integer                     id;
+    private String                      fileName;
+    private Integer                     nbDays;
+    private String                      borrowable;
+    
+    // ----- Output
+    private Topo                        topo;
+    private Integer                     nbCommentsTopo;
+    private List<Pair<Comment, String>> commentsTopoList;
+    private User                        ownerTopo;
+    private User                        borrowerTopo;
+    
+    
+    // ----- Manager
+    @Autowired
+    private ManagerFactory              managerFactory;
+    
+    // ----- Struts Elements
+    private InputStream                 inputStream;
+    private HttpServletRequest          servletRequest;
+    
+    
+    // ===== Getters =====
+    public Integer getId() {
+        return this.id;
     }
-	
-	@Override
-	public void setServletRequest(HttpServletRequest pServletRequest) {
-		this.servletRequest = pServletRequest;
-	}
-	
-	// ===== Methods =====
-	/**
-	 * Get Topo details with comments
-	 * 
-	 * @return ERROR if error occurred
-	 * 		   SUCCESS otherwise
-	 */
-	public String doTopoDetails() {
-	
-		if(id == null) {
-			this.addActionError("L'identifiant du topo recherché est incorrect (Identifiant vide) - Echec de la recherche");
-			return ActionSupport.ERROR;
-		}
-		
-		try {
-			topo = managerFactory.getTopoManager().getTopoById(id);
-			if(topo.getOwner() != 0) {
-				ownerTopo = managerFactory.getUserManager().getUserById(topo.getOwner());
-			}
-			if(topo.getBorrower() != null) {
-				borrowerTopo = managerFactory.getUserManager().getUserById(topo.getBorrower());
-			}
-		}catch (TechnicalException pException) {
-			this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
-		}catch (FunctionalException pException) {
-			this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
-		}catch (NotFoundException pException) {
-			this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
-		}
-		
-		try {
-			commentsTopoList = managerFactory.getCommentManager().getCommentsTopoListWithLogin(id, "ASC");
-			nbCommentsTopo = commentsTopoList.size();
-		}catch (TechnicalException pException) {
-			this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
-		}catch (FunctionalException pException) {
-			this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
-		}catch (NotFoundException pException) {
-			nbCommentsTopo = 0;
-			this.addActionMessage("Aucun commentaire");
-		}
-		
-		return ActionSupport.SUCCESS;
-	}
-	
-	/**
-	 * Topo pdf downloading
-	 * 
-	 * @return SUCCESS
-	 */
-	@Override
-	public String execute() throws FileNotFoundException{
-		
-		ServletContext servletContext = ServletActionContext.getServletContext();
-		String path = servletContext.getRealPath("/WEB-INF/files/"+getFileName());
-		File fileToDownLoad = new File(path);
-		
-		inputStream = new FileInputStream(fileToDownLoad);
-		fileName = fileToDownLoad.getName();
-		
-		return ActionSupport.SUCCESS;
-	}
-	
-	/**
-	 * Books the topo for the user.
-	 * Number of days of booking is provide in a form by user (Can't be more than 14 days, check is make in the form).
-	 * Only connected user can books topo.
-	 * 
-	 * @return ERROR if error occurred
-	 * 		   INPUT if number of days is null
-	 * 		   SUCCESS otherwise
-	 */
-	public String doBooking() {
-		
-		if(id == null) {
-			this.addActionError("L'identifiant du topo à réserver est incorrect (Identifiant vide) - Echec de la réservation");
-			return ActionSupport.ERROR;
-		}
-		
-		if(nbDays == null) {
-			doTopoDetails();
-			return ActionSupport.INPUT;
-		}
-		
-		User vUser = (User) this.servletRequest.getSession().getAttribute("user");
-	    if(vUser == null) {
-            addActionError("Vous n'êtes plus identifié, la réservation du topo n'a pu se faire. Merci de vous reconnecter.");
-            return ActionSupport.ERROR;
-        }
-	    
-	    try {
-	    	topo = managerFactory.getTopoManager().getTopoById(id);
-	    	topo = managerFactory.getTopoManager().borrowTopo(topo, nbDays, vUser);
-	    	borrowerTopo = vUser;
-		}catch (TechnicalException pException) {
-			this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
-		}catch (FunctionalException pException) {
-			this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
-		}catch (NotFoundException pException) {
-			this.addActionError(pException.getMessage());
-			return ActionSupport.ERROR;
-		}  
-		
-		return ActionSupport.SUCCESS;
-	}
-	
-	/**
-	 * Change the borrowable property of the Topo.
-	 * Only owner of the Topo can make this change. Check if user is owner of the topo is make in the jsp.
-	 * 
-	 * @return ERROR if error occurred
-	 * 		   SUCCESS otherwise
-	 */
-	public String doChangeBorrowable() {
-	  
-	  if(id == null) {
-           this.addActionError("L'identifiant du topo à modifier est incorrect (Identifiant vide) - Echec de la modification");
-           return ActionSupport.ERROR;
-      }
-	     
-      User vUser = (User) this.servletRequest.getSession().getAttribute("user");
-      if(vUser == null) {
-          addActionError("Vous n'êtes plus identifié, la modification du topo n'a pu se faire. Merci de vous reconnecter.");
-          return ActionSupport.ERROR;
-      }
-      
-      try {
-          topo = managerFactory.getTopoManager().getTopoById(id);
-          topo.setBorrowable(StringUtils.equals(borrowable, "true"));
-          managerFactory.getTopoManager().modifyTopo(topo, vUser);
-      }catch (TechnicalException pException) {
-        this.addActionError(pException.getMessage());
-        return ActionSupport.ERROR;
-      }catch (FunctionalException pException) {
-        this.addActionError(pException.getMessage());
-        return ActionSupport.ERROR;
-      }catch (NotFoundException pException) {
-        this.addActionError(pException.getMessage());
-        return ActionSupport.ERROR;
-      }
-      
-      return ActionSupport.SUCCESS;
-	  
-	}
-	
-	/**
-	 * Delete the topo
-	 * 
-	 * @return ERROR if error occurred
-	 * 		   SUCCESS otherwise
-	 */
-	public String doDelete() {
-	  
-        if(id == null) {
-            this.addActionError("L'identifiant du topo à supprimer est incorrect (Identifiant vide) - Echec de la modification");
-            return ActionSupport.ERROR;
-        }
+    
+    public Topo getTopo() {
+        return this.topo;
+    }
+    
+    public Integer getNbCommentsTopo() {
+        return this.nbCommentsTopo;
+    }
+    
+    public List<Pair<Comment, String>> getCommentsTopoList() {
+        return this.commentsTopoList;
+    }
+    
+    public User getOwnerTopo() {
+        return this.ownerTopo;
+    }
+    
+    public User getBorrowerTopo() {
+        return this.borrowerTopo;
+    }
+    
+    public InputStream getInputStream() {
+        return this.inputStream;
+    }
+    
+    public String getFileName() {
+        return this.fileName;
+    }
+    
+    public Integer getNbDays() {
+        return this.nbDays;
+    }
+    
+    public String getBorrowable() {
+        return this.borrowable;
+    }
+    
+    // ===== Setters =====
+    public void setId(Integer pId) {
+        this.id = pId;
+    }
+    
+    public void setFileName(String pFileName) {
+        this.fileName = pFileName;
+    }
+    
+    public void setNbDays(Integer pNbDays) {
+        this.nbDays = pNbDays;
+    }
+    
+    public void setBorrowable(String pBorrowable) {
+        this.borrowable = pBorrowable;
+    }
+    
+    @Override
+    public void setServletRequest(HttpServletRequest pServletRequest) {
+        this.servletRequest = pServletRequest;
+    }
+    
+    // ===== Methods =====
+    /**
+     * Get Topo details with comments
+     * 
+     * @return ERROR if error occurred SUCCESS otherwise
+     */
+    public String doTopoDetails() {
         
-        User vUser = (User) this.servletRequest.getSession().getAttribute("user");
-        if(vUser == null) {
-            addActionError("Vous n'êtes plus identifié, la suppression du topo n'a pu se faire. Merci de vous reconnecter.");
-            return ActionSupport.ERROR;
+        if (this.id == null) {
+            this.addActionError("L'identifiant du topo recherché est incorrect (Identifiant vide) - Echec de la recherche");
+            return Action.ERROR;
         }
         
         try {
-          
-          Topo vTopo = managerFactory.getTopoManager().getTopoById(id);
-          
-          ServletContext servletContext = ServletActionContext.getServletContext();
-          String path = servletContext.getRealPath("/WEB-INF/files/");
-          File topoPdf = new File(path,vTopo.getPdfFileName());
-          FileUtils.deleteQuietly(topoPdf);
-          
-          managerFactory.getTopoManager().deleteTopo(id, vUser);    
-          
-        }catch (TechnicalException pException) {
-          this.addActionError(pException.getMessage());
-          return ActionSupport.ERROR;
-        }catch (FunctionalException pException) {
-          this.addActionError(pException.getMessage());
-          return ActionSupport.ERROR;
-        }catch (NotFoundException pException) {
-          this.addActionError(pException.getMessage());
-          return ActionSupport.ERROR;
+            this.topo = this.managerFactory.getTopoManager().getTopoById(this.id);
+            if (this.topo.getOwner() != 0) {
+                this.ownerTopo = this.managerFactory.getUserManager().getUserById(this.topo.getOwner());
+            }
+            if (this.topo.getBorrower() != null) {
+                this.borrowerTopo = this.managerFactory.getUserManager().getUserById(this.topo.getBorrower());
+            }
+        } catch (TechnicalException | NotFoundException | FunctionalException pException) {
+            this.log.debug(pException.getMessage());
+            this.addActionError(pException.getMessage());
+            return Action.ERROR;
         }
         
-        return ActionSupport.SUCCESS;
-	}
+        try {
+            this.commentsTopoList = this.managerFactory.getCommentManager().getCommentsTopoListWithLogin(this.id, "ASC");
+            this.nbCommentsTopo = this.commentsTopoList.size();
+        } catch (TechnicalException | FunctionalException pException) {
+            this.addActionError(pException.getMessage());
+            return Action.ERROR;
+        } catch (NotFoundException pException) {
+            this.nbCommentsTopo = 0;
+            this.addActionMessage("Aucun commentaire");
+        }
+        
+        return Action.SUCCESS;
+    }
+    
+    /**
+     * Topo pdf downloading
+     * 
+     * @return SUCCESS
+     */
+    @Override
+    public String execute() throws FileNotFoundException {
+        
+        ServletContext servletContext = ServletActionContext.getServletContext();
+        String path = servletContext.getRealPath("/WEB-INF/files/" + this.getFileName());
+        File fileToDownLoad = new File(path);
+        
+        this.inputStream = new FileInputStream(fileToDownLoad);
+        this.fileName = fileToDownLoad.getName();
+        
+        return Action.SUCCESS;
+    }
+    
+    /**
+     * Books the topo for the user. Number of days of booking is provide in a form by user (Can't be
+     * more than 14 days, check is make in the form). Only connected user can books topo.
+     * 
+     * @return ERROR if error occurred INPUT if number of days is null SUCCESS otherwise
+     */
+    public String doBooking() {
+        
+        if (this.id == null) {
+            this.addActionError("L'identifiant du topo à réserver est incorrect (Identifiant vide) - Echec de la réservation");
+            return Action.ERROR;
+        }
+        
+        if (this.nbDays == null) {
+            this.doTopoDetails();
+            return Action.INPUT;
+        }
+        
+        User vUser = (User) this.servletRequest.getSession().getAttribute("user");
+        if (vUser == null) {
+            this.addActionError("Vous n'êtes plus identifié, la réservation du topo n'a pu se faire. Merci de vous reconnecter.");
+            return Action.ERROR;
+        }
+        
+        try {
+            this.topo = this.managerFactory.getTopoManager().getTopoById(this.id);
+            this.topo = this.managerFactory.getTopoManager().borrowTopo(this.topo, this.nbDays, vUser);
+            this.borrowerTopo = vUser;
+        } catch (TechnicalException | NotFoundException | FunctionalException pException) {
+            this.addActionError(pException.getMessage());
+            return Action.ERROR;
+        }
+        
+        return Action.SUCCESS;
+    }
+    
+    /**
+     * Change the borrowable property of the Topo. Only owner of the Topo can make this change. Check if
+     * user is owner of the topo is make in the jsp.
+     * 
+     * @return ERROR if error occurred SUCCESS otherwise
+     */
+    public String doChangeBorrowable() {
+        
+        if (this.id == null) {
+            this.addActionError("L'identifiant du topo à modifier est incorrect (Identifiant vide) - Echec de la modification");
+            return Action.ERROR;
+        }
+        
+        User vUser = (User) this.servletRequest.getSession().getAttribute("user");
+        if (vUser == null) {
+            this.addActionError("Vous n'êtes plus identifié, la modification du topo n'a pu se faire. Merci de vous reconnecter.");
+            return Action.ERROR;
+        }
+        
+        try {
+            this.topo = this.managerFactory.getTopoManager().getTopoById(this.id);
+            this.topo.setBorrowable(StringUtils.equals(this.borrowable, "true"));
+            this.managerFactory.getTopoManager().modifyTopo(this.topo, vUser);
+        } catch (TechnicalException | NotFoundException | FunctionalException pException) {
+            this.addActionError(pException.getMessage());
+            return Action.ERROR;
+        }
+        
+        return Action.SUCCESS;
+        
+    }
+    
+    /**
+     * Delete the topo
+     * 
+     * @return ERROR if error occurred SUCCESS otherwise
+     */
+    public String doDelete() {
+        
+        if (this.id == null) {
+            this.addActionError("L'identifiant du topo à supprimer est incorrect (Identifiant vide) - Echec de la modification");
+            return Action.ERROR;
+        }
+
+        User vUser = (User) this.servletRequest.getSession().getAttribute("user");
+        if (vUser == null) {
+            this.addActionError("Vous n'êtes plus identifié, la suppression du topo n'a pu se faire. Merci de vous reconnecter.");
+            return Action.ERROR;
+        }
+
+        try {
+            
+            Topo vTopo = this.managerFactory.getTopoManager().getTopoById(this.id);
+            
+            ServletContext servletContext = ServletActionContext.getServletContext();
+            String path = servletContext.getRealPath("/WEB-INF/files/");
+            File topoPdf = new File(path, vTopo.getPdfFileName());
+            FileUtils.deleteQuietly(topoPdf);
+            
+            this.managerFactory.getTopoManager().deleteTopo(this.id, vUser);
+            
+        } catch (TechnicalException | NotFoundException | FunctionalException pException) {
+            this.addActionError(pException.getMessage());
+            return Action.ERROR;
+        }
+
+        return Action.SUCCESS;
+    }
 }
