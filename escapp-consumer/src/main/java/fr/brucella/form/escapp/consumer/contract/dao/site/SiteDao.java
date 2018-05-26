@@ -17,7 +17,7 @@ public interface SiteDao {
     /**
      * Get the {@link Site} with the specified id from the datastore.
      * 
-     * @param pSiteId {@link Integer} id of the {@link Site}.
+     * @param siteId {@link Integer} id of the {@link Site}.
      * 
      * @return the {@link Site} with the specified id.
      * 
@@ -25,7 +25,7 @@ public interface SiteDao {
      * @throws NotFoundException - This exception is throws if there is no technical exception and the
      *         {@link Site} is not found.
      */
-    Site getSite(Integer pSiteId) throws TechnicalException, NotFoundException;
+    Site getSite(final Integer siteId) throws TechnicalException, NotFoundException;
     
     /**
      * Get the list of all {@link Site} from the datastore.
@@ -42,7 +42,7 @@ public interface SiteDao {
     /**
      * Get the list of {@link Site} searched from the datastore.
      * 
-     * @param pSiteSearch the {@link SiteSearch} which represents the site searching criteria.
+     * @param siteSearch the {@link SiteSearch} which represents the site searching criteria.
      * 
      * @return the list of {@link Site} searched.
      * 
@@ -50,40 +50,40 @@ public interface SiteDao {
      * @throws NotFoundException - This exception is throws if there is no technical exception and no
      *         {@link Site} is found.
      */
-    List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException;
+    List<Site> getSearchSitesList(final SiteSearch siteSearch) throws TechnicalException, NotFoundException;
     
     /**
      * Update an existing {@link Site} in the datastore.
      * 
-     * @param pSite The {@link Site} with the updated informations to save in datastore.
+     * @param site The {@link Site} with the updated informations to save in datastore.
      * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      * @throws NotFoundException - This exception is throws if there is no technical exception and the
      *         {@link Site} is not found.
      */
-    void updateSite(Site pSite) throws TechnicalException, NotFoundException;
+    void updateSite(final Site site) throws TechnicalException, NotFoundException;
     
     
     /**
      * Insert a new {@link Site} in datastore.
      * 
-     * @param pSite The {@link Site} to insert in datastore.
+     * @param site The {@link Site} to insert in datastore.
      * 
      * @return the id of the new {@link Site}
      * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      */
-    int insertSite(Site pSite) throws TechnicalException;
+    int insertSite(final Site site) throws TechnicalException;
     
     
     /**
      * Delete the {@link Site} with the specified id in the datastore.
      * 
-     * @param pSiteId {@link Integer} id of the {@link Site}.
+     * @param siteId {@link Integer} id of the {@link Site}.
      * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      * @throws NotFoundException - This exception is throws if there is no technical exception and the
      *         {@link Site} is not found.
      */
-    void deleteSite(Integer pSiteId) throws TechnicalException, NotFoundException;
+    void deleteSite(final Integer siteId) throws TechnicalException, NotFoundException;
 }

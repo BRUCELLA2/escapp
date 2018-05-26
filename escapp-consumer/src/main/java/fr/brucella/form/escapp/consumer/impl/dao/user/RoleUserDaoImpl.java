@@ -29,35 +29,37 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 @Component
 public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
     
-    // ----- Logger
-    private Log log = LogFactory.getLog(RoleUserDaoImpl.class);
+    /**
+     * RoleUser DAO logger
+     */
+    private static final Log LOG = LogFactory.getLog(RoleUserDaoImpl.class);
     
     /**
      * @see RoleUseDaor#getRoleUserList(Integer)
      */
     @Override
-    public List<RoleUser> getRoleUserList(Integer pUserId) throws NotFoundException, TechnicalException {
+    public List<RoleUser> getRoleUserList(final Integer userId) throws NotFoundException, TechnicalException {
         
-        String vSQL = "SELECT * FROM role_user where escapp_user = :userId";
+        final String sql = "SELECT * FROM role_user where escapp_user = :userId";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("userId", pUserId);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userId", userId);
         
-        RowMapper<RoleUser> vRowMapper = new RoleUserRM();
+        final RowMapper<RoleUser> rowMapper = new RoleUserRM();
         
         try {
-            return this.getNamedJdbcTemplate().query(vSQL, vParams, vRowMapper);
+            return this.getNamedJdbcTemplate().query(sql, params, rowMapper);
         } catch (EmptyResultDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new NotFoundException("L'utilisateur n'a aucun role", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
         
@@ -67,30 +69,30 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
      * @see RoleUserDao#updateRoleUser(Integer)
      */
     @Override
-    public void updateRoleUser(RoleUser pRoleUser) throws TechnicalException, NotFoundException {
+    public void updateRoleUser(final RoleUser roleUser) throws TechnicalException, NotFoundException {
         
-        String vSQL = "UPDATE role_user SET escapp_user = :userId, role = :role";
+        final String sql = "UPDATE role_user SET escapp_user = :userId, role = :role";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("userId", pRoleUser.getUserId());
-        vParams.addValue("role", pRoleUser.getUserRole());
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userId", roleUser.getUserId());
+        params.addValue("role", roleUser.getUserRole());
         
         try {
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le role associé à l'utilisateur n'a pas été trouvé. La mise à jour n'a pas été faite.");
             }
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du role n'a pu être réalisée.", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
         
@@ -100,30 +102,30 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
      * @see RoleUserDao#insertRoleUser(RoleUser)
      */
     @Override
-    public void insertRoleUser(RoleUser pRoleUser) throws TechnicalException {
+    public void insertRoleUser(final RoleUser roleUser) throws TechnicalException {
         
-        String vSQL = "INSERT INTO role_user (escapp_user, role) VALUES (:userId, :role)";
+        final String sql = "INSERT INTO role_user (escapp_user, role) VALUES (:userId, :role)";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("userId", pRoleUser.getUserId());
-        vParams.addValue("role", pRoleUser.getUserRole());
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userId", roleUser.getUserId());
+        params.addValue("role", roleUser.getUserRole());
         
         try {
-            this.getNamedJdbcTemplate().update(vSQL, vParams);
+            this.getNamedJdbcTemplate().update(sql, params);
         } catch (DuplicateKeyException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Un role identique pour cet utilisateur existe déjà.", pException);
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la création du role pour cet utilisateur n'a pu être réalisée", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -132,27 +134,27 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
      * @see RoleUserDao#deleteRoleUser(RoleUserDao)
      */
     @Override
-    public void deleteRoleUser(RoleUser pRoleUser) throws TechnicalException, NotFoundException {
+    public void deleteRoleUser(final RoleUser roleUser) throws TechnicalException, NotFoundException {
         
-        String vSQL = "DELETE FROM route_user WHERE escapp_user = :userId AND role = :role";
+        final String sql = "DELETE FROM route_user WHERE escapp_user = :userId AND role = :role";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("userId", pRoleUser.getUserId());
-        vParams.addValue("role", pRoleUser.getUserRole());
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userId", roleUser.getUserId());
+        params.addValue("role", roleUser.getUserRole());
         
         try {
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le role à supprimer pour cet utilisateur n'a pas été toruvé. La suppresion n'a pas été réalisée.");
             }
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
         

@@ -26,7 +26,15 @@ import fr.brucella.form.escapp.model.search.SiteSearch;
 @Component
 public class SiteManagerImpl extends AbstractManager implements SiteManager {
     
-    Log log = LogFactory.getLog(SiteManagerImpl.class);
+    // ----- Logger
+    
+    /**
+     * Site Manager logger
+     */
+    private static final Log LOG = LogFactory.getLog(SiteManagerImpl.class);
+    
+    
+    // ----- Methods
     
     /**
      * @see SiteManager#getAllSitesList()
@@ -47,15 +55,15 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager {
      * @see SiteManager#getSiteById(Integer)
      */
     @Override
-    public Site getSiteById(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException {
+    public Site getSiteById(final Integer siteId) throws TechnicalException, FunctionalException, NotFoundException {
         
-        if (pSiteId == null) {
+        if (siteId == null) {
             throw new FunctionalException("L'identifiant du site recherché est incorrect (Identifiant vide) - Echec de la recherche");
         }
         
         try {
             
-            return this.getDaoFactory().getSiteDao().getSite(pSiteId);
+            return this.getDaoFactory().getSiteDao().getSite(siteId);
             
         } catch (TechnicalException pException) {
             throw new TechnicalException(pException.getMessage(), pException);
@@ -68,26 +76,32 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager {
      * @see SiteManager#getSearchSitesList(SiteSearch)
      */
     @Override
-    public List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException, FunctionalException {
+    public List<Site> getSearchSitesList(final SiteSearch pSiteSearch) throws TechnicalException, NotFoundException, FunctionalException {
+        
+        
+        List<Site> sitesList;
         
         if (pSiteSearch == null) {
-            return this.getAllSitesList();
+            sitesList = this.getAllSitesList();
+        }
+        else {
+            final Set<ConstraintViolation<SiteSearch>> violations = this.getConstraintValidator().validate(pSiteSearch);
+            if (!violations.isEmpty()) {
+                for (final ConstraintViolation<SiteSearch> violation : violations) {
+                    LOG.debug(violation.getMessage());
+                }
+                throw new FunctionalException("Les critères de recherche ne sont pas valides", new ConstraintViolationException(violations));
+            }
+            try {
+                sitesList = this.getDaoFactory().getSiteDao().getSearchSitesList(pSiteSearch);
+            } catch (TechnicalException pException) {
+                throw new TechnicalException(pException.getMessage(), pException);
+            } catch (NotFoundException pException) {
+                throw new NotFoundException(pException.getMessage(), pException);
+            }
         }
         
-        Set<ConstraintViolation<SiteSearch>> vViolations = this.getConstraintValidator().validate(pSiteSearch);
-        if (!vViolations.isEmpty()) {
-            for (ConstraintViolation<SiteSearch> violation : vViolations) {
-                this.log.debug(violation.getMessage());
-            }
-            throw new FunctionalException("Les critères de recherche ne sont pas valides", new ConstraintViolationException(vViolations));
-        }
-        try {
-            return this.getDaoFactory().getSiteDao().getSearchSitesList(pSiteSearch);
-        } catch (TechnicalException pException) {
-            throw new TechnicalException(pException.getMessage(), pException);
-        } catch (NotFoundException pException) {
-            throw new NotFoundException(pException.getMessage(), pException);
-        }
+        return sitesList;
         
     }
     
@@ -95,23 +109,23 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager {
      * @see SiteManager#modifySite(Site)
      */
     @Override
-    public void modifySite(Site pSite) throws TechnicalException, FunctionalException, NotFoundException {
+    public void modifySite(final Site site) throws TechnicalException, FunctionalException, NotFoundException {
         
-        if (pSite == null) {
+        if (site == null) {
             throw new FunctionalException("Aucune modification n'a été transmise (Site vide) - Echec de la mise à jour");
         }
         
-        Set<ConstraintViolation<Site>> vViolations = this.getConstraintValidator().validate(pSite);
+        final Set<ConstraintViolation<Site>> violations = this.getConstraintValidator().validate(site);
         
-        if (!vViolations.isEmpty()) {
-            for (ConstraintViolation<Site> violation : vViolations) {
-                this.log.debug(violation.getMessage());
+        if (!violations.isEmpty()) {
+            for (final ConstraintViolation<Site> violation : violations) {
+                LOG.debug(violation.getMessage());
             }
-            throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(vViolations));
+            throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(violations));
         }
         
         try {
-            this.getDaoFactory().getSiteDao().updateSite(pSite);
+            this.getDaoFactory().getSiteDao().updateSite(site);
         } catch (NotFoundException pException) {
             throw new NotFoundException(pException.getMessage(), pException);
         } catch (TechnicalException pException) {
@@ -123,24 +137,24 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager {
      * @see SiteManager#addSite(Site)
      */
     @Override
-    public void addSite(Site pSite) throws TechnicalException, FunctionalException {
+    public void addSite(final Site site) throws TechnicalException, FunctionalException {
         
-        if (pSite == null) {
+        if (site == null) {
             throw new FunctionalException("Aucune site n'a été transmis (Site vide) - Echec de l'ajout");
         }
         
-        Set<ConstraintViolation<Site>> vViolations = this.getConstraintValidator().validate(pSite);
+        final Set<ConstraintViolation<Site>> violations = this.getConstraintValidator().validate(site);
         
-        if (!vViolations.isEmpty()) {
-            for (ConstraintViolation<Site> violation : vViolations) {
-                this.log.debug(violation.getMessage());
+        if (!violations.isEmpty()) {
+            for (final ConstraintViolation<Site> violation : violations) {
+                LOG.debug(violation.getMessage());
             }
-            throw new FunctionalException("Le site à ajouter n'est pas valide", new ConstraintViolationException(vViolations));
+            throw new FunctionalException("Le site à ajouter n'est pas valide", new ConstraintViolationException(violations));
         }
         
         try {
-            int newSiteId = this.getDaoFactory().getSiteDao().insertSite(pSite);
-            pSite.setId(newSiteId);
+            final int newSiteId = this.getDaoFactory().getSiteDao().insertSite(site);
+            site.setId(newSiteId);
         } catch (TechnicalException pException) {
             throw new TechnicalException(pException.getMessage(), pException);
         }
@@ -150,14 +164,14 @@ public class SiteManagerImpl extends AbstractManager implements SiteManager {
      * @see SiteManager#deleteSite(Integer)
      */
     @Override
-    public void deleteSite(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException {
+    public void deleteSite(final Integer siteId) throws TechnicalException, FunctionalException, NotFoundException {
         
-        if (pSiteId == null) {
+        if (siteId == null) {
             throw new FunctionalException("L'identifiant du site à supprimer est incorrect (Identifiant vide) - Echec de la suppression");
         }
         
         try {
-            this.getDaoFactory().getSiteDao().deleteSite(pSiteId);
+            this.getDaoFactory().getSiteDao().deleteSite(siteId);
         } catch (TechnicalException pException) {
             throw new TechnicalException(pException.getMessage(), pException);
         } catch (NotFoundException pException) {

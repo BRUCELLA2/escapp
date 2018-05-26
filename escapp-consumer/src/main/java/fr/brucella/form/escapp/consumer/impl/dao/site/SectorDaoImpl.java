@@ -34,37 +34,40 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 public class SectorDaoImpl extends AbstractDao implements SectorDao {
     
     
-    // ----- Logger
-    private Log log = LogFactory.getLog(SectorDaoImpl.class);
+    /**
+     * Sector DAO logger
+     */
+    private static final Log LOG = LogFactory.getLog(SectorDaoImpl.class);
+    
     
     /**
      * @see SectorDao#getSector(Integer)
      */
     @Override
-    public Sector getSector(Integer pSectorId) throws TechnicalException, NotFoundException {
+    public Sector getSector(final Integer sectorId) throws TechnicalException, NotFoundException {
         
-        String vSQL = "SELECT * FROM sector WHERE id = :id";
+        final String sql = "SELECT * FROM sector WHERE id = :id";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pSectorId);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", sectorId);
         
-        RowMapper<Sector> vRowMapper = new SectorRM();
+        final RowMapper<Sector> rowMapper = new SectorRM();
         
         try {
             
-            return this.getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
+            return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
             
         } catch (EmptyResultDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new NotFoundException("Le secteur demandé n'a pas été trouvé", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -73,17 +76,17 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
      * @see SectorDao#getSectorsList(Integer)
      */
     @Override
-    public List<Sector> getSectorsList(Integer pSiteId) throws TechnicalException, NotFoundException {
+    public List<Sector> getSectorsList(final Integer siteId) throws TechnicalException, NotFoundException {
         
-        String vSQL = "SELECT * FROM sector WHERE site_id = :siteId";
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("siteId", pSiteId);
+        final String sql = "SELECT * FROM sector WHERE site_id = :siteId";
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("siteId", siteId);
         
-        RowMapper<Sector> vRowMapper = new SectorRM();
+        final RowMapper<Sector> rowMapper = new SectorRM();
         
         try {
             
-            List<Sector> sectorsList = this.getNamedJdbcTemplate().query(vSQL, vParams, vRowMapper);
+            final List<Sector> sectorsList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
             if (sectorsList.isEmpty()) {
                 throw new NotFoundException("Aucun secteur n'a été trouvé.");
             }
@@ -92,13 +95,13 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
             }
             
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -107,29 +110,29 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
      * @see SectorDao#updateSector(Sector)
      */
     @Override
-    public void updateSector(Sector pSector) throws TechnicalException, NotFoundException {
+    public void updateSector(final Sector sector) throws TechnicalException, NotFoundException {
         
-        String vSQL = "UPDATE sector SET name = :name, description = :description, site_id = :siteId WHERE id = :id";
-        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pSector);
+        final String sql = "UPDATE sector SET name = :name, description = :description, site_id = :siteId WHERE id = :id";
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(sector);
         
         try {
             
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le secteur à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
             }
             
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du secteur n'a pu être réalisée.", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -138,33 +141,33 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
      * @see SectorDao#insertSector(Sector)
      */
     @Override
-    public int insertSector(Sector pSector) throws TechnicalException {
+    public int insertSector(final Sector sector) throws TechnicalException {
         
-        String vSQL = "INSERT INTO sector (id, name, description, site_id) VALUES (DEFAULT, :name, :description, :siteId)";
+        final String sql = "INSERT INTO sector (id, name, description, site_id) VALUES (DEFAULT, :name, :description, :siteId)";
         
-        KeyHolder vKeyHolder = new GeneratedKeyHolder();
+        final KeyHolder keyHolder = new GeneratedKeyHolder();
         
-        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pSector);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(sector);
         
         try {
             
-            this.getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] {"id"});
-            return vKeyHolder.getKey().intValue();
+            this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
+            return keyHolder.getKey().intValue();
             
         } catch (DuplicateKeyException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Un secteur existe déjà avec cet identifiant", pException);
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la création du secteur n'a pu être réalisée", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -173,27 +176,27 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
      * @see SectorDao#deleteSector(Integer)
      */
     @Override
-    public void deleteSector(Integer pSectorId) throws TechnicalException, NotFoundException {
+    public void deleteSector(final Integer sectorId) throws TechnicalException, NotFoundException {
         
-        String vSQL = "DELETE FROM sector WHERE id = :id";
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pSectorId);
+        final String sql = "DELETE FROM sector WHERE id = :id";
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", sectorId);
         
         try {
             
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le secteur à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
             }
             
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }

@@ -35,37 +35,39 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 @Component
 public class CommentDaoImpl extends AbstractDao implements CommentDao {
     
-    // ----- Logger
-    private Log log = LogFactory.getLog(CommentDaoImpl.class);
+    /**
+     * Comment Manager logger
+     */
+    private static final Log LOG = LogFactory.getLog(CommentDaoImpl.class);
     
     /**
      * @see CommentDao#getComment(Integer)
      */
     @Override
-    public Comment getComment(Integer pCommentId) throws TechnicalException, NotFoundException {
+    public Comment getComment(Integer commentId) throws TechnicalException, NotFoundException {
 
-        String vSQL = "SELECT * FROM comment WHERE id = :id";
+        final String sql = "SELECT * FROM comment WHERE id = :id";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pCommentId);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", commentId);
         
-        RowMapper<Comment> vRowMapper = new CommentRM();
+        RowMapper<Comment> rowMapper = new CommentRM();
         
         try {
             
-            return this.getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
+            return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
             
         } catch (EmptyResultDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new NotFoundException("Le commentaire demandé n'a pas été trouvé", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -74,18 +76,18 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
      * @see CommentDao#getCommentsList(String, Integer)
      */
     @Override
-    public List<Comment> getCommentsList(String pTargetType, Integer pIdCommentTarget) throws TechnicalException, NotFoundException {
+    public List<Comment> getCommentsList(final String targetType, final Integer idCommentTarget) throws TechnicalException, NotFoundException {
         
-        String vSQL = "SELECT * FROM comment WHERE target_type = :targetType AND id_comment_target = :idCommentTarget";
+        final String sql = "SELECT * FROM comment WHERE target_type = :targetType AND id_comment_target = :idCommentTarget";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("targetType", pTargetType);
-        vParams.addValue("idCommentTarget", pIdCommentTarget);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("targetType", targetType);
+        params.addValue("idCommentTarget", idCommentTarget);
         
-        RowMapper<Comment> vRowMapper = new CommentRM();
+        final RowMapper<Comment> rowMapper = new CommentRM();
         
         try {
-            List<Comment> commentsList = this.getNamedJdbcTemplate().query(vSQL, vParams, vRowMapper);
+            final List<Comment> commentsList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
             if (commentsList.isEmpty()) {
                 throw new NotFoundException("Aucun commentaire n'a été trouvé.");
             }
@@ -93,13 +95,13 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
                 return commentsList;
             }
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
         
@@ -109,21 +111,21 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
      * @see CommentDao#getCommentsListWithLogin(String, Integer)
      */
     @Override
-    public List<Pair<Comment, String>> getCommentsListWithLogin(String pTargetType, Integer pIdCommentTarget, String pOrder)
+    public List<Pair<Comment, String>> getCommentsListWithLogin(final String targetType, final Integer idCommentTarget, final String order)
             throws TechnicalException, NotFoundException {
         
-        String vSQL = "SELECT comment.id, comment.text, comment.target_type, comment.id_comment_target, comment.escapp_user, escapp_user.login "
+        final String sql = "SELECT comment.id, comment.text, comment.target_type, comment.id_comment_target, comment.escapp_user, escapp_user.login "
                 + "		FROM comment " + "		INNER JOIN escapp_user " + "		ON comment.escapp_user = escapp_user.id "
-                + "		WHERE comment.target_type = :targetType AND comment.id_comment_target = :idCommentTarget " + "		ORDER BY comment.id " + pOrder;
+                + "		WHERE comment.target_type = :targetType AND comment.id_comment_target = :idCommentTarget " + "		ORDER BY comment.id " + order;
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("targetType", pTargetType);
-        vParams.addValue("idCommentTarget", pIdCommentTarget);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("targetType", targetType);
+        params.addValue("idCommentTarget", idCommentTarget);
         
-        RowMapper<Pair<Comment, String>> vRowMapper = new CommentWithLoginRM();
+        final RowMapper<Pair<Comment, String>> rowMapper = new CommentWithLoginRM();
         
         try {
-            List<Pair<Comment, String>> commentsListWithLogin = this.getNamedJdbcTemplate().query(vSQL, vParams, vRowMapper);
+            final List<Pair<Comment, String>> commentsListWithLogin = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
             if (commentsListWithLogin.isEmpty()) {
                 throw new NotFoundException("Aucun commentaire n'a été trouvé.");
             }
@@ -131,13 +133,13 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
                 return commentsListWithLogin;
             }
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
         
@@ -147,31 +149,31 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
      * @see CommentDao#updateComment(Comment)
      */
     @Override
-    public void updateComment(Comment pComment) throws TechnicalException, NotFoundException {
+    public void updateComment(final Comment comment) throws TechnicalException, NotFoundException {
         
-        String vSQL =
+        final String sql =
                 "UPDATE comment SET text = :text, target_type = :targetType, id_comment_target = :idCommentTarget, escapp_user = :escappUser WHERE id = :id";
         
-        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pComment);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
         
         try {
             
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le commentaire à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
             }
             
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du commentaire n'a pu être réalisée.", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -180,34 +182,34 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
      * @see CommentDao#insertComment(Comment)
      */
     @Override
-    public int insertComment(Comment pComment) throws TechnicalException {
+    public int insertComment(final Comment comment) throws TechnicalException {
         
-        String vSQL =
+        final String sql =
                 "INSERT INTO comment (id, text, target_type, id_comment_target, escapp_user) VALUES (DEFAULT, :text, :targetType, :idCommentTarget, :escappUser)";
         
-        KeyHolder vKeyHolder = new GeneratedKeyHolder();
+        final KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pComment);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
 
         try {
             
-            this.getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] {"id"});
-            return vKeyHolder.getKey().intValue();
+            this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
+            return keyHolder.getKey().intValue();
             
         } catch (DuplicateKeyException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Un commentaire existe déjà avec cet identifiant", pException);
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la création du commentaire n'a pu être réalisée", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -216,27 +218,28 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
      * @see CommentDao#deleteComment(Integer)
      */
     @Override
-    public void deleteComment(Integer pCommentId) throws TechnicalException, NotFoundException {
-        String vSQL = "DELETE FROM comment WHERE id = :id";
+    public void deleteComment(Integer commentId) throws TechnicalException, NotFoundException {
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pCommentId);
+        final String sql = "DELETE FROM comment WHERE id = :id";
+        
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", commentId);
         
         try {
             
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le commentaire à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
             }
             
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }

@@ -35,37 +35,40 @@ import fr.brucella.form.escapp.model.search.SiteSearch;
 @Component
 public class SiteDaoImpl extends AbstractDao implements SiteDao {
     
-    // ----- Logger
-    private Log log = LogFactory.getLog(SiteDaoImpl.class);
+    /**
+     * Site DAO logger
+     */
+    private static final Log LOG = LogFactory.getLog(SiteDaoImpl.class);
+    
     
     /**
      * @see SiteDao#getSite(Integer)
      */
     @Override
-    public Site getSite(Integer pSiteId) throws TechnicalException, NotFoundException {
+    public Site getSite(final Integer siteId) throws TechnicalException, NotFoundException {
         
-        String vSQL = "SELECT * FROM site WHERE id = :id";
+        final String sql = "SELECT * FROM site WHERE id = :id";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pSiteId);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", siteId);
         
-        RowMapper<Site> vRowMapper = new SiteRM();
+        final RowMapper<Site> rowMapper = new SiteRM();
         
         try {
             
-            return this.getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
+            return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
             
         } catch (EmptyResultDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getMessage());
             throw new NotFoundException("Le site demandé n'a pas été trouvé", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -76,13 +79,13 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
     @Override
     public List<Site> getAllSitesList() throws TechnicalException, NotFoundException {
         
-        String vSQL = "SELECT * FROM site";
+        final String sql = "SELECT * FROM site";
         
-        RowMapper<Site> vRowMapper = new SiteRM();
+        final RowMapper<Site> rowMapper = new SiteRM();
         
         try {
             
-            List<Site> allSitesList = this.getJdbcTemplate().query(vSQL, vRowMapper);
+            final List<Site> allSitesList = this.getJdbcTemplate().query(sql, rowMapper);
             if (allSitesList.isEmpty()) {
                 throw new NotFoundException("Aucun site n'a été trouvé.");
             }
@@ -91,13 +94,13 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
             }
             
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -106,48 +109,57 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
      * @see SiteDao#getSearchSiteList(SiteSearch)
      */
     @Override
-    public List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException {
+    public List<Site> getSearchSitesList(final SiteSearch siteSearch) throws TechnicalException, NotFoundException {
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
+        final MapSqlParameterSource params = new MapSqlParameterSource();
         
-        StringBuilder vSQL = new StringBuilder(
-                "SELECT DISTINCT site.id, site.name, site.department, site.municipality, site.description " + " 	FROM site " + " 	INNER JOIN sector "
-                        + " 	ON sector.site_id = site.id " + " 		INNER JOIN route " + " 		ON route.sector_id = sector.id " + " 	WHERE 1 = 1 ");
+        final StringBuilder sql = new StringBuilder(
+                "SELECT DISTINCT site.id, site.name, site.department, site.municipality, site.description " + " 	FROM site ");
         
-        if (pSiteSearch != null) {
-            if (!StringUtils.isEmpty(pSiteSearch.getDepartmentSite())) {
-                vSQL.append(" AND UPPER(site.department) = UPPER(:departmentSite) ");
-                vParams.addValue("departmentSite", pSiteSearch.getDepartmentSite());
+        if (siteSearch != null) {
+            
+            if(!StringUtils.isEmpty(siteSearch.getMinGradeRoute()) || !StringUtils.isEmpty(siteSearch.getMaxGradeRoute())){
+                sql.append(" INNER JOIN sector ON sector.site_id = site.id INNER JOIN route ON route.sector_id = sector.id WHERE 1 = 1 ");
             }
-            if (!StringUtils.isEmpty(pSiteSearch.getMunicipalitySite())) {
-                vSQL.append(" AND UPPER(site.municipality) = UPPER(:municipalitySite) ");
-                vParams.addValue("municipalitySite", pSiteSearch.getMunicipalitySite());
+            else {
+                sql.append(" WHERE 1 = 1 ");
             }
-            if (!StringUtils.isEmpty(pSiteSearch.getMinGradeRoute())) {
-                vSQL.append(" AND UPPER(route.grade) >= UPPER(:minGradeRoute) ");
-                vParams.addValue("minGradeRoute", pSiteSearch.getMinGradeRoute());
+            
+            
+            if (!StringUtils.isEmpty(siteSearch.getDepartmentSite())) {
+                sql.append(" AND UPPER(site.department) = UPPER(:departmentSite) ");
+                params.addValue("departmentSite", siteSearch.getDepartmentSite());
             }
-            if (!StringUtils.isEmpty(pSiteSearch.getMaxGradeRoute())) {
-                vSQL.append(" AND UPPER(route.grade) <= UPPER(:maxGradeRoute) ");
-                vParams.addValue("maxGradeRoute", pSiteSearch.getMaxGradeRoute());
+            if (!StringUtils.isEmpty(siteSearch.getMunicipalitySite())) {
+                sql.append(" AND UPPER(site.municipality) = UPPER(:municipalitySite) ");
+                params.addValue("municipalitySite", siteSearch.getMunicipalitySite());
+            }
+            if (!StringUtils.isEmpty(siteSearch.getMinGradeRoute())) {
+                sql.append(" AND UPPER(route.grade) >= UPPER(:minGradeRoute) ");
+                params.addValue("minGradeRoute", siteSearch.getMinGradeRoute());
+            }
+            if (!StringUtils.isEmpty(siteSearch.getMaxGradeRoute())) {
+                sql.append(" AND UPPER(route.grade) <= UPPER(:maxGradeRoute) ");
+                params.addValue("maxGradeRoute", siteSearch.getMaxGradeRoute());
             }
         }
         
-        RowMapper<Site> vRowMapper = new SiteRM();
+        final RowMapper<Site> rowMapper = new SiteRM();
         
         try {
-            return this.getNamedJdbcTemplate().query(vSQL.toString(), vParams, vRowMapper);
+            LOG.debug("SQL" + sql.toString());
+            return this.getNamedJdbcTemplate().query(sql.toString(), params, rowMapper);
         } catch (EmptyResultDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new NotFoundException("Aucun site ne correspond à votre recherche", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -156,30 +168,30 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
      * @see SiteDao#updateSite(Site)
      */
     @Override
-    public void updateSite(Site pSite) throws TechnicalException, NotFoundException {
+    public void updateSite(final Site site) throws TechnicalException, NotFoundException {
         
-        String vSQL = "UPDATE site SET name = :name, department = :department, municipality = :municipality, description = :description WHERE id = :id";
+        final String sql = "UPDATE site SET name = :name, department = :department, municipality = :municipality, description = :description WHERE id = :id";
         
-        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pSite);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(site);
         
         try {
             
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le site à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
             }
             
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du site n'a pu être réalisée.", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -188,33 +200,33 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
      * @see SiteDao#insertSite(Site)
      */
     @Override
-    public int insertSite(Site pSite) throws TechnicalException {
+    public int insertSite(final Site site) throws TechnicalException {
         
-        String vSQL = "INSERT INTO site (id, name, department, municipality, description) VALUES (DEFAULT, :name, :department, :municipality, :description)";
+        final String sql = "INSERT INTO site (id, name, department, municipality, description) VALUES (DEFAULT, :name, :department, :municipality, :description)";
         
-        KeyHolder vKeyHolder = new GeneratedKeyHolder();
+        final KeyHolder keyHolder = new GeneratedKeyHolder();
         
-        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pSite);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(site);
         
         try {
             
-            this.getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] {"id"});
-            return vKeyHolder.getKey().intValue();
+            this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
+            return keyHolder.getKey().intValue();
             
         } catch (DuplicateKeyException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Un site existe déjà avec cet identifiant", pException);
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la création du site n'a pu être réalisée", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -223,28 +235,28 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
      * @see SiteDao#deleteSite(Integer)
      */
     @Override
-    public void deleteSite(Integer pSiteId) throws TechnicalException, NotFoundException {
+    public void deleteSite(final Integer siteId) throws TechnicalException, NotFoundException {
         
-        String vSQL = "DELETE FROM site WHERE id = :id";
+        final String sql = "DELETE FROM site WHERE id = :id";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pSiteId);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", siteId);
         
         try {
             
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le site à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
             }
             
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }

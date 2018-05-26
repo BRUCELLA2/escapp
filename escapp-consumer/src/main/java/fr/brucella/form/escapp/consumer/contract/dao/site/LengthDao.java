@@ -16,7 +16,7 @@ public interface LengthDao {
     /**
      * Get the {@link Length} with the specified id from the datastore.
      * 
-     * @param pLengthId {@link Integer} id of the {@link Length}.
+     * @param lengthId {@link Integer} id of the {@link Length}.
      * 
      * @return the {@link Length} with the specified id.
      * 
@@ -24,13 +24,13 @@ public interface LengthDao {
      * @throws NotFoundException - This exception is throws if there is no technical exception and the
      *         {@link Length} is not found.
      */
-    Length getLength(Integer pLengthId) throws TechnicalException, NotFoundException;
+    Length getLength(final Integer lengthId) throws TechnicalException, NotFoundException;
     
     
     /**
      * Get a list of {@link Length} with the specified route id from the datastore.
      *
-     * @param pRouteId {@link Integer} id of the {@link fr.brucella.form.escapp.model.beans.site.Route}
+     * @param routeId {@link Integer} id of the {@link fr.brucella.form.escapp.model.beans.site.Route}
      *        to which the {@link Length} belongs.
      *
      * @return a list of {@link Length} with the specified route id.
@@ -39,42 +39,42 @@ public interface LengthDao {
      * @throws NotFoundException - This exception is throws if there is no technical exception and no
      *         {@link Length} is found.
      */
-    List<Length> getLengthsList(Integer pRouteId) throws TechnicalException, NotFoundException;
+    List<Length> getLengthsList(final Integer routeId) throws TechnicalException, NotFoundException;
 
 
     /**
      * Update an existing {@link Length} in the datastore.
      *
-     * @param pLength The {@link Length} with the updated informations to save in datastore.
+     * @param length The {@link Length} with the updated informations to save in datastore.
      * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      * @throws NotFoundException - This exception is throws if there is no technical exception and the
      *         {@link Length} is not found.
      */
-    void updateLength(Length pLength) throws TechnicalException, NotFoundException;
+    void updateLength(final Length length) throws TechnicalException, NotFoundException;
 
 
     /**
      * Insert a new {@link Length} in the datastore.
      *
-     * @param pLength The {@link Length} to insert in datastore.
+     * @param length The {@link Length} to insert in datastore.
      *
      * @return the id of the new {@link Length}
      *
      * @throws TechnicalException - wraps technical exception caused during data access.
      */
-    int insertLength(Length pLength) throws TechnicalException;
+    int insertLength(final Length length) throws TechnicalException;
 
 
     /**
      * Delete the {@link Length} with the specified id in the datastore.
      *
-     * @param pLengthId {@link Integer} id of the {@link Length}.
+     * @param lengthId {@link Integer} id of the {@link Length}.
      * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      * @throws NotFoundException - This exception is throws if there is no technical exception and the
      *         {@link Length} is not found.
      */
-    void deleteLength(Integer pLengthId) throws TechnicalException, NotFoundException;
+    void deleteLength(final Integer lengthId) throws TechnicalException, NotFoundException;
     
 }

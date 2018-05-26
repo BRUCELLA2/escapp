@@ -33,37 +33,39 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 @Component
 public class RouteDaoImpl extends AbstractDao implements RouteDao {
     
-    // ----- Logger
-    private Log log = LogFactory.getLog(RouteDaoImpl.class);
+    /**
+     * Route DAO logger
+     */
+    private static final Log LOG = LogFactory.getLog(RouteDaoImpl.class);
     
     /**
      * @see RouteDao#getRoute(Integer)
      */
     @Override
-    public Route getRoute(Integer pRouteId) throws TechnicalException, NotFoundException {
+    public Route getRoute(final Integer routeId) throws TechnicalException, NotFoundException {
         
-        String vSQL = "SELECT * FROM route WHERE id = :id";
+        final String sql = "SELECT * FROM route WHERE id = :id";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pRouteId);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", routeId);
         
-        RowMapper<Route> vRowMapper = new RouteRM();
+        final RowMapper<Route> rowMapper = new RouteRM();
         
         try {
             
-            return this.getNamedJdbcTemplate().queryForObject(vSQL, vParams, vRowMapper);
+            return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
             
         } catch (EmptyResultDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new NotFoundException("La voie demandée n'a pas été trouvée", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -72,18 +74,18 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
      * @see RouteDao#getRoutesList(Integer)
      */
     @Override
-    public List<Route> getRoutesList(Integer pSectorId) throws TechnicalException, NotFoundException {
+    public List<Route> getRoutesList(final Integer sectorId) throws TechnicalException, NotFoundException {
         
-        String vSQL = "SELECT * FROM route WHERE sector_id = :sectorId";
+        final String sql = "SELECT * FROM route WHERE sector_id = :sectorId";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("sectorId", pSectorId);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("sectorId", sectorId);
         
-        RowMapper<Route> vRowMapper = new RouteRM();
+        final RowMapper<Route> rowMapper = new RouteRM();
         
         try {
             
-            List<Route> routesList = this.getNamedJdbcTemplate().query(vSQL, vParams, vRowMapper);
+            final List<Route> routesList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
             if (routesList.isEmpty()) {
                 throw new NotFoundException("Aucune voie n'a été trouvée.");
             }
@@ -92,13 +94,13 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
             }
             
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -107,29 +109,29 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
      * @see RouteDao#updateRoute(Route)
      */
     @Override
-    public void updateRoute(Route pRoute) throws TechnicalException, NotFoundException {
+    public void updateRoute(final Route route) throws TechnicalException, NotFoundException {
         
-        String vSQL = "UPDATE route SET sector_id = :sectorId, name = :name, grade = :grade, points_nb = :pointsNb, description = :description WHERE id = :id";
-        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pRoute);
+        final String sql = "UPDATE route SET sector_id = :sectorId, name = :name, grade = :grade, points_nb = :pointsNb, description = :description WHERE id = :id";
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(route);
         
         try {
             
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("La voie à modifier n'a pas été trouvée. La mise à jour n'a pas été faite.");
             }
             
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de la voie n'a pu être réalisée.", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -138,34 +140,34 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
      * @see RouteDao#insertRoute(Route)
      */
     @Override
-    public int insertRoute(Route pRoute) throws TechnicalException {
+    public int insertRoute(final Route route) throws TechnicalException {
         
-        String vSQL =
+        final String sql =
                 "INSERT INTO route (id, sector_id, name, grade, points_nb, description) VALUES (DEFAULT, :sectorId, :name, :grade, :pointsNb, :description)";
         
-        KeyHolder vKeyHolder = new GeneratedKeyHolder();
+        final KeyHolder keyHolder = new GeneratedKeyHolder();
         
-        SqlParameterSource vParams = new BeanPropertySqlParameterSource(pRoute);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(route);
         
         try {
             
-            this.getNamedJdbcTemplate().update(vSQL, vParams, vKeyHolder, new String[] {"id"});
-            return vKeyHolder.getKey().intValue();
+            this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
+            return keyHolder.getKey().intValue();
             
         } catch (DuplicateKeyException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Une voie existe déjà avec cet identifiant", pException);
         } catch (DataIntegrityViolationException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la création de la voie n'a pu être réalisée", pException);
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
@@ -174,28 +176,28 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
      * @see RouteDao#deleteRoute(Integer)
      */
     @Override
-    public void deleteRoute(Integer pRouteId) throws TechnicalException, NotFoundException {
+    public void deleteRoute(final Integer routeId) throws TechnicalException, NotFoundException {
         
-        String vSQL = "DELETE FROM route WHERE id = :id";
+        final String sql = "DELETE FROM route WHERE id = :id";
         
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pRouteId);
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", routeId);
         
         try {
             
-            int result = this.getNamedJdbcTemplate().update(vSQL, vParams);
+            final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("La voie à supprimer n'a pas été trouvée. La suppression n'a pas été réalisée.");
             }
             
         } catch (PermissionDeniedDataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         } catch (DataAccessResourceFailureException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
         } catch (DataAccessException pException) {
-            this.log.debug(pException.getStackTrace());
+            LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }

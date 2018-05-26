@@ -30,11 +30,11 @@ import fr.brucella.form.escapp.model.search.TopoSearch;
 @Component
 public class TopoManagerImpl extends AbstractManager implements TopoManager {
     
-    // ----- Logger
+
     /**
      * Topo Manager logger
      */
-    private static final Log log = LogFactory.getLog(TopoManagerImpl.class);
+    private static final Log LOG = LogFactory.getLog(TopoManagerImpl.class);
     
     /**
      * @see TopoManager#getAllToposList()
@@ -57,25 +57,28 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager {
     @Override
     public List<Topo> getSearchToposList(final TopoSearch topoSearch) throws TechnicalException, NotFoundException, FunctionalException {
         
+        List<Topo> toposList;
+        
         if (topoSearch == null) {
-            return this.getAllToposList();
+            toposList = this.getAllToposList();
         }
-        
-        final Set<ConstraintViolation<TopoSearch>> vViolations = this.getConstraintValidator().validate(topoSearch);
-        if (!vViolations.isEmpty()) {
-            for (final ConstraintViolation<TopoSearch> violation : vViolations) {
-                log.debug(violation.getMessage());
+        else {
+            final Set<ConstraintViolation<TopoSearch>> vViolations = this.getConstraintValidator().validate(topoSearch);
+            if (!vViolations.isEmpty()) {
+                for (final ConstraintViolation<TopoSearch> violation : vViolations) {
+                    LOG.debug(violation.getMessage());
+                }
+                throw new FunctionalException("Les critères de recherche ne sont pas valides", new ConstraintViolationException(vViolations));
             }
-            throw new FunctionalException("Les critères de recherche ne sont pas valides", new ConstraintViolationException(vViolations));
+            try {
+                toposList = this.getDaoFactory().getTopoDao().getSearchToposList(topoSearch);
+            } catch (TechnicalException pException) {
+                throw new TechnicalException(pException.getMessage(), pException);
+            } catch (NotFoundException pException) {
+                throw new NotFoundException(pException.getMessage(), pException);
+            }
         }
-        try {
-            return this.getDaoFactory().getTopoDao().getSearchToposList(topoSearch);
-        } catch (TechnicalException pException) {
-            throw new TechnicalException(pException.getMessage(), pException);
-        } catch (NotFoundException pException) {
-            throw new NotFoundException(pException.getMessage(), pException);
-        }
-        
+      return toposList;
     }
     
     /**
@@ -234,7 +237,7 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager {
         
         if (!vViolations.isEmpty()) {
             for (final ConstraintViolation<Topo> violation : vViolations) {
-                log.debug(violation.getMessage());
+                LOG.debug(violation.getMessage());
             }
             throw new FunctionalException("Le topo à ajouter n'est pas valide", new ConstraintViolationException(vViolations));
         }
@@ -268,7 +271,7 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager {
         
         if (!vViolations.isEmpty()) {
             for (final ConstraintViolation<Topo> violation : vViolations) {
-                log.debug(violation.getMessage());
+                LOG.debug(violation.getMessage());
             }
             throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(vViolations));
         }
@@ -320,7 +323,7 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager {
         
         try {
             if (!comments.isEmpty()) {
-                for (Comment comment : comments) {
+                for (final Comment comment : comments) {
                     this.getDaoFactory().getCommentDao().deleteComment(comment.getId());
                 }
             }
@@ -354,7 +357,7 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager {
      */
     private Topo clearBorrow(final Topo topoToClear) throws TechnicalException {
         
-        Topo topo = topoToClear;
+        final Topo topo = topoToClear;
         if (topo != null) {
             if (topo.getEndDateBorrow() != null && LocalDateTime.now().compareTo(topo.getEndDateBorrow()) > 0) {
                 topo.setBorrower(null);
@@ -362,10 +365,10 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager {
                 try {
                     this.getDaoFactory().getTopoDao().updateTopo(topo);
                 } catch (TechnicalException pException) {
-                    throw new TechnicalException("Un problème technique lors de la mise à jour de l'emprunteur du topo est survenu - Echec de la mise à jour");
+                    throw new TechnicalException("Un problème technique lors de la mise à jour de l'emprunteur du topo est survenu - Echec de la mise à jour", pException);
                 } catch (NotFoundException pException) {
                     throw new TechnicalException(
-                            "Un problème technique lors de la mise à jour de l'emprunteur du topo est survenu (Topo non trouvé) - Echec de la mise à jour");
+                            "Un problème technique lors de la mise à jour de l'emprunteur du topo est survenu (Topo non trouvé) - Echec de la mise à jour", pException);
                 }
             }
         }

@@ -28,7 +28,7 @@ public interface SiteManager {
     /**
      * Get the {@link Site} with the specified id.
      * 
-     * @param pSiteId {@link Integer} id of the {@link Site}
+     * @param siteId {@link Integer} id of the {@link Site}
      * 
      * @return the {@link Site} with the specified id.
      * 
@@ -36,13 +36,13 @@ public interface SiteManager {
      * @throws FunctionalException - This exception is throws if the site id is null.
      * @throws NotFoundException - This exception is throws if the {@link Site} is not found.
      */
-    Site getSiteById(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
+    Site getSiteById(Integer siteId) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Get the list of {@link Site} that match to search criteria. If no search criteria are provided,
      * the list of all {@link Site} is returned.
      * 
-     * @param pSiteSearch the search criteria {@link SiteSearch}
+     * @param siteSearch the search criteria {@link SiteSearch}
      * 
      * @return the list of {@link Site} that match to search criteria or the list of all {@link Site} if
      *         no search criteria are provided
@@ -52,40 +52,40 @@ public interface SiteManager {
      * @throws FunctionalException - This exception is throws if the data of the search criteria
      *         {@link SiteSearch} are not valid.
      */
-    List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException, FunctionalException;
+    List<Site> getSearchSitesList(SiteSearch siteSearch) throws TechnicalException, NotFoundException, FunctionalException;
     
     /**
      * Save the modification of the {@link Site}.
      * 
-     * @param pSite the {@link Site} modified to save
+     * @param site the {@link Site} modified to save
      * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      * @throws FunctionalException - This exception is throws if the {@link Site} is null. - This
      *         exception is throws if the data in the {@link Site} are not valid.
      * @throws NotFoundException - This exception is throws if the {@link Site} is not found.
      */
-    void modifySite(Site pSite) throws TechnicalException, FunctionalException, NotFoundException;
+    void modifySite(Site site) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Validate and add the {@link Site} to data store. The id will be added to the {@link Site} give in
      * parameter.
      * 
-     * @param pSite the {@link Site} to add.
+     * @param site the {@link Site} to add.
      * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      * @throws FunctionalException - This exception is throws if the {@link Site} pSite is null. - This
      *         exception is throws if the data in the {@link Site} are not valid.
      */
-    void addSite(Site pSite) throws TechnicalException, FunctionalException;
+    void addSite(Site site) throws TechnicalException, FunctionalException;
     
     /**
      * Delete the {@link Site} with the specified id.
      * 
-     * @param pSiteId {@link Integer} id of the {@link Site} to delete.
+     * @param siteId {@link Integer} id of the {@link Site} to delete.
      * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      * @throws FunctionalException - This exception is throws if the site id is null.
      * @throws NotFoundException - This exception is throws if the {@link Site} is not found.
      */
-    void deleteSite(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
+    void deleteSite(Integer siteId) throws TechnicalException, FunctionalException, NotFoundException;
 }
