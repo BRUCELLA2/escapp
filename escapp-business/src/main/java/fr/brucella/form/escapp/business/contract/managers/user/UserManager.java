@@ -25,7 +25,7 @@ public interface UserManager {
      * @throws FunctionalException - This exception is throws if the login is null or empty.
      * @throws NotFoundException - This exception is throws if the {@link User} is not found.
      */
-    public User getUserByLogin(String pUserLogin) throws TechnicalException, FunctionalException, NotFoundException;
+    User getUserByLogin(String pUserLogin) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Get the {@link User} with the specified user id.
@@ -38,7 +38,7 @@ public interface UserManager {
      * @throws FunctionalException - This exception is throws if the user id is null.
      * @throws NotFoundException - This exception is throws if the {@link User} is not found.
      */
-    public User getUserById(Integer pUserId) throws TechnicalException, FunctionalException, NotFoundException;
+    User getUserById(Integer pUserId) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Get a {@link User} authentified by login and password. If login and password don't match, this
@@ -57,7 +57,7 @@ public interface UserManager {
      * @throws NotFoundException - This exception is throws if the {@link User} is not found. - This
      *         exception is throws if the login and password don't match.
      */
-    public User getConnectUser(String pUserLogin, String pRawUserPassword) throws TechnicalException, FunctionalException, NotFoundException;
+    User getConnectUser(String pUserLogin, String pRawUserPassword) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Validate and add the {@link User} to data store. The password property of the {@link User} need
@@ -73,7 +73,7 @@ public interface UserManager {
      *         exception is throws if the password of the {@link User} is not null or empty. - This
      *         exception is throws if the data in the {@link User} are not valid.
      */
-    public User addUser(User pUser) throws TechnicalException, FunctionalException;
+    User addUser(User pUser) throws TechnicalException, FunctionalException;
     
     /**
      * Modify the password of the {@link User} give in parameter. The new password need to be raw
@@ -89,7 +89,7 @@ public interface UserManager {
      * @throws NotFoundException - This exception is throws if the {@link User} is not found in data
      *         store.
      */
-    public void modifyPassword(User pUser, String pNewRawPassword) throws TechnicalException, FunctionalException, NotFoundException;
+    void modifyPassword(User pUser, String pNewRawPassword) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Check if the login is disponible and not already used.
@@ -100,7 +100,7 @@ public interface UserManager {
      * 
      * @throws TechnicalException - wraps technical exception caused during data access.
      */
-    public boolean checkLoginDispo(String pLogin) throws TechnicalException;
+    boolean checkLoginDispo(String pLogin) throws TechnicalException;
     
     /**
      * Get the list of the role {@link RoleUser} of the {@link User} with the specified id.
@@ -113,5 +113,5 @@ public interface UserManager {
      * @throws TechnicalException - wraps technical exception caused during data access.
      * @throws FunctionalException - This exception is throws if the user id is null.
      */
-    public List<RoleUser> getRoleUserList(Integer pUserId) throws TechnicalException, FunctionalException;
+    List<RoleUser> getRoleUserList(Integer pUserId) throws TechnicalException, FunctionalException;
 }

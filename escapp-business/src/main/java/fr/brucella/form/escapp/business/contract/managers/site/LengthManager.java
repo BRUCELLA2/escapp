@@ -26,7 +26,7 @@ public interface LengthManager {
      * @throws FunctionalException - This exception is throws if the route id is null.
      * @throws NotFoundException - This exception is throws if no {@link Length} is found.
      */
-    public List<Length> getLengthsRouteList(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException;
+    List<Length> getLengthsRouteList(Integer pRouteId) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Save the modification of the {@link Length}.
@@ -38,7 +38,7 @@ public interface LengthManager {
      *         This exception is throws if the data in the {@link Length} are not valid.
      * @throws NotFoundException - This exception is throws if the {@link Length} is not found.
      */
-    public void modifyLength(Length pLength) throws TechnicalException, FunctionalException, NotFoundException;
+    void modifyLength(Length pLength) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Validate and add the {@link Length} to data store. The id will be added to the {@link Length}
@@ -50,7 +50,7 @@ public interface LengthManager {
      * @throws FunctionalException - This exception is throws if the {@link Length} is null. - This
      *         exception is throws if the data in the {@link Length} are not valid.
      */
-    public void addLength(Length pLength) throws TechnicalException, FunctionalException;
+    void addLength(Length pLength) throws TechnicalException, FunctionalException;
     
     /**
      * Delete the {@link Length} with the specified id.
@@ -61,5 +61,5 @@ public interface LengthManager {
      * @throws FunctionalException - This exception is throws if the length id is null.
      * @throws NotFoundException - This exception is throws if the {@link Length} is not found.
      */
-    public void deleteLength(Integer pLengthId) throws TechnicalException, FunctionalException, NotFoundException;
+    void deleteLength(Integer pLengthId) throws TechnicalException, FunctionalException, NotFoundException;
 }

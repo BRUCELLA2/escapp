@@ -165,9 +165,11 @@ public class SiteDetailsAction extends ActionSupport {
                 this.nbCommentsSectorsList.add(new MutablePair<Integer, Integer>(sectorL.getId(), tempCommentsSectorList.size()));
                 this.commentsSectorList.addAll(tempCommentsSectorList);
             }
-        } catch (TechnicalException | FunctionalException | NotFoundException pException) {
+        } catch (TechnicalException | FunctionalException pException) {
             this.addActionError(pException.getMessage());
             return Action.ERROR;
+        } catch (NotFoundException pException) {
+            return Action.SUCCESS;
         }
         
         return (this.hasErrors()) ? Action.ERROR : Action.SUCCESS;

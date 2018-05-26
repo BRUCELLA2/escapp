@@ -23,7 +23,7 @@ public interface SiteManager {
      * @throws TechnicalException - wraps technical exception caused during data access.
      * @throws NotFoundException - This exception is throws if no {@link Site} is found.
      */
-    public List<Site> getAllSitesList() throws TechnicalException, NotFoundException;
+    List<Site> getAllSitesList() throws TechnicalException, NotFoundException;
     
     /**
      * Get the {@link Site} with the specified id.
@@ -36,7 +36,7 @@ public interface SiteManager {
      * @throws FunctionalException - This exception is throws if the site id is null.
      * @throws NotFoundException - This exception is throws if the {@link Site} is not found.
      */
-    public Site getSiteById(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
+    Site getSiteById(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Get the list of {@link Site} that match to search criteria. If no search criteria are provided,
@@ -52,7 +52,7 @@ public interface SiteManager {
      * @throws FunctionalException - This exception is throws if the data of the search criteria
      *         {@link SiteSearch} are not valid.
      */
-    public List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException, FunctionalException;
+    List<Site> getSearchSitesList(SiteSearch pSiteSearch) throws TechnicalException, NotFoundException, FunctionalException;
     
     /**
      * Save the modification of the {@link Site}.
@@ -64,7 +64,7 @@ public interface SiteManager {
      *         exception is throws if the data in the {@link Site} are not valid.
      * @throws NotFoundException - This exception is throws if the {@link Site} is not found.
      */
-    public void modifySite(Site pSite) throws TechnicalException, FunctionalException, NotFoundException;
+    void modifySite(Site pSite) throws TechnicalException, FunctionalException, NotFoundException;
     
     /**
      * Validate and add the {@link Site} to data store. The id will be added to the {@link Site} give in
@@ -76,7 +76,7 @@ public interface SiteManager {
      * @throws FunctionalException - This exception is throws if the {@link Site} pSite is null. - This
      *         exception is throws if the data in the {@link Site} are not valid.
      */
-    public void addSite(Site pSite) throws TechnicalException, FunctionalException;
+    void addSite(Site pSite) throws TechnicalException, FunctionalException;
     
     /**
      * Delete the {@link Site} with the specified id.
@@ -87,5 +87,5 @@ public interface SiteManager {
      * @throws FunctionalException - This exception is throws if the site id is null.
      * @throws NotFoundException - This exception is throws if the {@link Site} is not found.
      */
-    public void deleteSite(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
+    void deleteSite(Integer pSiteId) throws TechnicalException, FunctionalException, NotFoundException;
 }

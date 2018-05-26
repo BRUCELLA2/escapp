@@ -26,7 +26,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      * @see CommentManager
      */
     @Autowired
-    private CommentManager vCommentManager;
+    private CommentManager commentManager;
     
     /**
      * Length Manager
@@ -34,7 +34,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      * @see LengthManager
      */
     @Autowired
-    private LengthManager  vLengthManager;
+    private LengthManager  lengthManager;
     
     /**
      * Route Manager
@@ -42,7 +42,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      * @see RouteManager
      */
     @Autowired
-    private RouteManager   vRouteManager;
+    private RouteManager   routeManager;
     
     /**
      * Sector Manager
@@ -50,7 +50,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      * @see SectorManager
      */
     @Autowired
-    private SectorManager  vSectorManager;
+    private SectorManager  sectorManager;
     
     /**
      * Site Manager
@@ -58,7 +58,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      * @see SiteManager
      */
     @Autowired
-    private SiteManager    vSiteManager;
+    private SiteManager    siteManager;
     
     /**
      * Topo Manager
@@ -66,7 +66,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      * @see TopoManager
      */
     @Autowired
-    private TopoManager    vTopoManager;
+    private TopoManager    topoManager;
     
     /**
      * User Manager
@@ -74,7 +74,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      * @see UserManager
      */
     @Autowired
-    private UserManager    vUserManager;
+    private UserManager    userManager;
     
     
     // ===== Getters =====
@@ -84,7 +84,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      */
     @Override
     public CommentManager getCommentManager() {
-        return this.vCommentManager;
+        return this.commentManager;
     }
     
     /**
@@ -92,7 +92,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      */
     @Override
     public LengthManager getLengthManager() {
-        return this.vLengthManager;
+        return this.lengthManager;
     }
     
     /**
@@ -100,7 +100,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      */
     @Override
     public RouteManager getRouteManager() {
-        return this.vRouteManager;
+        return this.routeManager;
     }
     
     /**
@@ -108,7 +108,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      */
     @Override
     public SectorManager getSectorManager() {
-        return this.vSectorManager;
+        return this.sectorManager;
     }
     
     /**
@@ -116,7 +116,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      */
     @Override
     public SiteManager getSiteManager() {
-        return this.vSiteManager;
+        return this.siteManager;
     }
     
     /**
@@ -124,7 +124,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      */
     @Override
     public TopoManager getTopoManager() {
-        return this.vTopoManager;
+        return this.topoManager;
     }
     
     /**
@@ -132,7 +132,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
      */
     @Override
     public UserManager getUserManager() {
-        return this.vUserManager;
+        return this.userManager;
     }
     
     
@@ -142,56 +142,56 @@ public class ManagerFactoryImpl implements ManagerFactory {
      * @see ManagerFactory#setCommentManager(CommentManager)
      */
     @Override
-    public void setCommentManager(CommentManager pCommentManager) {
-        this.vCommentManager = pCommentManager;
+    public void setCommentManager(final CommentManager pCommentManager) {
+        this.commentManager = pCommentManager;
     }
     
     /**
      * @see ManagerFactory#setLengthManager(LengthManager)
      */
     @Override
-    public void setLengthManager(LengthManager pLengthManager) {
-        this.vLengthManager = pLengthManager;
+    public void setLengthManager(final LengthManager pLengthManager) {
+        this.lengthManager = pLengthManager;
     }
     
     /**
      * @see ManagerFactory#setRouteManager(RouteManager)
      */
     @Override
-    public void setRouteManager(RouteManager pRouteManager) {
-        this.vRouteManager = pRouteManager;
+    public void setRouteManager(final RouteManager pRouteManager) {
+        this.routeManager = pRouteManager;
     }
     
     /**
      * @see ManagerFactory#setSectorManager(SectorManager)
      */
     @Override
-    public void setSectorManager(SectorManager pSectorManager) {
-        this.vSectorManager = pSectorManager;
+    public void setSectorManager(final SectorManager pSectorManager) {
+        this.sectorManager = pSectorManager;
     }
     
     /**
      * @see ManagerFactory#setSiteManager(SiteManager)
      */
     @Override
-    public void setSiteManager(SiteManager pSiteManager) {
-        this.vSiteManager = pSiteManager;
+    public void setSiteManager(final SiteManager pSiteManager) {
+        this.siteManager = pSiteManager;
     }
     
     /**
      * @see ManagerFactory#setTopoManager(TopoManager)
      */
     @Override
-    public void setTopoManager(TopoManager pTopoManager) {
-        this.vTopoManager = pTopoManager;
+    public void setTopoManager(final TopoManager pTopoManager) {
+        this.topoManager = pTopoManager;
     }
     
     /**
      * @see ManagerFactory#setUserManager(UserManager)
      */
     @Override
-    public void setUserManager(UserManager pUserManager) {
-        this.vUserManager = pUserManager;
+    public void setUserManager(final UserManager pUserManager) {
+        this.userManager = pUserManager;
     }
     
 }
