@@ -7,7 +7,7 @@ package fr.brucella.form.escapp.model.exceptions;
  * @author BRUCELLA2
  */
 public class TechnicalException extends Exception {
-    
+
     /**
      * Constructs a new TechnicalException with the specified detail message.
      *
@@ -16,7 +16,7 @@ public class TechnicalException extends Exception {
     public TechnicalException(String pMessage) {
         super(pMessage);
     }
-    
+
     /**
      * Constructs a new TechnicalException with the specified detail message and cause.
      *

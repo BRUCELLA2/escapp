@@ -11,25 +11,25 @@ import fr.brucella.form.escapp.consumer.contract.DaoFactory;
 
 @Component
 public class AbstractManager {
-    
+
     /**
      * The Data Access Object Factory
      */
     @Autowired
     private DaoFactory vDaoFactory;
-    
+
     /**
      * Get the {@link DaoFactory}
-     * 
+     *
      * @return the {@link DaoFactory}
      */
     public DaoFactory getDaoFactory() {
         return this.vDaoFactory;
     }
-    
+
     /**
      * Get a constraint {@link Validator}.
-     * 
+     *
      * @return a constraint {@link Validator}.
      */
     protected Validator getConstraintValidator() {

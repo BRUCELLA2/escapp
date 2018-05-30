@@ -8,11 +8,15 @@
 			<PatternLayout
 				pattern="%highlight{%-5level} [%t] %c : %m%n" />
 		</Console>
-		<File name="global" fileName="${sys:catalina.home}/logs/global.log" append="true">
-			<PatternLayout pattern="%highlight{%-5level} [%t] %c : %m%n" />
+		<File name="global"
+			fileName="${sys:catalina.home}/logs/global.log" append="true">
+			<PatternLayout
+				pattern="%highlight{%-5level} [%t] %c : %m%n" />
 		</File>
-		<File name="escapp" fileName="${sys:catalina.home}/logs/escapp.log" append="true">
-			<PatternLayout pattern="%highlight{%-5level} [%t] %c : %m%n" />
+		<File name="escapp"
+			fileName="${sys:catalina.home}/logs/escapp.log" append="true">
+			<PatternLayout
+				pattern="%highlight{%-5level} [%t] %c : %m%n" />
 		</File>
 	</Appenders>
 

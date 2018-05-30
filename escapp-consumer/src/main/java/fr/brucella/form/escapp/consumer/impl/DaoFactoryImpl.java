@@ -21,17 +21,17 @@ import fr.brucella.form.escapp.consumer.contract.dao.user.UserDao;
  */
 @Component
 public class DaoFactoryImpl implements DaoFactory {
-    
-    
-    
+
+
+
     /**
      * Comment Data Access Object
-     * 
+     *
      * @see CommentDao
      */
     @Autowired
     private CommentDao  vCommentDao;
-
+    
     /**
      * Site Data Access Object
      *
@@ -39,7 +39,7 @@ public class DaoFactoryImpl implements DaoFactory {
      */
     @Autowired
     private SiteDao     vSiteDao;
-
+    
     /**
      * Topo Data Access Object
      *
@@ -47,7 +47,7 @@ public class DaoFactoryImpl implements DaoFactory {
      */
     @Autowired
     private TopoDao     vTopoDao;
-
+    
     /**
      * User Data Access Object
      *
@@ -55,7 +55,7 @@ public class DaoFactoryImpl implements DaoFactory {
      */
     @Autowired
     private UserDao     vUserDao;
-
+    
     /**
      * RoleUser Data Access Object
      *
@@ -63,7 +63,7 @@ public class DaoFactoryImpl implements DaoFactory {
      */
     @Autowired
     private RoleUserDao vRoleUserDao;
-
+    
     /**
      * Route Data Access Object
      *
@@ -71,7 +71,7 @@ public class DaoFactoryImpl implements DaoFactory {
      */
     @Autowired
     private RouteDao    vRouteDao;
-
+    
     /**
      * Sector Data Access Object
      *
@@ -79,7 +79,7 @@ public class DaoFactoryImpl implements DaoFactory {
      */
     @Autowired
     private SectorDao   vSectorDao;
-
+    
     /**
      * Length Data Access Object
      *
@@ -87,10 +87,10 @@ public class DaoFactoryImpl implements DaoFactory {
      */
     @Autowired
     private LengthDao   vLengthDao;
-    
-    
+
+
     // ===== Getters =====
-    
+
     /**
      * @see DaoFactory#getCommentDao()
      */
@@ -98,7 +98,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public CommentDao getCommentDao() {
         return this.vCommentDao;
     }
-    
+
     /**
      * @see DaoFactory#getSiteDao()
      */
@@ -106,7 +106,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public SiteDao getSiteDao() {
         return this.vSiteDao;
     }
-    
+
     /**
      * @see DaoFactory#getRouteDao()
      */
@@ -114,7 +114,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public RouteDao getRouteDao() {
         return this.vRouteDao;
     }
-    
+
     /**
      * @see DaoFactory#getSectorDao()
      */
@@ -122,7 +122,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public SectorDao getSectorDao() {
         return this.vSectorDao;
     }
-    
+
     /**
      * @see DaoFactory#getLengthDao()
      */
@@ -130,7 +130,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public LengthDao getLengthDao() {
         return this.vLengthDao;
     }
-    
+
     /**
      * @see DaoFactory#getTopoDao()
      */
@@ -138,7 +138,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public TopoDao getTopoDao() {
         return this.vTopoDao;
     }
-    
+
     /**
      * @see DaoFactory#getUserDao()
      */
@@ -146,7 +146,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public UserDao getUserDao() {
         return this.vUserDao;
     }
-    
+
     /**
      * @see DaoFactory#getRoleUserDao()
      */
@@ -154,9 +154,9 @@ public class DaoFactoryImpl implements DaoFactory {
     public RoleUserDao getRoleUserDao() {
         return this.vRoleUserDao;
     }
-    
+
     // ===== Setters =====
-    
+
     /**
      * @see DaoFactory#setCommentDao(CommentDao)
      */
@@ -164,7 +164,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setCommentDao(CommentDao pCommentDao) {
         this.vCommentDao = pCommentDao;
     }
-    
+
     /**
      * @see DaoFactory#setSiteDao(SiteDao)
      */
@@ -172,7 +172,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setSiteDao(SiteDao pSiteDao) {
         this.vSiteDao = pSiteDao;
     }
-    
+
     /**
      * @see DaoFactory#setRouteDao(RouteDao)
      */
@@ -180,7 +180,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setRouteDao(RouteDao pRouteDao) {
         this.vRouteDao = pRouteDao;
     }
-    
+
     /**
      * @see DaoFactory#setSectorDao(SectorDao)
      */
@@ -188,7 +188,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setSectorDao(SectorDao pSectorDao) {
         this.vSectorDao = pSectorDao;
     }
-    
+
     /**
      * @see DaoFactory#setLengthDao(LengthDao)
      */
@@ -196,7 +196,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setLengthDao(LengthDao pLengthDao) {
         this.vLengthDao = pLengthDao;
     }
-    
+
     /**
      * @see DaoFactory#setTopoDao(TopoDao)
      */
@@ -204,7 +204,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setTopoDao(TopoDao pTopoDao) {
         this.vTopoDao = pTopoDao;
     }
-    
+
     /**
      * @see DaoFactory#setUserDao(UserDao)
      */
@@ -212,7 +212,7 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setUserDao(UserDao pUserDao) {
         this.vUserDao = pUserDao;
     }
-
+    
     /**
      * @see DaoFactory#setRoleUserDao(RoleUserDao)
      */
@@ -220,5 +220,5 @@ public class DaoFactoryImpl implements DaoFactory {
     public void setRoleUserDao(RoleUserDao pRoleUserDao) {
         this.vRoleUserDao = pRoleUserDao;
     }
-    
+
 }

@@ -7,7 +7,7 @@ package fr.brucella.form.escapp.model.exceptions;
  * @author BRUCELLA2
  */
 public class FunctionalException extends Exception {
-    
+
     /**
      * Constructs a new FunctionalException with the specified detail message.
      *
@@ -16,7 +16,7 @@ public class FunctionalException extends Exception {
     public FunctionalException(String pMessage) {
         super(pMessage);
     }
-    
+
     /**
      * Constructs a new FunctionalException with the specified detail message and cause.
      *

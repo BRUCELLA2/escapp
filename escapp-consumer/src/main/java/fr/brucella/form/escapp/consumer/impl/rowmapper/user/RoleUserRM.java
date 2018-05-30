@@ -13,18 +13,18 @@ import fr.brucella.form.escapp.model.beans.user.RoleUser;
  * @author BRUCELLA2
  */
 public class RoleUserRM implements RowMapper<RoleUser> {
-    
+
     /**
      * @see RowMapper#mapRow(ResultSet, int)
      */
     @Override
     public RoleUser mapRow(ResultSet rs, int rowNum) throws SQLException {
-        
+
         RoleUser vRoleUser = new RoleUser();
-        
+
         vRoleUser.setUserId(rs.getObject("escapp_user", Integer.class));
         vRoleUser.setUserRole(rs.getString("role"));
-        
+
         return vRoleUser;
     }
 }

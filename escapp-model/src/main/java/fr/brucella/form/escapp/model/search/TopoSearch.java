@@ -13,11 +13,11 @@ import fr.brucella.form.escapp.model.beans.topo.Topo;
  * @author BRUCELLA2
  */
 public class TopoSearch implements Serializable {
-    
-    
+
+
     private static final long serialVersionUID = -8234667938852361245L;
-    
-    
+
+
     /**
      * String representing the department code associated to the {@link Topo} searched. Size need to be
      * 3 characters. Ex : "034", "030", "02A"
@@ -28,8 +28,8 @@ public class TopoSearch implements Serializable {
      */
     @Size(min = 0, max = 3, message = "Le numéro du département doit être sur deux caractères")
     private String            departmentTopo;
-
-
+    
+    
     /**
      * Municipality associated to the {@link Topo} searched. Max size is 100 characters.
      *
@@ -39,7 +39,7 @@ public class TopoSearch implements Serializable {
      */
     @Size(min = 0, max = 100, message = "Le nom de la commune d'un topo ne doit pas dépasser {max} caractères.")
     private String            municipalityTopo;
-
+    
     /**
      * Boolean indicating if the {@link Topo} searched need to be available for a borrow. Can't be null
      *
@@ -48,10 +48,10 @@ public class TopoSearch implements Serializable {
      */
     @NotNull(message = "Il est nécessaire d'indiquer si le topo doit être disponible ou non")
     private Boolean           availableTopo;
-
-
+    
+    
     // ===== Getters =====
-
+    
     /**
      * Get the {@link String} representing the department code associated to the {@link Topo} searched.
      *
@@ -65,8 +65,8 @@ public class TopoSearch implements Serializable {
     public String getDepartmentTopo() {
         return this.departmentTopo;
     }
-
-
+    
+    
     /**
      * Get the municipality associated to the {@link Topo} searched.
      *
@@ -79,7 +79,7 @@ public class TopoSearch implements Serializable {
     public String getMunicipalityTopo() {
         return this.municipalityTopo;
     }
-
+    
     /**
      * Indicate if the {@link Topo} searched need to be available for a borrow.
      *
@@ -91,10 +91,10 @@ public class TopoSearch implements Serializable {
     public Boolean getAvailableTopo() {
         return this.availableTopo;
     }
-
-
+    
+    
     // ===== Setters =====
-
+    
     /**
      * Set the {@link String} representing the department code associated to {@link Topo} searched.
      *
@@ -108,7 +108,7 @@ public class TopoSearch implements Serializable {
     public void setDepartmentTopo(String pDepartmentTopo) {
         this.departmentTopo = pDepartmentTopo;
     }
-
+    
     /**
      * Set the municipality associated to the {@link Topo} searched.
      *
@@ -122,7 +122,7 @@ public class TopoSearch implements Serializable {
     public void setMunicipalityTopo(String pMunicipalityTopo) {
         this.municipalityTopo = pMunicipalityTopo;
     }
-
+    
     /**
      * Set if the {@link Topo} is available.
      *
@@ -135,14 +135,14 @@ public class TopoSearch implements Serializable {
     public void setAvailableTopo(Boolean pAvailableTopo) {
         this.availableTopo = pAvailableTopo;
     }
-
-
-    // ===== Methods =====
     
+    
+    // ===== Methods =====
+
     @Override
     public String toString() {
         return "TopoSearch [departmentTopo=" + this.departmentTopo + ", municipalityTopo=" + this.municipalityTopo + ", availableTopo=" + this.availableTopo
                 + "]";
     }
-
+    
 }

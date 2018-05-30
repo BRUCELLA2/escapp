@@ -13,20 +13,20 @@ import javax.validation.constraints.Size;
  * @author BRUCELLA2
  */
 public class Comment implements Serializable {
-    
-    
+
+
     private static final long serialVersionUID = 430229845493717046L;
-    
-    
+
+
     /**
      * id of the {@link Comment}.
-     * 
+     *
      * @see #getId()
      * @see #setId(Integer)
      */
     private Integer           id;
-    
-    
+
+
     /**
      * Text of the {@link Comment} (write by an user). Can't by empty and max size is 1000 characters.
      *
@@ -36,8 +36,8 @@ public class Comment implements Serializable {
     @NotEmpty(message = "Le texte ne peut être vide")
     @Size(min = 1, max = 1000, message = "Le texte ne peut dépasser {max} caractères")
     private String            text;
-    
-    
+
+
     /**
      * id of the {@link fr.brucella.form.escapp.model.beans.user.User} who write the {@link Comment}.
      * Can't be null.
@@ -47,8 +47,8 @@ public class Comment implements Serializable {
      */
     @NotNull(message = "Un commentaire doit être associé à un utilisateur")
     private Integer           escappUser;
-    
-    
+
+
     /**
      * String that represents the target's type of the {@link Comment} Value can be one of these :
      * "Length", "Route", "Sector", "Site" or "Topo". Can't be empty.
@@ -58,8 +58,8 @@ public class Comment implements Serializable {
      */
     @NotEmpty(message = "Le type de la cible du commentaire ne peut être null")
     private String            targetType;
-    
-    
+
+
     /**
      * id of the target which is commented. Can't be null.
      *
@@ -68,12 +68,12 @@ public class Comment implements Serializable {
      */
     @NotNull(message = "Un commentaire doit être associé à un élément à commenter")
     private Integer           idCommentTarget;
-    
-    
-    
+
+
+
     // ===== Getters =====
-    
-    
+
+
     /**
      * Get the id of the {@link Comment}.
      *
@@ -85,8 +85,8 @@ public class Comment implements Serializable {
     public Integer getId() {
         return this.id;
     }
-    
-    
+
+
     /**
      * Get the text of the {@link Comment}
      *
@@ -99,8 +99,8 @@ public class Comment implements Serializable {
     public String getText() {
         return this.text;
     }
-    
-    
+
+
     /**
      * Get the id of the user who write the {@link Comment}.
      *
@@ -112,8 +112,8 @@ public class Comment implements Serializable {
     public Integer getEscappUser() {
         return this.escappUser;
     }
-    
-    
+
+
     /**
      * Get the {@link String} that represents the target's type of the {@link Comment}.
      *
@@ -126,8 +126,8 @@ public class Comment implements Serializable {
     public String getTargetType() {
         return this.targetType;
     }
-    
-    
+
+
     /**
      * Get the id of the target which is commented.
      *
@@ -139,11 +139,11 @@ public class Comment implements Serializable {
     public Integer getIdCommentTarget() {
         return this.idCommentTarget;
     }
-    
-    
+
+
     // ===== Setters =====
-    
-    
+
+
     /**
      * Set the id of the {@link Comment}.
      *
@@ -155,8 +155,8 @@ public class Comment implements Serializable {
     public void setId(Integer pId) {
         this.id = pId;
     }
-    
-    
+
+
     /**
      * Set the text of the {@link Comment}.
      *
@@ -169,8 +169,8 @@ public class Comment implements Serializable {
     public void setText(String pText) {
         this.text = pText;
     }
-    
-    
+
+
     /**
      * Set the id of the user who writes the {@link Comment}.
      *
@@ -182,8 +182,8 @@ public class Comment implements Serializable {
     public void setEscappUser(Integer pEscappUser) {
         this.escappUser = pEscappUser;
     }
-    
-    
+
+
     /**
      * Set the {@link String} that represents the target's type of the {@link Comment}.
      *
@@ -196,8 +196,8 @@ public class Comment implements Serializable {
     public void setTargetType(String pTargetType) {
         this.targetType = pTargetType;
     }
-    
-    
+
+
     /**
      * Set the id of the target which is commented.
      *
@@ -209,10 +209,10 @@ public class Comment implements Serializable {
     public void setIdCommentTarget(Integer pIdCommentTarget) {
         this.idCommentTarget = pIdCommentTarget;
     }
-    
+
     // ===== Methods =====
-    
-    
+
+
     @Override
     public String toString() {
         return "Comment{" + "id=" + this.id + ", text='" + this.text + '\'' + ", escappUser=" + this.escappUser + ", targetType='" + this.targetType + '\''

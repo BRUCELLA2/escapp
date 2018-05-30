@@ -32,29 +32,29 @@ import fr.brucella.form.escapp.model.search.TopoSearch;
  */
 @Component
 public class TopoDaoImpl extends AbstractDao implements TopoDao {
-    
+
     /**
      * Topo DAO logger
      */
     private static final Log LOG = LogFactory.getLog(TopoDaoImpl.class);
-    
+
     /**
      * @see TopoDao#getTopo(Integer)
      */
     @Override
     public Topo getTopo(final Integer topoId) throws TechnicalException, NotFoundException {
-        
+
         final String sql = "SELECT * FROM topo WHERE id = :id";
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", topoId);
-        
+
         final RowMapper<Topo> rowMapper = new TopoRM();
-        
+
         try {
-            
+
             return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
-            
+
         } catch (EmptyResultDataAccessException pException) {
             LOG.debug(pException.getStackTrace());
             throw new NotFoundException("Le topo demandé n'a pas été trouvé", pException);
@@ -69,19 +69,19 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see TopoDao#getAllToposList()
      */
     @Override
     public List<Topo> getAllToposList() throws TechnicalException, NotFoundException {
-        
+
         final String sql = "SELECT * FROM topo";
-        
+
         final RowMapper<Topo> rowMapper = new TopoRM();
-        
+
         try {
-            
+
             final List<Topo> allToposList = this.getJdbcTemplate().query(sql, rowMapper);
             if (allToposList.isEmpty()) {
                 throw new NotFoundException("Aucun topo n'a été trouvé.");
@@ -89,7 +89,7 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             else {
                 return allToposList;
             }
-            
+
         } catch (PermissionDeniedDataAccessException pException) {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
@@ -101,17 +101,17 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see TopoDao#getSearchTopoList(TopoSearch)
      */
     @Override
     public List<Topo> getSearchToposList(final TopoSearch topoSearch) throws TechnicalException, NotFoundException {
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
-        
+
         final StringBuilder sql = new StringBuilder("SELECT * FROM topo WHERE 1 = 1 ");
-        
+
         if (topoSearch != null) {
             if (!StringUtils.isEmpty(topoSearch.getDepartmentTopo())) {
                 sql.append(" AND UPPER(department) = UPPER(:departmentTopo) ");
@@ -126,9 +126,9 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
                 sql.append(" AND (end_date_borrow is null or end_date_borrow < CURRENT_TIMESTAMP)");
             }
         }
-        
+
         final RowMapper<Topo> rowMapper = new TopoRM();
-        
+
         try {
             return this.getNamedJdbcTemplate().query(sql.toString(), params, rowMapper);
         } catch (EmptyResultDataAccessException pException) {
@@ -145,22 +145,22 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see TopoDao#getOwnerToposList(Integer)
      */
     @Override
     public List<Topo> getOwnerToposList(final Integer ownerId) throws TechnicalException, NotFoundException {
-        
+
         final String sql = "SELECT * FROM topo WHERE owner_id = :ownerId";
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("ownerId", ownerId);
-        
+
         final RowMapper<Topo> rowMapper = new TopoRM();
-        
+
         try {
-            
+
             final List<Topo> ownerToposList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
             if (ownerToposList.isEmpty()) {
                 throw new NotFoundException("Aucun topo n'a été trouvé pour ce propriétaire.");
@@ -168,7 +168,7 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             else {
                 return ownerToposList;
             }
-            
+
         } catch (PermissionDeniedDataAccessException pException) {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
@@ -180,22 +180,22 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see TopoDao#getBorrowerToposList(Integer)
      */
     @Override
     public List<Topo> getBorrowerToposList(final Integer borrowerId) throws TechnicalException, NotFoundException {
-        
+
         final String sql = "SELECT * FROM topo WHERE borrower_id = :borrowerId";
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("borrowerId", borrowerId);
-        
+
         final RowMapper<Topo> rowMapper = new TopoRM();
-        
+
         try {
-            
+
             final List<Topo> borrowerToposList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
             if (borrowerToposList.isEmpty()) {
                 throw new NotFoundException("Aucun topo n'a été trouvé pour cet emprunteur.");
@@ -203,7 +203,7 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             else {
                 return borrowerToposList;
             }
-            
+
         } catch (PermissionDeniedDataAccessException pException) {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
@@ -215,17 +215,17 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see TopoDao#updateTopo(Topo)
      */
     @Override
     public void updateTopo(Topo topo) throws TechnicalException, NotFoundException {
-        
+
         final String sql = "UPDATE topo SET "
                 + "name = :name, department = :department, is_borrowable = :isBorrowable, pdf_file_name = :pdfFileName, municipality = :municipality, "
                 + "end_date_borrow = :endDateBorrow, borrower_id = :borrowerId, description = :description, owner_id = :ownerId WHERE id = :id";
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", topo.getName());
         params.addValue("department", topo.getDepartment());
@@ -237,13 +237,13 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
         params.addValue("description", topo.getDescription());
         params.addValue("ownerId", topo.getOwner());
         params.addValue("id", topo.getId());
-        
+
         try {
             final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le topo à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
             }
-            
+
         } catch (DataIntegrityViolationException pException) {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du topo n'a pu être réalisée.", pException);
@@ -258,19 +258,19 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see TopoDao#insertTopo(Topo)
      */
     @Override
     public int insertTopo(Topo topo) throws TechnicalException {
-        
+
         final String sql =
                 "INSERT INTO topo (id, name, department, is_borrowable, pdf_file_name, municipality, end_date_borrow, borrower_id, description, owner_id) "
                         + "VALUES (DEFAULT, :name, :department, :isBorrowable, :pdfFileName, :municipality, :endDateBorrow, :borrowerId, :description, :ownerId)";
-        
+
         final KeyHolder keyHolder = new GeneratedKeyHolder();
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", topo.getName());
         params.addValue("department", topo.getDepartment());
@@ -281,12 +281,12 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
         params.addValue("borrowerId", topo.getBorrower());
         params.addValue("description", topo.getDescription());
         params.addValue("ownerId", topo.getOwner());
-        
+
         try {
-            
+
             this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
             return keyHolder.getKey().intValue();
-            
+
         } catch (DuplicateKeyException pException) {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Un topo existe déjà avec cet identifiant", pException);
@@ -304,25 +304,25 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see TopoDao#deleteTopo(Integer)
      */
     @Override
     public void deleteTopo(final Integer topoId) throws TechnicalException, NotFoundException {
-        
+
         final String sql = "DELETE FROM topo WHERE id = :id";
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", topoId);
-        
+
         try {
-            
+
             final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le topo à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
             }
-            
+
         } catch (PermissionDeniedDataAccessException pException) {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);

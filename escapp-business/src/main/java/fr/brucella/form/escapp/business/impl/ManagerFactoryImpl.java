@@ -19,66 +19,66 @@ import fr.brucella.form.escapp.business.contract.managers.user.UserManager;
  */
 @Component
 public class ManagerFactoryImpl implements ManagerFactory {
-    
+
     /**
      * Comment Manager
-     * 
+     *
      * @see CommentManager
      */
     @Autowired
     private CommentManager commentManager;
-    
+
     /**
      * Length Manager
-     * 
+     *
      * @see LengthManager
      */
     @Autowired
     private LengthManager  lengthManager;
-    
+
     /**
      * Route Manager
-     * 
+     *
      * @see RouteManager
      */
     @Autowired
     private RouteManager   routeManager;
-    
+
     /**
      * Sector Manager
-     * 
+     *
      * @see SectorManager
      */
     @Autowired
     private SectorManager  sectorManager;
-    
+
     /**
      * Site Manager
-     * 
+     *
      * @see SiteManager
      */
     @Autowired
     private SiteManager    siteManager;
-    
+
     /**
      * Topo Manager
-     * 
+     *
      * @see TopoManager
      */
     @Autowired
     private TopoManager    topoManager;
-    
+
     /**
      * User Manager
-     * 
+     *
      * @see UserManager
      */
     @Autowired
     private UserManager    userManager;
-    
-    
+
+
     // ===== Getters =====
-    
+
     /**
      * @see ManagerFactory#getCommentManager()
      */
@@ -86,7 +86,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public CommentManager getCommentManager() {
         return this.commentManager;
     }
-    
+
     /**
      * @see ManagerFactory#getLengthManager()
      */
@@ -94,7 +94,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public LengthManager getLengthManager() {
         return this.lengthManager;
     }
-    
+
     /**
      * @see ManagerFactory#getRouteManager()
      */
@@ -102,7 +102,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public RouteManager getRouteManager() {
         return this.routeManager;
     }
-    
+
     /**
      * @see ManagerFactory#getSectorManager()
      */
@@ -110,7 +110,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public SectorManager getSectorManager() {
         return this.sectorManager;
     }
-    
+
     /**
      * @see ManagerFactory#getSiteManager()
      */
@@ -118,7 +118,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public SiteManager getSiteManager() {
         return this.siteManager;
     }
-    
+
     /**
      * @see ManagerFactory#getTopoManager()
      */
@@ -126,7 +126,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public TopoManager getTopoManager() {
         return this.topoManager;
     }
-    
+
     /**
      * @see ManagerFactory#getUserManager()
      */
@@ -134,10 +134,10 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public UserManager getUserManager() {
         return this.userManager;
     }
-    
-    
+
+
     // ===== Setters =====
-    
+
     /**
      * @see ManagerFactory#setCommentManager(CommentManager)
      */
@@ -145,7 +145,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public void setCommentManager(final CommentManager pCommentManager) {
         this.commentManager = pCommentManager;
     }
-    
+
     /**
      * @see ManagerFactory#setLengthManager(LengthManager)
      */
@@ -153,7 +153,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public void setLengthManager(final LengthManager pLengthManager) {
         this.lengthManager = pLengthManager;
     }
-    
+
     /**
      * @see ManagerFactory#setRouteManager(RouteManager)
      */
@@ -161,7 +161,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public void setRouteManager(final RouteManager pRouteManager) {
         this.routeManager = pRouteManager;
     }
-    
+
     /**
      * @see ManagerFactory#setSectorManager(SectorManager)
      */
@@ -169,7 +169,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public void setSectorManager(final SectorManager pSectorManager) {
         this.sectorManager = pSectorManager;
     }
-    
+
     /**
      * @see ManagerFactory#setSiteManager(SiteManager)
      */
@@ -177,7 +177,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public void setSiteManager(final SiteManager pSiteManager) {
         this.siteManager = pSiteManager;
     }
-    
+
     /**
      * @see ManagerFactory#setTopoManager(TopoManager)
      */
@@ -185,7 +185,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public void setTopoManager(final TopoManager pTopoManager) {
         this.topoManager = pTopoManager;
     }
-    
+
     /**
      * @see ManagerFactory#setUserManager(UserManager)
      */
@@ -193,5 +193,5 @@ public class ManagerFactoryImpl implements ManagerFactory {
     public void setUserManager(final UserManager pUserManager) {
         this.userManager = pUserManager;
     }
-    
+
 }

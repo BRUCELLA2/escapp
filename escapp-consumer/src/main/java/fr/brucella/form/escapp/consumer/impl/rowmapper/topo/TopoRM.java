@@ -13,15 +13,15 @@ import fr.brucella.form.escapp.model.beans.topo.Topo;
  * @author BRUCELLA2
  */
 public class TopoRM implements RowMapper<Topo> {
-    
+
     /**
      * @see RowMapper#mapRow(ResultSet, int)
      */
     @Override
     public Topo mapRow(ResultSet rs, int rowNum) throws SQLException {
-        
+
         Topo vTopo = new Topo();
-        
+
         vTopo.setId(rs.getInt("id"));
         vTopo.setName(rs.getString("name"));
         vTopo.setDepartment(rs.getString("department"));
@@ -37,8 +37,8 @@ public class TopoRM implements RowMapper<Topo> {
         vTopo.setBorrower(rs.getObject("borrower_id", Integer.class));
         vTopo.setDescription(rs.getString("description"));
         vTopo.setOwner(rs.getInt("owner_id"));
-        
+
         return vTopo;
     }
-    
+
 }

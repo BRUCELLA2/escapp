@@ -7,7 +7,7 @@ package fr.brucella.form.escapp.model.exceptions;
  * @author BRUCELLA2
  */
 public class NotFoundException extends Exception {
-    
+
     /**
      * Constructs a new NotFoundException with the specified detail message.
      *
@@ -16,7 +16,7 @@ public class NotFoundException extends Exception {
     public NotFoundException(String pMessage) {
         super(pMessage);
     }
-    
+
     /**
      * Constructs a new NotFoundException with the specified detail message and cause.
      *

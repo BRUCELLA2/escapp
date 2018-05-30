@@ -12,20 +12,20 @@ import javax.validation.constraints.Size;
  * @author BRUCELLA2
  */
 public class Length implements Serializable {
-    
-    
+
+
     private static final long serialVersionUID = -3926420174130532857L;
-    
-    
+
+
     /**
      * id of the {@link Length}.
-     * 
+     *
      * @see #getId()
      * @see #setId(Integer)
      */
     private Integer           id;
-    
-    
+
+
     /**
      * Length in meters of the {@link Length}. Can't be null.
      *
@@ -34,8 +34,8 @@ public class Length implements Serializable {
      */
     @NotNull(message = "La longueur ne peut être absente")
     private Integer           length;
-    
-    
+
+
     /**
      * Grade of the {@link Length}. The grade is a {@link String} which represents the difficulty. Can't
      * be empty and max size is 2 characters.
@@ -46,8 +46,8 @@ public class Length implements Serializable {
     @NotEmpty(message = "Une longueur doit avoir une cotation")
     @Size(min = 1, max = 2, message = "La cotation doit être composée de {max} caractères maximum")
     private String            grade;
-    
-    
+
+
     /**
      * Number of points for this {@link Length}. Can't be null.
      *
@@ -56,8 +56,8 @@ public class Length implements Serializable {
      */
     @NotNull(message = "Une longueur doit avoir un nombre de point")
     private Integer           pointsNb;
-    
-    
+
+
     /**
      * Description of the {@link Length}. Can be empty. Max size is 10 000 characters.
      *
@@ -66,8 +66,8 @@ public class Length implements Serializable {
      */
     @Size(min = 0, max = 10000, message = "La description d'une longueur doit être composée de {max} caractères maximum")
     private String            description;
-    
-    
+
+
     /**
      * Id of the {@link Route} to which the {@link Length} belongs. Can't be null.
      *
@@ -76,9 +76,9 @@ public class Length implements Serializable {
      */
     @NotNull(message = "Une longueur doit avoir une voie de référence")
     private Integer           routeId;
-
-    // ===== Getters =====
     
+    // ===== Getters =====
+
     /**
      * Get the id of the {@link Length}.
      *
@@ -90,7 +90,7 @@ public class Length implements Serializable {
     public Integer getId() {
         return this.id;
     }
-    
+
     /**
      * Get the length in meters of the {@link Length}.
      *
@@ -102,8 +102,8 @@ public class Length implements Serializable {
     public Integer getLength() {
         return this.length;
     }
-    
-    
+
+
     /**
      * Get the String which represents the grade of the {@link Length}.
      *
@@ -116,8 +116,8 @@ public class Length implements Serializable {
     public String getGrade() {
         return this.grade;
     }
-    
-    
+
+
     /**
      * Get the number of points of the {@link Length}.
      *
@@ -129,8 +129,8 @@ public class Length implements Serializable {
     public Integer getPointsNb() {
         return this.pointsNb;
     }
-    
-    
+
+
     /**
      * Get the description of the {@link Length}.
      *
@@ -142,8 +142,8 @@ public class Length implements Serializable {
     public String getDescription() {
         return this.description;
     }
-    
-    
+
+
     /**
      * Get the id of the {@link Route} to which the {@link Length} belongs.
      *
@@ -156,11 +156,11 @@ public class Length implements Serializable {
     public Integer getRouteId() {
         return this.routeId;
     }
-    
-    
+
+
     // ===== Setters =====
-    
-    
+
+
     /**
      * Set the id of the {@link Length}.
      *
@@ -172,8 +172,8 @@ public class Length implements Serializable {
     public void setId(Integer pId) {
         this.id = pId;
     }
-    
-    
+
+
     /**
      * Set the length in meters of the {@link Length}.
      *
@@ -185,8 +185,8 @@ public class Length implements Serializable {
     public void setLength(Integer pLength) {
         this.length = pLength;
     }
-    
-    
+
+
     /**
      * Set the String which represents the grade of the {@link Length}.
      *
@@ -199,8 +199,8 @@ public class Length implements Serializable {
     public void setGrade(String pGrade) {
         this.grade = pGrade;
     }
-    
-    
+
+
     /**
      * Set the number of points of the {@link Length}.
      *
@@ -212,8 +212,8 @@ public class Length implements Serializable {
     public void setPointsNb(Integer pPointsNb) {
         this.pointsNb = pPointsNb;
     }
-    
-    
+
+
     /**
      * Set the description of the {@link Length}.
      *
@@ -226,8 +226,8 @@ public class Length implements Serializable {
     public void setDescription(String pDescription) {
         this.description = pDescription;
     }
-    
-    
+
+
     /**
      * Set the id of the {@link Route} to which the {@link Length} belongs.
      *
@@ -239,11 +239,11 @@ public class Length implements Serializable {
     public void setRouteId(Integer pRouteId) {
         this.routeId = pRouteId;
     }
-    
-    
+
+
     // ===== Methods =====
-    
-    
+
+
     @Override
     public String toString() {
         return "Length{" + "id=" + this.id + ", length=" + this.length + ", grade='" + this.grade + '\'' + ", pointsNb=" + this.pointsNb + ", description='"

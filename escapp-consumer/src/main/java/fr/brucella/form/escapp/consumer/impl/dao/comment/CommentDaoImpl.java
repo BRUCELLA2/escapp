@@ -34,29 +34,29 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
  */
 @Component
 public class CommentDaoImpl extends AbstractDao implements CommentDao {
-    
+
     /**
      * Comment Manager logger
      */
     private static final Log LOG = LogFactory.getLog(CommentDaoImpl.class);
-    
+
     /**
      * @see CommentDao#getComment(Integer)
      */
     @Override
     public Comment getComment(Integer commentId) throws TechnicalException, NotFoundException {
-
-        final String sql = "SELECT * FROM comment WHERE id = :id";
         
+        final String sql = "SELECT * FROM comment WHERE id = :id";
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", commentId);
-        
+
         RowMapper<Comment> rowMapper = new CommentRM();
-        
+
         try {
-            
+
             return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
-            
+
         } catch (EmptyResultDataAccessException pException) {
             LOG.debug(pException.getStackTrace());
             throw new NotFoundException("Le commentaire demandé n'a pas été trouvé", pException);
@@ -71,21 +71,21 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see CommentDao#getCommentsList(String, Integer)
      */
     @Override
     public List<Comment> getCommentsList(final String targetType, final Integer idCommentTarget) throws TechnicalException, NotFoundException {
-        
+
         final String sql = "SELECT * FROM comment WHERE target_type = :targetType AND id_comment_target = :idCommentTarget";
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("targetType", targetType);
         params.addValue("idCommentTarget", idCommentTarget);
-        
+
         final RowMapper<Comment> rowMapper = new CommentRM();
-        
+
         try {
             final List<Comment> commentsList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
             if (commentsList.isEmpty()) {
@@ -104,26 +104,26 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
-        
+
     }
-    
+
     /**
      * @see CommentDao#getCommentsListWithLogin(String, Integer)
      */
     @Override
     public List<Pair<Comment, String>> getCommentsListWithLogin(final String targetType, final Integer idCommentTarget, final String order)
             throws TechnicalException, NotFoundException {
-        
+
         final String sql = "SELECT comment.id, comment.text, comment.target_type, comment.id_comment_target, comment.escapp_user, escapp_user.login "
                 + "		FROM comment " + "		INNER JOIN escapp_user " + "		ON comment.escapp_user = escapp_user.id "
                 + "		WHERE comment.target_type = :targetType AND comment.id_comment_target = :idCommentTarget " + "		ORDER BY comment.id " + order;
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("targetType", targetType);
         params.addValue("idCommentTarget", idCommentTarget);
-        
+
         final RowMapper<Pair<Comment, String>> rowMapper = new CommentWithLoginRM();
-        
+
         try {
             final List<Pair<Comment, String>> commentsListWithLogin = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
             if (commentsListWithLogin.isEmpty()) {
@@ -142,27 +142,27 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
-        
+
     }
-    
+
     /**
      * @see CommentDao#updateComment(Comment)
      */
     @Override
     public void updateComment(final Comment comment) throws TechnicalException, NotFoundException {
-        
+
         final String sql =
                 "UPDATE comment SET text = :text, target_type = :targetType, id_comment_target = :idCommentTarget, escapp_user = :escappUser WHERE id = :id";
-        
+
         final SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
-        
+
         try {
-            
+
             final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le commentaire à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
             }
-            
+
         } catch (DataIntegrityViolationException pException) {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du commentaire n'a pu être réalisée.", pException);
@@ -177,25 +177,25 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see CommentDao#insertComment(Comment)
      */
     @Override
     public int insertComment(final Comment comment) throws TechnicalException {
-        
+
         final String sql =
                 "INSERT INTO comment (id, text, target_type, id_comment_target, escapp_user) VALUES (DEFAULT, :text, :targetType, :idCommentTarget, :escappUser)";
-        
+
         final KeyHolder keyHolder = new GeneratedKeyHolder();
-
+        
         final SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
-
+        
         try {
-            
+
             this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
             return keyHolder.getKey().intValue();
-            
+
         } catch (DuplicateKeyException pException) {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException("Un commentaire existe déjà avec cet identifiant", pException);
@@ -213,25 +213,25 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
         }
     }
-    
+
     /**
      * @see CommentDao#deleteComment(Integer)
      */
     @Override
     public void deleteComment(Integer commentId) throws TechnicalException, NotFoundException {
-        
+
         final String sql = "DELETE FROM comment WHERE id = :id";
-        
+
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", commentId);
-        
+
         try {
-            
+
             final int result = this.getNamedJdbcTemplate().update(sql, params);
             if (result == 0) {
                 throw new NotFoundException("Le commentaire à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
             }
-            
+
         } catch (PermissionDeniedDataAccessException pException) {
             LOG.debug(pException.getStackTrace());
             throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);

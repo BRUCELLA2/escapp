@@ -12,19 +12,19 @@ import javax.validation.constraints.Size;
  * @author BRUCELLA2
  */
 public class User implements Serializable {
-    
+
     private static final long serialVersionUID = -3400475576749606144L;
-    
-    
+
+
     /**
      * id of the {@link User}.
-     * 
+     *
      * @see #getId()
      * @see #setId(Integer)
      */
     private Integer           id;
-    
-    
+
+
     /**
      * Login of the {@link User}. Can't be empty and max size is 30 characters.
      *
@@ -34,8 +34,8 @@ public class User implements Serializable {
     @NotEmpty(message = "L'identifiant de l'utilisateur doit être renseigné")
     @Size(min = 1, max = 30, message = "L'identifiant ne peut avoir que {max} caractères au maximum")
     private String            login;
-    
-    
+
+
     /**
      * Password of the {@link User}. Can't be empty. Max size is 60 characters.
      *
@@ -45,8 +45,8 @@ public class User implements Serializable {
     @NotEmpty(message = "Il est obligatoire de renseigner le mot de passe")
     @Size(max = 60, message = "Le mot de passe ne peut avoir que {max} caractères au maximum")
     private String            password;
-    
-    
+
+
     /**
      * Email of the {@link User}. Can't be empty. Max size is 100 characters.
      *
@@ -57,11 +57,11 @@ public class User implements Serializable {
     @Email(message = "L'adresse email n'est pas correcte")
     @Size(max = 100, message = "Votre adresse mail est trop longue. Elle ne doit pas contenir plus de {max} caractères")
     private String            email;
-    
-    
+
+
     // ===== Getters =====
-    
-    
+
+
     /**
      * Get the id of the {@link User}.
      *
@@ -73,8 +73,8 @@ public class User implements Serializable {
     public Integer getId() {
         return this.id;
     }
-    
-    
+
+
     /**
      * Get the login of the {@link User}.
      *
@@ -86,8 +86,8 @@ public class User implements Serializable {
     public String getLogin() {
         return this.login;
     }
-    
-    
+
+
     /**
      * Get the password of the {@link User}.
      *
@@ -99,8 +99,8 @@ public class User implements Serializable {
     public String getPassword() {
         return this.password;
     }
-    
-    
+
+
     /**
      * Get the email of the {@link User}.
      *
@@ -112,11 +112,11 @@ public class User implements Serializable {
     public String getEmail() {
         return this.email;
     }
-    
-    
+
+
     // ===== Setters =====
-    
-    
+
+
     /**
      * Set the id of the {@link User}.
      *
@@ -128,8 +128,8 @@ public class User implements Serializable {
     public void setId(Integer pId) {
         this.id = pId;
     }
-    
-    
+
+
     /**
      * Set the login of the {@link User}.
      *
@@ -140,8 +140,8 @@ public class User implements Serializable {
     public void setLogin(String pLogin) {
         this.login = pLogin;
     }
-    
-    
+
+
     /**
      * Set the password of the {@link User}.
      *
@@ -152,8 +152,8 @@ public class User implements Serializable {
     public void setPassword(String pPassword) {
         this.password = pPassword;
     }
-    
-    
+
+
     /**
      * Set the email of the {@link User}.
      *
@@ -164,10 +164,10 @@ public class User implements Serializable {
     public void setEmail(String pEmail) {
         this.email = pEmail;
     }
-    
-    
+
+
     // ===== Methods =====
-    
+
     @Override
     public String toString() {
         return "User{" + "id=" + this.id + ", login='" + this.login + '\'' + ", password='" + this.password + '\'' + ", email='" + this.email + '\'' + '}';
