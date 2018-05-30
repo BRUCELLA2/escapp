@@ -9,22 +9,27 @@ import org.springframework.stereotype.Component;
 
 import fr.brucella.form.escapp.consumer.contract.DaoFactory;
 
+/**
+ * Abstract Manager.
+ * 
+ * @author BRUCELLA2
+ */
 @Component
-public class AbstractManager {
+public abstract class AbstractManager {
   
   /**
-   * The Data Access Object Factory
+   * The Data Access Object Factory.
    */
   @Autowired
-  private DaoFactory vDaoFactory;
+  private DaoFactory daoFactory;
   
   /**
-   * Get the {@link DaoFactory}
+   * Get the {@link DaoFactory}.
    *
    * @return the {@link DaoFactory}
    */
   public DaoFactory getDaoFactory() {
-    return this.vDaoFactory;
+    return this.daoFactory;
   }
   
   /**
@@ -33,7 +38,7 @@ public class AbstractManager {
    * @return a constraint {@link Validator}.
    */
   protected Validator getConstraintValidator() {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     return factory.getValidator();
   }
 }

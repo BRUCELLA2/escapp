@@ -14,7 +14,9 @@ import fr.brucella.form.escapp.model.search.SiteSearch;
  */
 public class Site implements Serializable {
   
-  
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = -6707683532861567867L;
   
   

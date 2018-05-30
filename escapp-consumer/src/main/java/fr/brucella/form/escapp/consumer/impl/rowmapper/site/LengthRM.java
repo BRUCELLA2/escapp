@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import fr.brucella.form.escapp.model.beans.site.Length;
 
 /**
- * This class allow to map row of {@link java.sql.ResultSet} to an {@link Length} business object
+ * This class allow to map row of {@link java.sql.ResultSet} to an {@link Length} business object.
  *
  * @author BRUCELLA2
  */
@@ -18,18 +18,18 @@ public class LengthRM implements RowMapper<Length> {
    * @see RowMapper#mapRow(ResultSet, int)
    */
   @Override
-  public Length mapRow(ResultSet rs, int rowNum) throws SQLException {
+  public Length mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
     
-    Length vLength = new Length();
+    Length length = new Length();
     
-    vLength.setId(rs.getInt("id"));
-    vLength.setDescription(rs.getString("description"));
-    vLength.setGrade(rs.getString("grade"));
-    vLength.setLength(rs.getInt("length"));
-    vLength.setPointsNb(rs.getInt("points_nb"));
-    vLength.setRouteId(rs.getInt("route_id"));
+    length.setId(resultSet.getInt("id"));
+    length.setDescription(resultSet.getString("description"));
+    length.setGrade(resultSet.getString("grade"));
+    length.setLength(resultSet.getInt("length"));
+    length.setPointsNb(resultSet.getInt("points_nb"));
+    length.setRouteId(resultSet.getInt("route_id"));
     
-    return vLength;
+    return length;
   }
   
 }

@@ -60,13 +60,13 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       throw new NotFoundException("La voie demandée n'a pas été trouvée", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -95,13 +95,13 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -126,13 +126,13 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de la voie n'a pu être réalisée.", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -162,13 +162,13 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       throw new TechnicalException("Les données n'étant pas conformes, la création de la voie n'a pu être réalisée", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -192,13 +192,13 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   

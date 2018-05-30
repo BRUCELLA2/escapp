@@ -54,13 +54,13 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
       throw new NotFoundException("L'utilisateur n'a aucun role", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
     
   }
@@ -87,13 +87,13 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
       throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du role n'a pu être réalisée.", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
     
   }
@@ -120,13 +120,13 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
       throw new TechnicalException("Les données n'étant pas conformes, la création du role pour cet utilisateur n'a pu être réalisée", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -149,13 +149,13 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
       }
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
     
   }

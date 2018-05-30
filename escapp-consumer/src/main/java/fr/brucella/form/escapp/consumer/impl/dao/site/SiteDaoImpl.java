@@ -63,13 +63,13 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
       throw new NotFoundException("Le site demandé n'a pas été trouvé", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -95,13 +95,13 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
       
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -153,13 +153,13 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
       throw new NotFoundException("Aucun site ne correspond à votre recherche", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -185,13 +185,13 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
       throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du site n'a pu être réalisée.", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -220,13 +220,13 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
       throw new TechnicalException("Les données n'étant pas conformes, la création du site n'a pu être réalisée", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -250,13 +250,13 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
       
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   

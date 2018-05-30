@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import fr.brucella.form.escapp.model.beans.site.Site;
 
 /**
- * This class allow to map row of {@link java.sql.ResultSet} to an {@link Site} business object
+ * This class allow to map row of {@link java.sql.ResultSet} to an {@link Site} business object.
  *
  * @author BRUCELLA2
  */
@@ -18,17 +18,17 @@ public class SiteRM implements RowMapper<Site> {
    * @see RowMapper#mapRow(ResultSet, int)
    */
   @Override
-  public Site mapRow(ResultSet rs, int rowNum) throws SQLException {
+  public Site mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
     
-    Site vSite = new Site();
+    final Site site = new Site();
     
-    vSite.setId(rs.getInt("id"));
-    vSite.setName(rs.getString("name"));
-    vSite.setDepartment(rs.getString("department"));
-    vSite.setMunicipality(rs.getString("municipality"));
-    vSite.setDescription(rs.getString("description"));
+    site.setId(resultSet.getInt("id"));
+    site.setName(resultSet.getString("name"));
+    site.setDepartment(resultSet.getString("department"));
+    site.setMunicipality(resultSet.getString("municipality"));
+    site.setDescription(resultSet.getString("description"));
     
-    return vSite;
+    return site;
   }
   
   

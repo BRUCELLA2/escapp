@@ -9,21 +9,26 @@ package fr.brucella.form.escapp.model.exceptions;
 public class NotFoundException extends Exception {
   
   /**
+   * Serial ID.
+   */
+  private static final long serialVersionUID = 1464270623183788703L;
+
+  /**
    * Constructs a new NotFoundException with the specified detail message.
    *
-   * @param pMessage the detail message.
+   * @param message the detail message.
    */
-  public NotFoundException(String pMessage) {
-    super(pMessage);
+  public NotFoundException(final String message) {
+    super(message);
   }
   
   /**
    * Constructs a new NotFoundException with the specified detail message and cause.
    *
-   * @param pMessage the detail message.
-   * @param pCause the cause
+   * @param message the detail message.
+   * @param cause the cause
    */
-  public NotFoundException(String pMessage, Throwable pCause) {
-    super(pMessage, pCause);
+  public NotFoundException(final String message, final Throwable cause) {
+    super(message, cause);
   }
 }

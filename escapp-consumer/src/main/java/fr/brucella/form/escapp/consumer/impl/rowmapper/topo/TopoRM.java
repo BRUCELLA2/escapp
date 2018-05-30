@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import fr.brucella.form.escapp.model.beans.topo.Topo;
 
 /**
- * This class allow to map row of {@link java.sql.ResultSet} to an {@link Topo} business object
+ * This class allow to map row of {@link java.sql.ResultSet} to an {@link Topo} business object.
  *
  * @author BRUCELLA2
  */
@@ -18,27 +18,27 @@ public class TopoRM implements RowMapper<Topo> {
    * @see RowMapper#mapRow(ResultSet, int)
    */
   @Override
-  public Topo mapRow(ResultSet rs, int rowNum) throws SQLException {
+  public Topo mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
     
-    Topo vTopo = new Topo();
+    Topo topo = new Topo();
     
-    vTopo.setId(rs.getInt("id"));
-    vTopo.setName(rs.getString("name"));
-    vTopo.setDepartment(rs.getString("department"));
-    vTopo.setBorrowable(rs.getBoolean("is_borrowable"));
-    vTopo.setPdfFileName(rs.getString("pdf_file_name"));
-    vTopo.setMunicipality(rs.getString("municipality"));
-    if (rs.getTimestamp("end_date_borrow") != null) {
-      vTopo.setEndDateBorrow(rs.getTimestamp("end_date_borrow").toLocalDateTime());
+    topo.setId(resultSet.getInt("id"));
+    topo.setName(resultSet.getString("name"));
+    topo.setDepartment(resultSet.getString("department"));
+    topo.setBorrowable(resultSet.getBoolean("is_borrowable"));
+    topo.setPdfFileName(resultSet.getString("pdf_file_name"));
+    topo.setMunicipality(resultSet.getString("municipality"));
+    if (resultSet.getTimestamp("end_date_borrow") == null) {
+      topo.setEndDateBorrow(null);
     }
     else {
-      vTopo.setEndDateBorrow(null);
+      topo.setEndDateBorrow(resultSet.getTimestamp("end_date_borrow").toLocalDateTime());
     }
-    vTopo.setBorrower(rs.getObject("borrower_id", Integer.class));
-    vTopo.setDescription(rs.getString("description"));
-    vTopo.setOwner(rs.getInt("owner_id"));
+    topo.setBorrower(resultSet.getObject("borrower_id", Integer.class));
+    topo.setDescription(resultSet.getString("description"));
+    topo.setOwner(resultSet.getInt("owner_id"));
     
-    return vTopo;
+    return topo;
   }
   
 }

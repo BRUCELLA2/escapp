@@ -14,6 +14,9 @@ import javax.validation.constraints.Size;
  */
 public class Topo implements Serializable {
   
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = -5852973080904585758L;
   
   /**

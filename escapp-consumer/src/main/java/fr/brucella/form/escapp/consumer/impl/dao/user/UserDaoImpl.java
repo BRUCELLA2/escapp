@@ -59,13 +59,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -89,13 +89,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -114,13 +114,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       return this.getNamedJdbcTemplate().queryForObject(sql, params, Integer.class);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -146,13 +146,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de l'utilisateur n'a pu être réalisée.", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -181,13 +181,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       throw new TechnicalException("Les données n'étant pas conformes, la création de l'utilisateur n'a pu être réalisée", pException);
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
   
@@ -211,13 +211,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       
     } catch (PermissionDeniedDataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED_DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION, pException);
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
       LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION_MESSAGE, pException);
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
     }
   }
 }

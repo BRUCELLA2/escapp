@@ -21,19 +21,19 @@ public class CommentWithLoginRM implements RowMapper<Pair<Comment, String>> {
    * @see RowMapper#mapRow(ResultSet, int)
    */
   @Override
-  public Pair<Comment, String> mapRow(ResultSet rs, int rowNum) throws SQLException {
+  public Pair<Comment, String> mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
     
-    Comment vComment = new Comment();
+    final Comment comment = new Comment();
     
-    vComment.setId(rs.getInt("id"));
-    vComment.setIdCommentTarget(rs.getInt("id_comment_target"));
-    vComment.setTargetType(rs.getString("target_type"));
-    vComment.setText(rs.getString("text"));
-    vComment.setEscappUser(rs.getInt("escapp_user"));
+    comment.setId(resultSet.getInt("id"));
+    comment.setIdCommentTarget(resultSet.getInt("id_comment_target"));
+    comment.setTargetType(resultSet.getString("target_type"));
+    comment.setText(resultSet.getString("text"));
+    comment.setEscappUser(resultSet.getInt("escapp_user"));
     
-    String vLogin = rs.getString("login");
+    final String login = resultSet.getString("login");
     
-    return new MutablePair<>(vComment, vLogin);
+    return new MutablePair<>(comment, login);
     
   }
 }
