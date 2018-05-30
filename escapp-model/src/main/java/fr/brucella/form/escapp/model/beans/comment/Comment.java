@@ -14,7 +14,9 @@ import javax.validation.constraints.Size;
  */
 public class Comment implements Serializable {
   
-  
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = 430229845493717046L;
   
   
@@ -88,7 +90,7 @@ public class Comment implements Serializable {
   
   
   /**
-   * Get the text of the {@link Comment}
+   * Get the text of the {@link Comment}.
    *
    * @return the {@link String} text of the {@link Comment}. Max size is 1000 characters. Can't be
    *         empty.
@@ -147,67 +149,67 @@ public class Comment implements Serializable {
   /**
    * Set the id of the {@link Comment}.
    *
-   * @param pId {@link Integer} id of the {@link Comment}.
+   * @param id {@link Integer} id of the {@link Comment}.
    *
    * @see #id
    * @see #getId()
    */
-  public void setId(Integer pId) {
-    this.id = pId;
+  public void setId(final Integer id) {
+    this.id = id;
   }
   
   
   /**
    * Set the text of the {@link Comment}.
    *
-   * @param pText {@link String} text of the {@link Comment} Can't be empty. Max size is 1000
+   * @param text {@link String} text of the {@link Comment} Can't be empty. Max size is 1000
    *        characters.
    *
    * @see #text
    * @see #getText()
    */
-  public void setText(String pText) {
-    this.text = pText;
+  public void setText(final String text) {
+    this.text = text;
   }
   
   
   /**
    * Set the id of the user who writes the {@link Comment}.
    *
-   * @param pEscappUser {@link Integer} id of the user who writes the {@link Comment}. Can't be null
+   * @param escappUser {@link Integer} id of the user who writes the {@link Comment}. Can't be null
    *
    * @see #escappUser
    * @see #setEscappUser(Integer)
    */
-  public void setEscappUser(Integer pEscappUser) {
-    this.escappUser = pEscappUser;
+  public void setEscappUser(final Integer escappUser) {
+    this.escappUser = escappUser;
   }
   
   
   /**
    * Set the {@link String} that represents the target's type of the {@link Comment}.
    *
-   * @param pTargetType {@link String} that represents the target's type of the {@link Comment}. Can't
+   * @param targetType {@link String} that represents the target's type of the {@link Comment}. Can't
    *        be empty. Values can be one of these : "Length", "Route", "Sector", "Site" or "Topo".
    *
    * @see #targetType
    * @see #getTargetType()
    */
-  public void setTargetType(String pTargetType) {
-    this.targetType = pTargetType;
+  public void setTargetType(final String targetType) {
+    this.targetType = targetType;
   }
   
   
   /**
    * Set the id of the target which is commented.
    *
-   * @param pIdCommentTarget {@link Integer} id of the target which is commented. Can't be null
+   * @param idCommentTarget {@link Integer} id of the target which is commented. Can't be null
    *
    * @see #idCommentTarget
    * @see #setIdCommentTarget(Integer)
    */
-  public void setIdCommentTarget(Integer pIdCommentTarget) {
-    this.idCommentTarget = pIdCommentTarget;
+  public void setIdCommentTarget(final Integer idCommentTarget) {
+    this.idCommentTarget = idCommentTarget;
   }
   
   // ===== Methods =====

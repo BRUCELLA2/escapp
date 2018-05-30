@@ -13,7 +13,9 @@ import javax.validation.constraints.Size;
  */
 public class Length implements Serializable {
   
-  
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = -3926420174130532857L;
   
   
@@ -76,6 +78,7 @@ public class Length implements Serializable {
    */
   @NotNull(message = "Une longueur doit avoir une voie de référence")
   private Integer           routeId;
+  
   
   // ===== Getters =====
   
@@ -164,80 +167,80 @@ public class Length implements Serializable {
   /**
    * Set the id of the {@link Length}.
    *
-   * @param pId {@link Integer} id of the {@link Length}.
+   * @param id {@link Integer} id of the {@link Length}.
    *
    * @see #id
    * @see #getId()
    */
-  public void setId(Integer pId) {
-    this.id = pId;
+  public void setId(final Integer id) {
+    this.id = id;
   }
   
   
   /**
    * Set the length in meters of the {@link Length}.
    *
-   * @param pLength the length in meters of the {@link Length}. Can't be null.
+   * @param length the length in meters of the {@link Length}. Can't be null.
    *
    * @see #length
    * @see #getLength()
    */
-  public void setLength(Integer pLength) {
-    this.length = pLength;
+  public void setLength(final Integer length) {
+    this.length = length;
   }
   
   
   /**
    * Set the String which represents the grade of the {@link Length}.
    *
-   * @param pGrade the String which represents the grade of the {@link Length}. Can't be empty. Max
+   * @param grade the String which represents the grade of the {@link Length}. Can't be empty. Max
    *        size is 2 characters.
    *
    * @see #grade
    * @see #getGrade()
    */
-  public void setGrade(String pGrade) {
-    this.grade = pGrade;
+  public void setGrade(final String grade) {
+    this.grade = grade;
   }
   
   
   /**
    * Set the number of points of the {@link Length}.
    *
-   * @param pPointsNb the number of points of the {@link Length}. Can't be null.
+   * @param pointsNb the number of points of the {@link Length}. Can't be null.
    *
    * @see #pointsNb
    * @see #getPointsNb()
    */
-  public void setPointsNb(Integer pPointsNb) {
-    this.pointsNb = pPointsNb;
+  public void setPointsNb(final Integer pointsNb) {
+    this.pointsNb = pointsNb;
   }
   
   
   /**
    * Set the description of the {@link Length}.
    *
-   * @param pDescription the description of the {@link Length}. Can be empty. Max size is 10 000
+   * @param description the description of the {@link Length}. Can be empty. Max size is 10 000
    *        characters.
    *
    * @see #description
    * @see #getDescription()
    */
-  public void setDescription(String pDescription) {
-    this.description = pDescription;
+  public void setDescription(final String description) {
+    this.description = description;
   }
   
   
   /**
    * Set the id of the {@link Route} to which the {@link Length} belongs.
    *
-   * @param pRouteId the {@link Integer} id of the {@link Route} to which the {@link Length} belongs.
+   * @param routeId the {@link Integer} id of the {@link Route} to which the {@link Length} belongs.
    *
    * @see #routeId
    * @see #getRouteId()
    */
-  public void setRouteId(Integer pRouteId) {
-    this.routeId = pRouteId;
+  public void setRouteId(final Integer routeId) {
+    this.routeId = routeId;
   }
   
   

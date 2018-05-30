@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import fr.brucella.form.escapp.model.search.SiteSearch;
 
 /**
- * Business object which represents a Site
+ * Business object which represents a Site.
  *
  * @author BRUCELLA2
  */
@@ -150,68 +150,68 @@ public class Site implements Serializable {
   /**
    * Set the id of the {@link Site}.
    *
-   * @param pId {@link Integer} id of the {@link Site}.
+   * @param id {@link Integer} id of the {@link Site}.
    *
    * @see #id
    * @see #getId()
    */
-  public void setId(Integer pId) {
-    this.id = pId;
+  public void setId(final Integer id) {
+    this.id = id;
   }
   
   
   /**
    * Set the name of the {@link Site}.
    *
-   * @param pName the name of the {@link Site}. Can't be empty. Max size is 100 characters.
+   * @param name the name of the {@link Site}. Can't be empty. Max size is 100 characters.
    *
    * @see #name
    * @see #getName()
    */
-  public void setName(String pName) {
-    this.name = pName;
+  public void setName(final String name) {
+    this.name = name;
   }
   
   
   /**
    * Set the {@link String} representing the department code to which {@link Site} belongs.
    *
-   * @param pDepartment the {@link String} representing the department code to which {@link Site}
+   * @param department the {@link String} representing the department code to which {@link Site}
    *        belongs. Can't be empty Size need to be 3 characters. Ex : "034", "030", "02A"
    *
    * @see #department
    * @see #getDepartment()
    */
-  public void setDepartment(String pDepartment) {
-    this.department = pDepartment;
+  public void setDepartment(final String department) {
+    this.department = department;
   }
   
   
   /**
    * Set the municipality to which {@link Site} belongs.
    *
-   * @param pMunicipality the municipality to which {@link Site} belongs. Can't be empty Max size is
+   * @param municipality the municipality to which {@link Site} belongs. Can't be empty Max size is
    *        100 characters
    *
    * @see #municipality
    * @see #getMunicipality()
    */
-  public void setMunicipality(String pMunicipality) {
-    this.municipality = pMunicipality;
+  public void setMunicipality(final String municipality) {
+    this.municipality = municipality;
   }
   
   
   /**
    * Set the description of the {@link Site}.
    *
-   * @param pDescription the description of the {@link Site}. Can be empty. Max size is 10 000
+   * @param description the description of the {@link Site}. Can be empty. Max size is 10 000
    *        characters.
    *
    * @see #description
    * @see #getDescription()
    */
-  public void setDescription(String pDescription) {
-    this.description = pDescription;
+  public void setDescription(final String description) {
+    this.description = description;
   }
   
   

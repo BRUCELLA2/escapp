@@ -565,9 +565,11 @@ public class SiteDetailsAction extends ActionSupport {
       this.routesList = new ArrayList<>();
       this.commentsSectorList = new ArrayList<>();
       this.nbCommentsSectorsList = new ArrayList<>();
-      for (Sector sectorL : this.sectorsList) {
+      
+      List<Pair<Comment, String>> tempCommentsSectorList;
+      for (final Sector sectorL : this.sectorsList) {
         this.routesList.addAll(this.managerFactory.getRouteManager().getRoutesSectorList(sectorL.getId()));
-        List<Pair<Comment, String>> tempCommentsSectorList = this.managerFactory.getCommentManager().getCommentsSectorListWithLogin(sectorL.getId(), "ASC");
+        tempCommentsSectorList = this.managerFactory.getCommentManager().getCommentsSectorListWithLogin(sectorL.getId(), "ASC");
         this.nbCommentsSectorsList.add(new MutablePair<Integer, Integer>(sectorL.getId(), tempCommentsSectorList.size()));
         this.commentsSectorList.addAll(tempCommentsSectorList);
       }
@@ -578,7 +580,7 @@ public class SiteDetailsAction extends ActionSupport {
       return Action.SUCCESS;
     }
     
-    return (this.hasErrors()) ? Action.ERROR : Action.SUCCESS;
+    return this.hasErrors() ? Action.ERROR : Action.SUCCESS;
     
   }
   
@@ -618,7 +620,7 @@ public class SiteDetailsAction extends ActionSupport {
     /*
      * Calculate number of points for the route
      */
-    this.nbPoints = this.nbPoints(this.lengthsList);
+    this.nbPoints = this.sumNbPoints(this.lengthsList);
     
     /*
      * Get comments list for the route
@@ -642,7 +644,7 @@ public class SiteDetailsAction extends ActionSupport {
    *
    * @return the number of points for the route.
    */
-  private int nbPoints(final List<Length> lengthsList) {
+  private int sumNbPoints(final List<Length> lengthsList) {
     int nbPoins = 0;
     
     for (final Length length : lengthsList) {

@@ -14,7 +14,9 @@ import fr.brucella.form.escapp.model.beans.topo.Topo;
  */
 public class TopoSearch implements Serializable {
   
-  
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = -8234667938852361245L;
   
   
@@ -98,42 +100,42 @@ public class TopoSearch implements Serializable {
   /**
    * Set the {@link String} representing the department code associated to {@link Topo} searched.
    *
-   * @param pDepartmentTopo the {@link String} representing the department code associated to
+   * @param departmentTopo the {@link String} representing the department code associated to
    *        {@link Topo} searched. Size need to be 3 characters. Ex : "034", "030", "02A"
    *
    * @see #departmentTopo
    * @see #getDepartmentTopo()
    * @see Topo
    */
-  public void setDepartmentTopo(String pDepartmentTopo) {
-    this.departmentTopo = pDepartmentTopo;
+  public void setDepartmentTopo(final String departmentTopo) {
+    this.departmentTopo = departmentTopo;
   }
   
   /**
    * Set the municipality associated to the {@link Topo} searched.
    *
-   * @param pMunicipalityTopo the municipality associated to the {@link Topo} searched. Max size is
+   * @param municipalityTopo the municipality associated to the {@link Topo} searched. Max size is
    *        100 characters
    *
    * @see #municipalityTopo
    * @see #getMunicipalityTopo()
    * @see Topo
    */
-  public void setMunicipalityTopo(String pMunicipalityTopo) {
-    this.municipalityTopo = pMunicipalityTopo;
+  public void setMunicipalityTopo(final String municipalityTopo) {
+    this.municipalityTopo = municipalityTopo;
   }
   
   /**
    * Set if the {@link Topo} is available.
    *
-   * @param pAvailableTopo true if the {@link Topo} is available to be borrow, false otherwise. Can't
+   * @param availableTopo true if the {@link Topo} is available to be borrow, false otherwise. Can't
    *        be null
    *
    * @see #availableTopo
    * @see #getAvailableTopo()
    */
-  public void setAvailableTopo(Boolean pAvailableTopo) {
-    this.availableTopo = pAvailableTopo;
+  public void setAvailableTopo(final Boolean availableTopo) {
+    this.availableTopo = availableTopo;
   }
   
   

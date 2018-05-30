@@ -1,6 +1,5 @@
 package fr.brucella.form.escapp.webapp.action.users;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * Actions related to User
+ * Actions related to User.
  * 
  * @author BRUCELLA2
  */
@@ -79,7 +78,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   // ----- Struts Elements
   
   /**
-   * the user's HTTP session attributes
+   * the user's HTTP session attributes.
    * 
    * @see #setSession(Map)
    */
@@ -153,7 +152,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
    * @see #login
    * @see #getLogin()
    */
-  public void setLogin(String login) {
+  public void setLogin(final String login) {
     this.login = login;
   }
   
@@ -165,7 +164,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
    * @see #password
    * @see #getPassword()
    */
-  public void setPassword(String password) {
+  public void setPassword(final String password) {
     this.password = password;
   }
   
@@ -177,7 +176,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
    * @see #confPwd
    * @see #getConfPwd()
    */
-  public void setConfPwd(String confPwd) {
+  public void setConfPwd(final String confPwd) {
     this.confPwd = confPwd;
   }
   
@@ -189,7 +188,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
    * @see #email
    * @see #setEmail(String)
    */
-  public void setEmail(String email) {
+  public void setEmail(final String email) {
     this.email = email;
   }
   
@@ -199,7 +198,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
    * @see #session
    */
   @Override
-  public void setSession(Map<String, Object> session) {
+  public void setSession(final Map<String, Object> session) {
     this.session = session;
   }
   
@@ -209,7 +208,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
    * @see #servletRequest
    */
   @Override
-  public void setServletRequest(HttpServletRequest servletRequest) {
+  public void setServletRequest(final HttpServletRequest servletRequest) {
     this.servletRequest = servletRequest;
     
   }

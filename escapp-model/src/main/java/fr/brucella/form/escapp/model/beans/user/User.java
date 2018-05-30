@@ -7,12 +7,15 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 /**
- * Business object which represents an User
+ * Business object which represents an User.
  *
  * @author BRUCELLA2
  */
 public class User implements Serializable {
   
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = -3400475576749606144L;
   
   
@@ -120,49 +123,49 @@ public class User implements Serializable {
   /**
    * Set the id of the {@link User}.
    *
-   * @param pId {@link Integer} id of the {@link User}.
+   * @param id {@link Integer} id of the {@link User}.
    *
    * @see #id
    * @see #getId()
    */
-  public void setId(Integer pId) {
-    this.id = pId;
+  public void setId(final Integer id) {
+    this.id = id;
   }
   
   
   /**
    * Set the login of the {@link User}.
    *
-   * @param pLogin the login of the {@link User}. Can't be empty. Max size is 30 characters.
+   * @param login the login of the {@link User}. Can't be empty. Max size is 30 characters.
    * @see #login
    * @see #getLogin()
    */
-  public void setLogin(String pLogin) {
-    this.login = pLogin;
+  public void setLogin(final String login) {
+    this.login = login;
   }
   
   
   /**
    * Set the password of the {@link User}.
    *
-   * @param pPassword the password of the {@link User}. Can't be empty. Max size is 60 characters.
+   * @param password the password of the {@link User}. Can't be empty. Max size is 60 characters.
    * @see #password
    * @see #getPassword()
    */
-  public void setPassword(String pPassword) {
-    this.password = pPassword;
+  public void setPassword(final String password) {
+    this.password = password;
   }
   
   
   /**
    * Set the email of the {@link User}.
    *
-   * @param pEmail the email of the {@link User}. Can't be empty. Max size is 100 characters.
+   * @param email the email of the {@link User}. Can't be empty. Max size is 100 characters.
    * @see #email
    * @see #getEmail()
    */
-  public void setEmail(String pEmail) {
-    this.email = pEmail;
+  public void setEmail(final String email) {
+    this.email = email;
   }
   
   

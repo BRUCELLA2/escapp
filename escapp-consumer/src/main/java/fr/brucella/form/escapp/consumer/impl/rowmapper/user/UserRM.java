@@ -20,7 +20,7 @@ public class UserRM implements RowMapper<User> {
   @Override
   public User mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
     
-    User user = new User();
+    final User user = new User();
     
     user.setId(resultSet.getInt("id"));
     user.setLogin(resultSet.getString("login"));

@@ -13,7 +13,9 @@ import javax.validation.constraints.Size;
  */
 public class Route implements Serializable {
   
-  
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = -7505857619427747573L;
   
   
@@ -168,80 +170,80 @@ public class Route implements Serializable {
   /**
    * Set the id of the {@link Route}.
    *
-   * @param pId {@link Integer} id of the {@link Route}.
+   * @param id {@link Integer} id of the {@link Route}.
    *
    * @see #id
    * @see #getId()
    */
-  public void setId(Integer pId) {
-    this.id = pId;
+  public void setId(final Integer id) {
+    this.id = id;
   }
   
   
   /**
    * Set the name of the {@link Route}.
    *
-   * @param pName the name of the {@link Route}. Can't be empty. Max size is 100 characters.
+   * @param name the name of the {@link Route}. Can't be empty. Max size is 100 characters.
    *
    * @see #name
    * @see #getName()
    */
-  public void setName(String pName) {
-    this.name = pName;
+  public void setName(final String name) {
+    this.name = name;
   }
   
   
   /**
    * Set the String which represents the grade of the {@link Route}.
    *
-   * @param pGrade the String which represents the grade of the {@link Route}. Can't be empty. Max
+   * @param grade the String which represents the grade of the {@link Route}. Can't be empty. Max
    *        size is 2 characters.
    *
    * @see #grade
    * @see #getGrade()
    */
-  public void setGrade(String pGrade) {
-    this.grade = pGrade;
+  public void setGrade(final String grade) {
+    this.grade = grade;
   }
   
   
   /**
    * Set the id of the {@link Sector} to which the {@link Route} belongs.
    *
-   * @param pSectorId the {@link Integer} id of the {@link Sector} to which the {@link Sector}
+   * @param sectorId the {@link Integer} id of the {@link Sector} to which the {@link Sector}
    *        belongs. Can't be null.
    * @see #sectorId
    * @see #getSectorId()
    */
-  public void setSectorId(Integer pSectorId) {
-    this.sectorId = pSectorId;
+  public void setSectorId(final Integer sectorId) {
+    this.sectorId = sectorId;
   }
   
   
   /**
    * Set the number of points of the {@link Route}.
    *
-   * @param pPointsNb the number of points of the {@link Route}. Can't be null.
+   * @param pointsNb the number of points of the {@link Route}. Can't be null.
    *
    * @see #pointsNb
    * @see #getPointsNb()
    */
-  public void setPointsNb(Integer pPointsNb) {
-    this.pointsNb = pPointsNb;
+  public void setPointsNb(final Integer pointsNb) {
+    this.pointsNb = pointsNb;
   }
   
   
   /**
    * Set the description of the {@link Route}.
    *
-   * @param pDescription the description of the {@link Route}. Can be empty. Max size is 10 000
+   * @param description the description of the {@link Route}. Can be empty. Max size is 10 000
    *        characters.
    *
    * @see #description
    * @see #getDescription()
    */
-  public void setDescription(String pDescription) {
-    this.description = pDescription;
+  public void setDescription(final String description) {
+    this.description = description;
   }
   
   // ===== Methods =====

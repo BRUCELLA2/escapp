@@ -24,7 +24,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * User Data Access Object
+ * User Data Access Object.
  *
  * @author BRUCELLA2
  */
@@ -32,9 +32,10 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 public class UserDaoImpl extends AbstractDao implements UserDao {
   
   /**
-   * User DAO logger
+   * User DAO logger.
    */
   private static final Log LOG = LogFactory.getLog(UserDaoImpl.class);
+  
   
   
   /**

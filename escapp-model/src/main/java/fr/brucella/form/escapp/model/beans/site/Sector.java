@@ -13,7 +13,9 @@ import javax.validation.constraints.Size;
  */
 public class Sector implements Serializable {
   
-  
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = -4544026296319665451L;
   
   
@@ -119,54 +121,54 @@ public class Sector implements Serializable {
   /**
    * Set the id of the {@link Sector}.
    *
-   * @param pId {@link Integer} id of the {@link Sector}.
+   * @param id {@link Integer} id of the {@link Sector}.
    *
    * @see #id
    * @see #getId()
    */
-  public void setId(Integer pId) {
-    this.id = pId;
+  public void setId(final Integer id) {
+    this.id = id;
   }
   
   
   /**
    * Set the name of the {@link Sector}.
    *
-   * @param pName the name of the {@link Sector}. Can't be empty. Max size is 100 characters.
+   * @param name the name of the {@link Sector}. Can't be empty. Max size is 100 characters.
    *
    * @see #name
    * @see #getName()
    */
-  public void setName(String pName) {
-    this.name = pName;
+  public void setName(final String name) {
+    this.name = name;
   }
   
   
   /**
    * Set the description of the {@link Sector}.
    *
-   * @param pDescription the description of the {@link Sector}. Can be empty. Max size is 10 000
+   * @param description the description of the {@link Sector}. Can be empty. Max size is 10 000
    *        characters.
    *
    * @see #description
    * @see #getDescription()
    */
-  public void setDescription(String pDescription) {
-    this.description = pDescription;
+  public void setDescription(final String description) {
+    this.description = description;
   }
   
   
   /**
    * Set the id of the {@link Site} to which the {@link Sector} belongs.
    *
-   * @param pSiteId the {@link Integer} id of the {@link Site} to which the {@link Sector} belongs
+   * @param siteId the {@link Integer} id of the {@link Site} to which the {@link Sector} belongs
    *        Can't be null.
    *
    * @see #siteId
    * @see #getSiteId()
    */
-  public void setSiteId(Integer pSiteId) {
-    this.siteId = pSiteId;
+  public void setSiteId(final Integer siteId) {
+    this.siteId = siteId;
   }
   
   

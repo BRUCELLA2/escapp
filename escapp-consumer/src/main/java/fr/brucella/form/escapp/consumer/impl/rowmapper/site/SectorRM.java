@@ -20,7 +20,7 @@ public class SectorRM implements RowMapper<Sector> {
   @Override
   public Sector mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
     
-    Sector sector = new Sector();
+    final Sector sector = new Sector();
     
     sector.setId(resultSet.getInt("id"));
     sector.setName(resultSet.getString("name"));

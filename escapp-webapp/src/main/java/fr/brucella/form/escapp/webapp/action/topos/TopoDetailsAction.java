@@ -473,16 +473,16 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
       return Action.INPUT;
     }
     
-    User vUser = (User) this.servletRequest.getSession().getAttribute("user");
-    if (vUser == null) {
+    final User user = (User) this.servletRequest.getSession().getAttribute("user");
+    if (user == null) {
       this.addActionError("Vous n'êtes plus identifié, la réservation du topo n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
     
     try {
       this.topo = this.managerFactory.getTopoManager().getTopoById(this.id);
-      this.topo = this.managerFactory.getTopoManager().borrowTopo(this.topo, this.nbDays, vUser);
-      this.borrowerTopo = vUser;
+      this.topo = this.managerFactory.getTopoManager().borrowTopo(this.topo, this.nbDays, user);
+      this.borrowerTopo = user;
     } catch (TechnicalException | NotFoundException | FunctionalException pException) {
       this.addActionError(pException.getMessage());
       return Action.ERROR;
@@ -535,22 +535,22 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
       return Action.ERROR;
     }
     
-    User vUser = (User) this.servletRequest.getSession().getAttribute("user");
-    if (vUser == null) {
+    final User user = (User) this.servletRequest.getSession().getAttribute("user");
+    if (user == null) {
       this.addActionError("Vous n'êtes plus identifié, la suppression du topo n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
     
     try {
       
-      Topo vTopo = this.managerFactory.getTopoManager().getTopoById(this.id);
+      topo = this.managerFactory.getTopoManager().getTopoById(this.id);
       
-      ServletContext servletContext = ServletActionContext.getServletContext();
-      String path = servletContext.getRealPath("/WEB-INF/files/");
-      File topoPdf = new File(path, vTopo.getPdfFileName());
+      final ServletContext servletContext = ServletActionContext.getServletContext();
+      final String path = servletContext.getRealPath("/WEB-INF/files/");
+      final File topoPdf = new File(path, topo.getPdfFileName());
       FileUtils.deleteQuietly(topoPdf);
       
-      this.managerFactory.getTopoManager().deleteTopo(this.id, vUser);
+      this.managerFactory.getTopoManager().deleteTopo(this.id, user);
       
     } catch (TechnicalException | NotFoundException | FunctionalException pException) {
       this.addActionError(pException.getMessage());

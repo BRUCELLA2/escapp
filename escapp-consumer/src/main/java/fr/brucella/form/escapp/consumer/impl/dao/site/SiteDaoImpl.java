@@ -28,7 +28,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.model.search.SiteSearch;
 
 /**
- * Site Data Access Object
+ * Site Data Access Object.
  *
  * @author BRUCELLA2
  */
@@ -36,7 +36,7 @@ import fr.brucella.form.escapp.model.search.SiteSearch;
 public class SiteDaoImpl extends AbstractDao implements SiteDao {
   
   /**
-   * Site DAO logger
+   * Site DAO logger.
    */
   private static final Log LOG = LogFactory.getLog(SiteDaoImpl.class);
   
@@ -113,7 +113,8 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
     
     final MapSqlParameterSource params = new MapSqlParameterSource();
     
-    final StringBuilder sql = new StringBuilder("SELECT DISTINCT site.id, site.name, site.department, site.municipality, site.description " + " 	FROM site ");
+    final StringBuilder sql = new StringBuilder(49);
+    sql.append("SELECT DISTINCT site.id, site.name, site.department, site.municipality, site.description FROM site ");
     
     if (siteSearch != null) {
       
@@ -146,7 +147,9 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
     final RowMapper<Site> rowMapper = new SiteRM();
     
     try {
-      LOG.debug("SQL" + sql.toString());
+      if(LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql.toString());
+      }
       return this.getNamedJdbcTemplate().query(sql.toString(), params, rowMapper);
     } catch (EmptyResultDataAccessException pException) {
       LOG.debug(pException.getStackTrace());

@@ -14,6 +14,9 @@ import fr.brucella.form.escapp.model.beans.site.Site;
  */
 public class SiteSearch implements Serializable {
   
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = 1243057213802380805L;
   
   
@@ -126,57 +129,57 @@ public class SiteSearch implements Serializable {
   /**
    * Set the {@link String} representing the department code to which {@link Site} searched belongs.
    *
-   * @param pDepartmentSite the {@link String} representing the department code to which {@link Site}
+   * @param departmentSite the {@link String} representing the department code to which {@link Site}
    *        searched belongs. Size need to be 3 characters. Ex : "034", "030", "02A"
    *
    * @see #departmentSite
    * @see #getDepartmentSite()
    * @see Site
    */
-  public void setDepartmentSite(String pDepartmentSite) {
-    this.departmentSite = pDepartmentSite;
+  public void setDepartmentSite(final String departmentSite) {
+    this.departmentSite = departmentSite;
   }
   
   /**
    * Set the municipality to which {@link Site} searched belongs.
    *
-   * @param pMunicipalitySite the municipality to which {@link Site} searched belongs. Max size is 100
+   * @param municipalitySite the municipality to which {@link Site} searched belongs. Max size is 100
    *        characters
    *
    * @see #municipalitySite
    * @see #getMunicipalitySite()
    * @see Site
    */
-  public void setMunicipalitySite(String pMunicipalitySite) {
-    this.municipalitySite = pMunicipalitySite;
+  public void setMunicipalitySite(final String municipalitySite) {
+    this.municipalitySite = municipalitySite;
   }
   
   /**
    * Set the String which represents the minimum grade of the {@link Route} for the site searched.
    *
-   * @param pMinGradeRoute the String which represents the minimum grade of the {@link Route} for the
+   * @param minGradeRoute the String which represents the minimum grade of the {@link Route} for the
    *        site searched. Max size is 2 characters.
    *
    * @see #minGradeRoute
    * @see #getMinGradeRoute()
    * @see Route
    */
-  public void setMinGradeRoute(String pMinGradeRoute) {
-    this.minGradeRoute = pMinGradeRoute;
+  public void setMinGradeRoute(final String minGradeRoute) {
+    this.minGradeRoute = minGradeRoute;
   }
   
   /**
    * Set the String which represents the maximum grade of the {@link Route} for the site searched.
    *
-   * @param pMaxGradeRoute the String which represents the maximum grade of the {@link Route} for the
+   * @param maxGradeRoute the String which represents the maximum grade of the {@link Route} for the
    *        site searched. Max size is 2 characters.
    *
    * @see #maxGradeRoute
    * @see #getMaxGradeRoute()
    * @see Route
    */
-  public void setMaxGradeRoute(String pMaxGradeRoute) {
-    this.maxGradeRoute = pMaxGradeRoute;
+  public void setMaxGradeRoute(final String maxGradeRoute) {
+    this.maxGradeRoute = maxGradeRoute;
   }
   
   // ===== Methods =====

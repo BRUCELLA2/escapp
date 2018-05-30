@@ -22,7 +22,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * The User Manager
+ * The User Manager.
  *
  * @author BRUCELL2
  */
@@ -30,14 +30,14 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 public class UserManagerImpl extends AbstractManager implements UserManager {
   
   /**
-   * Topo Manager logger
+   * Topo Manager logger.
    */
   private static final Log LOG              = LogFactory.getLog(UserManagerImpl.class);
   
   /**
-   * Password Encoder
+   * Password Encoder.
    */
-  BCryptPasswordEncoder    vPasswordEncoder = new BCryptPasswordEncoder();
+  private BCryptPasswordEncoder    vPasswordEncoder = new BCryptPasswordEncoder();
   
   
   // Methods
@@ -172,7 +172,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
       throw new FunctionalException("Le nouveau mot de passe n'a pas été transmis (Mot de passe vide) - Echec de la modificaiton de mot de passe");
     }
     
-    User user = userToModify;
+    final User user = userToModify;
     final String password = this.encodePassword(newRawPassword);
     user.setPassword(password);
     
@@ -238,7 +238,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
   }
   
   /**
-   * This method encrypte a raw password with the password encoder {@link #vPasswordEncoder}
+   * This method encrypte a raw password with the password encoder {@link #vPasswordEncoder}.
    *
    * @param rawPassword the raw password to encrypte
    *
@@ -261,7 +261,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
    */
   private boolean checkPassword(final String rawPassword, final String encodePassword) {
     
-    return (this.vPasswordEncoder.matches(rawPassword, encodePassword));
+    return this.vPasswordEncoder.matches(rawPassword, encodePassword);
     
   }
   

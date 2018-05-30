@@ -12,7 +12,9 @@ import javax.validation.constraints.NotNull;
  */
 public class RoleUser implements Serializable {
   
-  
+  /**
+   * Serial ID.
+   */
   private static final long serialVersionUID = 1926369691569154147L;
   
   /**
@@ -64,27 +66,27 @@ public class RoleUser implements Serializable {
   // ===== Setters =====
   
   /**
-   * Set the id of the {@link User}
+   * Set the id of the {@link User}.
    *
-   * @param pUserId {@link Integer} id of the {@link User}. Can't be null.
+   * @param userId {@link Integer} id of the {@link User}. Can't be null.
    *
    * @see #userId
    * @see #getUserId()
    */
-  public void setUserId(Integer pUserId) {
-    this.userId = pUserId;
+  public void setUserId(final Integer userId) {
+    this.userId = userId;
   }
   
   /**
    * Set the role of the {@link User}.
    *
-   * @param pUserRole the role of the {@link User}. Can't be null.
+   * @param userRole the role of the {@link User}. Can't be null.
    *
    * @see #userRole
    * @see #getUserRole()
    */
-  public void setUserRole(String pUserRole) {
-    this.userRole = pUserRole;
+  public void setUserRole(final String userRole) {
+    this.userRole = userRole;
   }
   
   

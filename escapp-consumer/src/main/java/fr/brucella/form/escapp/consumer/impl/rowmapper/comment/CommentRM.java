@@ -20,7 +20,7 @@ public class CommentRM implements RowMapper<Comment> {
   @Override
   public Comment mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
     
-    Comment comment = new Comment();
+    final Comment comment = new Comment();
     
     comment.setId(resultSet.getInt("id"));
     comment.setIdCommentTarget(resultSet.getInt("id_comment_target"));

@@ -26,7 +26,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.model.search.TopoSearch;
 
 /**
- * Topo Data Access Object
+ * Topo Data Access Object.
  *
  * @author BRUCELLA2
  */
@@ -34,7 +34,7 @@ import fr.brucella.form.escapp.model.search.TopoSearch;
 public class TopoDaoImpl extends AbstractDao implements TopoDao {
   
   /**
-   * Topo DAO logger
+   * Topo DAO logger.
    */
   private static final Log LOG = LogFactory.getLog(TopoDaoImpl.class);
   
@@ -110,7 +110,8 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
     
     final MapSqlParameterSource params = new MapSqlParameterSource();
     
-    final StringBuilder sql = new StringBuilder("SELECT * FROM topo WHERE 1 = 1 ");
+    final StringBuilder sql = new StringBuilder(100);
+    sql.append("SELECT * FROM topo WHERE 1 = 1 ");
     
     if (topoSearch != null) {
       if (!StringUtils.isEmpty(topoSearch.getDepartmentTopo())) {
@@ -122,8 +123,7 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
         params.addValue("municipalityTopo", topoSearch.getMunicipalityTopo());
       }
       if (topoSearch.getAvailableTopo()) {
-        sql.append(" AND is_borrowable = true ");
-        sql.append(" AND (end_date_borrow is null or end_date_borrow < CURRENT_TIMESTAMP)");
+        sql.append(" AND is_borrowable = true AND (end_date_borrow is null or end_date_borrow < CURRENT_TIMESTAMP)");
       }
     }
     
@@ -220,7 +220,7 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
    * @see TopoDao#updateTopo(Topo)
    */
   @Override
-  public void updateTopo(Topo topo) throws TechnicalException, NotFoundException {
+  public void updateTopo(final Topo topo) throws TechnicalException, NotFoundException {
     
     final String sql = "UPDATE topo SET "
         + "name = :name, department = :department, is_borrowable = :isBorrowable, pdf_file_name = :pdfFileName, municipality = :municipality, "
@@ -263,7 +263,7 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
    * @see TopoDao#insertTopo(Topo)
    */
   @Override
-  public int insertTopo(Topo topo) throws TechnicalException {
+  public int insertTopo(final Topo topo) throws TechnicalException {
     
     final String sql =
         "INSERT INTO topo (id, name, department, is_borrowable, pdf_file_name, municipality, end_date_borrow, borrower_id, description, owner_id) "
