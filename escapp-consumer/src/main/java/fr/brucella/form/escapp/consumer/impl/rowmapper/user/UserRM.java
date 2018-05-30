@@ -13,22 +13,22 @@ import fr.brucella.form.escapp.model.beans.user.User;
  * @author BRUCELLA2
  */
 public class UserRM implements RowMapper<User> {
-
-    /**
-     * @see RowMapper#mapRow(ResultSet, int)
-     */
-    @Override
-    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-        User vUser = new User();
-
-        vUser.setId(rs.getInt("id"));
-        vUser.setLogin(rs.getString("login"));
-        vUser.setPassword(rs.getString("password"));
-        vUser.setEmail(rs.getString("email"));
-
-        return vUser;
-    }
-
-
+  
+  /**
+   * @see RowMapper#mapRow(ResultSet, int)
+   */
+  @Override
+  public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+    
+    User vUser = new User();
+    
+    vUser.setId(rs.getInt("id"));
+    vUser.setLogin(rs.getString("login"));
+    vUser.setPassword(rs.getString("password"));
+    vUser.setEmail(rs.getString("email"));
+    
+    return vUser;
+  }
+  
+  
 }

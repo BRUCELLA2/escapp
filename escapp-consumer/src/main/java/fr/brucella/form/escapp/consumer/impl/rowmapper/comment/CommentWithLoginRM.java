@@ -16,24 +16,24 @@ import fr.brucella.form.escapp.model.beans.comment.Comment;
  * @author BRUCELLA
  */
 public class CommentWithLoginRM implements RowMapper<Pair<Comment, String>> {
-
-    /**
-     * @see RowMapper#mapRow(ResultSet, int)
-     */
-    @Override
-    public Pair<Comment, String> mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-        Comment vComment = new Comment();
-
-        vComment.setId(rs.getInt("id"));
-        vComment.setIdCommentTarget(rs.getInt("id_comment_target"));
-        vComment.setTargetType(rs.getString("target_type"));
-        vComment.setText(rs.getString("text"));
-        vComment.setEscappUser(rs.getInt("escapp_user"));
-        
-        String vLogin = rs.getString("login");
-        
-        return new MutablePair<>(vComment, vLogin);
-
-    }
+  
+  /**
+   * @see RowMapper#mapRow(ResultSet, int)
+   */
+  @Override
+  public Pair<Comment, String> mapRow(ResultSet rs, int rowNum) throws SQLException {
+    
+    Comment vComment = new Comment();
+    
+    vComment.setId(rs.getInt("id"));
+    vComment.setIdCommentTarget(rs.getInt("id_comment_target"));
+    vComment.setTargetType(rs.getString("target_type"));
+    vComment.setText(rs.getString("text"));
+    vComment.setEscappUser(rs.getInt("escapp_user"));
+    
+    String vLogin = rs.getString("login");
+    
+    return new MutablePair<>(vComment, vLogin);
+    
+  }
 }

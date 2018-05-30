@@ -13,21 +13,21 @@ import fr.brucella.form.escapp.model.beans.site.Sector;
  * @author BRUCELLA2
  */
 public class SectorRM implements RowMapper<Sector> {
-
-    /**
-     * @see RowMapper#mapRow(ResultSet, int)
-     */
-    @Override
-    public Sector mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-        Sector vSector = new Sector();
-
-        vSector.setId(rs.getInt("id"));
-        vSector.setName(rs.getString("name"));
-        vSector.setDescription(rs.getString("description"));
-        vSector.setSiteId(rs.getInt("site_id"));
-
-        return vSector;
-    }
-
+  
+  /**
+   * @see RowMapper#mapRow(ResultSet, int)
+   */
+  @Override
+  public Sector mapRow(ResultSet rs, int rowNum) throws SQLException {
+    
+    Sector vSector = new Sector();
+    
+    vSector.setId(rs.getInt("id"));
+    vSector.setName(rs.getString("name"));
+    vSector.setDescription(rs.getString("description"));
+    vSector.setSiteId(rs.getInt("site_id"));
+    
+    return vSector;
+  }
+  
 }

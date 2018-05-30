@@ -13,23 +13,23 @@ import fr.brucella.form.escapp.model.beans.site.Site;
  * @author BRUCELLA2
  */
 public class SiteRM implements RowMapper<Site> {
-
-    /**
-     * @see RowMapper#mapRow(ResultSet, int)
-     */
-    @Override
-    public Site mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-        Site vSite = new Site();
-
-        vSite.setId(rs.getInt("id"));
-        vSite.setName(rs.getString("name"));
-        vSite.setDepartment(rs.getString("department"));
-        vSite.setMunicipality(rs.getString("municipality"));
-        vSite.setDescription(rs.getString("description"));
-
-        return vSite;
-    }
-
-
+  
+  /**
+   * @see RowMapper#mapRow(ResultSet, int)
+   */
+  @Override
+  public Site mapRow(ResultSet rs, int rowNum) throws SQLException {
+    
+    Site vSite = new Site();
+    
+    vSite.setId(rs.getInt("id"));
+    vSite.setName(rs.getString("name"));
+    vSite.setDepartment(rs.getString("department"));
+    vSite.setMunicipality(rs.getString("municipality"));
+    vSite.setDescription(rs.getString("description"));
+    
+    return vSite;
+  }
+  
+  
 }
