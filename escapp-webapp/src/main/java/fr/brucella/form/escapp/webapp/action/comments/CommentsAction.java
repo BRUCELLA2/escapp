@@ -307,13 +307,13 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
   /**
    * Set the {@link String} comment for the {@link Topo}.
    *
-   * @param pCommentTopo the {@link String} comment for the {@link Topo}
+   * @param commentTopo the {@link String} comment for the {@link Topo}
    *
    * @see #commentTopo
    * @see #getCommentTopo()
    */
-  public void setCommentTopo(final String pCommentTopo) {
-    this.commentTopo = pCommentTopo;
+  public void setCommentTopo(final String commentTopo) {
+    this.commentTopo = commentTopo;
   }
   
   /**
@@ -322,8 +322,8 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
    * @see #servletRequest
    */
   @Override
-  public void setServletRequest(final HttpServletRequest pServletRequest) {
-    this.servletRequest = pServletRequest;
+  public void setServletRequest(final HttpServletRequest servletRequest) {
+    this.servletRequest = servletRequest;
   }
   
   
@@ -421,7 +421,7 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
       return Action.INPUT;
     }
     
-    User user = (User) this.servletRequest.getSession().getAttribute("user");
+    final User user = (User) this.servletRequest.getSession().getAttribute("user");
     
     if (user == null) {
       this.addActionError("Vous n'êtes plus identifié, l'ajout du commentaire n'a pu se faire. Merci de vous reconnecter.");
@@ -456,7 +456,7 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
       return Action.INPUT;
     }
     
-    User user = (User) this.servletRequest.getSession().getAttribute("user");
+    final User user = (User) this.servletRequest.getSession().getAttribute("user");
     
     if (user == null) {
       this.addActionError("Vous n'êtes pas identifié, l'ajout du commentaire n'a pu se faire. Merci de vous reconnecter.");

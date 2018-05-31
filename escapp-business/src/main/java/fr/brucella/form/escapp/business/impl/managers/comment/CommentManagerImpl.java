@@ -21,7 +21,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * The Comment Manager
+ * The Comment Manager.
  *
  * @author BRUCELLA2
  */
@@ -30,9 +30,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   
   // ----- Logger
   /**
-   * Comment Manager logger
+   * Comment Manager logger.
    */
-  private static final Log    log             = LogFactory.getLog(CommentManagerImpl.class);
+  private static final Log    LOG             = LogFactory.getLog(CommentManagerImpl.class);
   
   // ----- STRING CONSTANTS
   private static final String SITE            = "site";
@@ -417,13 +417,13 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
       }
     }
     
-    final Set<ConstraintViolation<Comment>> vViolations = this.getConstraintValidator().validate(comment);
+    final Set<ConstraintViolation<Comment>> violations = this.getConstraintValidator().validate(comment);
     
-    if (!vViolations.isEmpty()) {
-      for (final ConstraintViolation<Comment> violation : vViolations) {
-        log.debug(violation.getMessage());
+    if (!violations.isEmpty()) {
+      for (final ConstraintViolation<Comment> violation : violations) {
+        LOG.debug(violation.getMessage());
       }
-      throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(vViolations));
+      throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(violations));
     }
     
     try {
@@ -479,16 +479,16 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   private List<Pair<Comment, String>> getCommentsListWithLogin(final Integer idCommentTarget, final String targetType, final String order)
       throws TechnicalException, NotFoundException {
     
-    String vOrder;
+    String commentOrder;
     if (StringUtils.isEmpty(order)) {
-      vOrder = "DESC";
+      commentOrder = "DESC";
     }
     else {
-      vOrder = order;
+      commentOrder = order;
     }
     
     try {
-      return this.getDaoFactory().getCommentDao().getCommentsListWithLogin(targetType, idCommentTarget, vOrder);
+      return this.getDaoFactory().getCommentDao().getCommentsListWithLogin(targetType, idCommentTarget, commentOrder);
     } catch (TechnicalException pException) {
       throw new TechnicalException(pException.getMessage(), pException);
     } catch (NotFoundException pException) {
@@ -503,17 +503,17 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
    *
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws FunctionalException - this exception is throws if the data in the {@link Comment} are not
-   *         valide.
+   *         valid.
    */
   private void addComment(final Comment comment) throws TechnicalException, FunctionalException {
     
-    final Set<ConstraintViolation<Comment>> vViolations = this.getConstraintValidator().validate(comment);
+    final Set<ConstraintViolation<Comment>> violations = this.getConstraintValidator().validate(comment);
     
-    if (!vViolations.isEmpty()) {
-      for (ConstraintViolation<Comment> violation : vViolations) {
-        log.debug(violation.getMessage());
+    if (!violations.isEmpty()) {
+      for (final ConstraintViolation<Comment> violation : violations) {
+        LOG.debug(violation.getMessage());
       }
-      throw new FunctionalException("Le commentaire à ajouter n'est pas valide", new ConstraintViolationException(vViolations));
+      throw new FunctionalException("Le commentaire à ajouter n'est pas valide", new ConstraintViolationException(violations));
     }
     
     try {

@@ -110,7 +110,7 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
     
     final MapSqlParameterSource params = new MapSqlParameterSource();
     
-    final StringBuilder sql = new StringBuilder(100);
+    final StringBuilder sql = new StringBuilder(125);
     sql.append("SELECT * FROM topo WHERE 1 = 1 ");
     
     if (topoSearch != null) {

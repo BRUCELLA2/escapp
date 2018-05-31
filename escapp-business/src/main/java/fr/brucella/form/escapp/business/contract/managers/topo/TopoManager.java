@@ -10,6 +10,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.model.search.TopoSearch;
 
 /**
+ * Interface for Topo Manager.
  *
  * @author BRUCELLA2
  */

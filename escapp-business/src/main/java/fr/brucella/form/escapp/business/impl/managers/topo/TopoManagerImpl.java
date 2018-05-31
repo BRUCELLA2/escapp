@@ -23,7 +23,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.model.search.TopoSearch;
 
 /**
- * The Topo Manager
+ * The Topo Manager.
  *
  * @author BRUCELLA2
  */
@@ -32,7 +32,7 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager {
   
   
   /**
-   * Topo Manager logger
+   * Topo Manager logger.
    */
   private static final Log LOG = LogFactory.getLog(TopoManagerImpl.class);
   
@@ -63,12 +63,12 @@ public class TopoManagerImpl extends AbstractManager implements TopoManager {
       toposList = this.getAllToposList();
     }
     else {
-      final Set<ConstraintViolation<TopoSearch>> vViolations = this.getConstraintValidator().validate(topoSearch);
-      if (!vViolations.isEmpty()) {
-        for (final ConstraintViolation<TopoSearch> violation : vViolations) {
+      final Set<ConstraintViolation<TopoSearch>> violations = this.getConstraintValidator().validate(topoSearch);
+      if (violations.isEmpty() == false) {
+        for (final ConstraintViolation<TopoSearch> violation : violations) {
           LOG.debug(violation.getMessage());
         }
-        throw new FunctionalException("Les critères de recherche ne sont pas valides", new ConstraintViolationException(vViolations));
+        throw new FunctionalException("Les critères de recherche ne sont pas valides", new ConstraintViolationException(violations));
       }
       try {
         toposList = this.getDaoFactory().getTopoDao().getSearchToposList(topoSearch);

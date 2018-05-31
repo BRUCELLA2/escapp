@@ -22,7 +22,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * RoleUser Data Access Object
+ * RoleUser Data Access Object.
  *
  * @author BRUCELLA2
  */
@@ -30,7 +30,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
   
   /**
-   * RoleUser DAO logger
+   * RoleUser DAO logger.
    */
   private static final Log LOG = LogFactory.getLog(RoleUserDaoImpl.class);
   
@@ -78,7 +78,7 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
     params.addValue("role", roleUser.getUserRole());
     
     try {
-      int result = this.getNamedJdbcTemplate().update(sql, params);
+      final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
         throw new NotFoundException("Le role associé à l'utilisateur n'a pas été trouvé. La mise à jour n'a pas été faite.");
       }

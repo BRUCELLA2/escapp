@@ -634,7 +634,7 @@ public class SiteDetailsAction extends ActionSupport {
     
     this.nbCommentsRoute = this.commentsRouteList.size();
     
-    return (this.hasErrors()) ? Action.ERROR : Action.SUCCESS;
+    return this.hasErrors() ? Action.ERROR : Action.SUCCESS;
   }
   
   /**

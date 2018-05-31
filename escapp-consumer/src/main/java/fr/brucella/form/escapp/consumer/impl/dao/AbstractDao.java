@@ -83,7 +83,7 @@ public abstract class AbstractDao {
    * @see #jdbcTemplate
    * @see #getJdbcTemplate()
    */
-  public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+  public void setJdbcTemplate(final JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
   }
   
@@ -95,7 +95,7 @@ public abstract class AbstractDao {
    * @see #namedJdbcTemplate
    * @see #getNamedJdbcTemplate()
    */
-  public void setNamedJdbcTemplate(NamedParameterJdbcTemplate namedJdbcTemplate) {
+  public void setNamedJdbcTemplate(final NamedParameterJdbcTemplate namedJdbcTemplate) {
     this.namedJdbcTemplate = namedJdbcTemplate;
   }
 }

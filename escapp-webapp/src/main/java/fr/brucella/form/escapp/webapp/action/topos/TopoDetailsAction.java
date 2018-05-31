@@ -504,8 +504,8 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
       return Action.ERROR;
     }
     
-    User vUser = (User) this.servletRequest.getSession().getAttribute("user");
-    if (vUser == null) {
+    final User user = (User) this.servletRequest.getSession().getAttribute("user");
+    if (user == null) {
       this.addActionError("Vous n'êtes plus identifié, la modification du topo n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
@@ -513,7 +513,7 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
     try {
       this.topo = this.managerFactory.getTopoManager().getTopoById(this.id);
       this.topo.setBorrowable(StringUtils.equals(this.borrowable, "true"));
-      this.managerFactory.getTopoManager().modifyTopo(this.topo, vUser);
+      this.managerFactory.getTopoManager().modifyTopo(this.topo, user);
     } catch (TechnicalException | NotFoundException | FunctionalException pException) {
       this.addActionError(pException.getMessage());
       return Action.ERROR;

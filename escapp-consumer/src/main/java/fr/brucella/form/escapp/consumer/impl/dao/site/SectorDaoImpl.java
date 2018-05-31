@@ -26,7 +26,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * Sector Data Access Object
+ * Sector Data Access Object.
  *
  * @author BRUCELLA2
  */
@@ -35,7 +35,7 @@ public class SectorDaoImpl extends AbstractDao implements SectorDao {
   
   
   /**
-   * Sector DAO logger
+   * Sector DAO logger.
    */
   private static final Log LOG = LogFactory.getLog(SectorDaoImpl.class);
   

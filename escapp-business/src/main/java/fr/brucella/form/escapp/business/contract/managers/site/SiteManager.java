@@ -9,7 +9,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 import fr.brucella.form.escapp.model.search.SiteSearch;
 
 /**
- * Interface for Site Manager
+ * Interface for Site Manager.
  *
  * @author BRUCELLA2
  */

@@ -20,7 +20,7 @@ public class TopoRM implements RowMapper<Topo> {
   @Override
   public Topo mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
     
-    Topo topo = new Topo();
+    final Topo topo = new Topo();
     
     topo.setId(resultSet.getInt("id"));
     topo.setName(resultSet.getString("name"));

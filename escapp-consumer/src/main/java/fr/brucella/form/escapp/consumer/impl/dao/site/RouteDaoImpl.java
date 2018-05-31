@@ -26,7 +26,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * Route Data Access Object
+ * Route Data Access Object.
  *
  * @author BRUCELLA2
  */
@@ -34,7 +34,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 public class RouteDaoImpl extends AbstractDao implements RouteDao {
   
   /**
-   * Route DAO logger
+   * Route DAO logger.
    */
   private static final Log LOG = LogFactory.getLog(RouteDaoImpl.class);
   

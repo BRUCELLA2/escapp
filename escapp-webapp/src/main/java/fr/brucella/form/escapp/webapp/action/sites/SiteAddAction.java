@@ -838,9 +838,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
       return false;
     }
     
-    List<RoleUser> roles = (List<RoleUser>) this.servletRequest.getSession().getAttribute("roles");
+    final List<RoleUser> roles = (List<RoleUser>) this.servletRequest.getSession().getAttribute("roles");
     boolean admin = false;
-    for (RoleUser role : roles) {
+    for (final RoleUser role : roles) {
       if (StringUtils.equals(role.getUserRole(), "Admin")) {
         admin = true;
       }

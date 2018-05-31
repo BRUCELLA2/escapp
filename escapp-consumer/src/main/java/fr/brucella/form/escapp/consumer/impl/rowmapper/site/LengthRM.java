@@ -20,7 +20,7 @@ public class LengthRM implements RowMapper<Length> {
   @Override
   public Length mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
     
-    Length length = new Length();
+    final Length length = new Length();
     
     length.setId(resultSet.getInt("id"));
     length.setDescription(resultSet.getString("description"));

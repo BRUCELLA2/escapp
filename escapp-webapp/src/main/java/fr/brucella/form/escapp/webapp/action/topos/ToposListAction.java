@@ -264,7 +264,7 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
    * @see #servletRequest
    */
   @Override
-  public void setServletRequest(HttpServletRequest servletRequest) {
+  public void setServletRequest(final HttpServletRequest servletRequest) {
     this.servletRequest = servletRequest;
   }
   

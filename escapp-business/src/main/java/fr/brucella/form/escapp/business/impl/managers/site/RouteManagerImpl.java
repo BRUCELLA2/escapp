@@ -18,7 +18,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * The Route Manager
+ * The Route Manager.
  *
  * @author BRUCELLA2
  */
@@ -27,9 +27,9 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
   
   // ----- Logger
   /**
-   * Route Manager logger
+   * Route Manager logger.
    */
-  private static final Log log = LogFactory.getLog(RouteManagerImpl.class);
+  private static final Log LOG = LogFactory.getLog(RouteManagerImpl.class);
   
   
   // ----- Methods
@@ -87,7 +87,7 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
     
     if (!vViolations.isEmpty()) {
       for (final ConstraintViolation<Route> violation : vViolations) {
-        log.debug(violation.getMessage());
+        LOG.debug(violation.getMessage());
       }
       throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(vViolations));
     }
@@ -115,7 +115,7 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
     
     if (!vViolations.isEmpty()) {
       for (final ConstraintViolation<Route> violation : vViolations) {
-        log.debug(violation.getMessage());
+        LOG.debug(violation.getMessage());
       }
       throw new FunctionalException("La voie à ajouter n'est pas valide", new ConstraintViolationException(vViolations));
     }
