@@ -287,8 +287,8 @@ public class Topo implements Serializable {
   /**
    * Set the {@link String} representing the department code associated to {@link Topo}.
    *
-   * @param department the {@link String} representing the department code associated to
-   *        {@link Topo}. Can't be empty Size need to be 3 characters. Ex : "034", "030", "02A"
+   * @param department the {@link String} representing the department code associated to {@link Topo}.
+   *        Can't be empty Size need to be 3 characters. Ex : "034", "030", "02A"
    *
    * @see #department
    * @see #getDepartment()

@@ -147,7 +147,7 @@ public class SiteDaoImpl extends AbstractDao implements SiteDao {
     final RowMapper<Site> rowMapper = new SiteRM();
     
     try {
-      if(LOG.isDebugEnabled()) {
+      if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql.toString());
       }
       return this.getNamedJdbcTemplate().query(sql.toString(), params, rowMapper);

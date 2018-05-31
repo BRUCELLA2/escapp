@@ -12,7 +12,7 @@ public class TechnicalException extends Exception {
    * Serial ID.
    */
   private static final long serialVersionUID = -2565533049963103680L;
-
+  
   /**
    * Constructs a new TechnicalException with the specified detail message.
    *

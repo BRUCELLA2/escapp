@@ -114,8 +114,8 @@ public class TopoSearch implements Serializable {
   /**
    * Set the municipality associated to the {@link Topo} searched.
    *
-   * @param municipalityTopo the municipality associated to the {@link Topo} searched. Max size is
-   *        100 characters
+   * @param municipalityTopo the municipality associated to the {@link Topo} searched. Max size is 100
+   *        characters
    *
    * @see #municipalityTopo
    * @see #getMunicipalityTopo()

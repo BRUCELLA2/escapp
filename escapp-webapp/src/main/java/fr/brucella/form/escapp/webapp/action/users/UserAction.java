@@ -22,7 +22,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
  * Actions related to User.
- * 
+ *
  * @author BRUCELLA2
  */
 public class UserAction extends ActionSupport implements SessionAware, ServletRequestAware {
@@ -36,7 +36,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Login of the {@link User}. Can't be empty and max size is 30 characters.
-   * 
+   *
    * @see #getLogin()
    * @see #setLogin(String)
    */
@@ -44,7 +44,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Password of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
+   *
    * @see #getPassword()
    * @see #setPassword(String)
    */
@@ -52,7 +52,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Password confirmation of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
+   *
    * @see #getConfPwd()
    * @see #setConfPwd(String)
    */
@@ -60,7 +60,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Email of the {@link User}. Can't be empty. Max size is 100 characters.
-   * 
+   *
    * @see #getEmail()
    * @see #setEmail(String)
    */
@@ -79,7 +79,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * the user's HTTP session attributes.
-   * 
+   *
    * @see #setSession(Map)
    */
   private Map<String, Object> session;
@@ -96,9 +96,9 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   // ===== Getters =====
   /**
    * Get the login of the {@link User}. Can't be empty and max size is 30 characters.
-   * 
+   *
    * @return the login of the {@link User}. Can't be empty and max size is 30 characters.
-   * 
+   *
    * @see #login
    * @see #setLogin(String)
    */
@@ -108,9 +108,9 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Get the password of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
+   *
    * @return the password of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
+   *
    * @see #password
    * @see #setPassword(String)
    */
@@ -120,9 +120,9 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Get the password confirmation of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
+   *
    * @return the password confirmation of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
+   *
    * @see #confPwd
    * @see #setConfPwd(String)
    */
@@ -132,9 +132,9 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Get the email of the {@link User}. Can't be empty. Max size is 100 characters.
-   * 
+   *
    * @return the email of the {@link User}. Can't be empty. Max size is 100 characters.
-   * 
+   *
    * @see #email
    * @see #setEmail(String)
    */
@@ -146,9 +146,9 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Set the login of the {@link User}. Can't be empty and max size is 30 characters.
-   * 
+   *
    * @param login the login of the {@link User}. Can't be empty and max size is 30 characters.
-   * 
+   *
    * @see #login
    * @see #getLogin()
    */
@@ -158,9 +158,9 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Set the password of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
+   *
    * @param password the password of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
+   *
    * @see #password
    * @see #getPassword()
    */
@@ -170,9 +170,10 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Set the password confirmation of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
-   * @param confPwd the password confirmation of the {@link User}. Can't be empty. Max size is 60 characters.
-   * 
+   *
+   * @param confPwd the password confirmation of the {@link User}. Can't be empty. Max size is 60
+   *        characters.
+   *
    * @see #confPwd
    * @see #getConfPwd()
    */
@@ -182,9 +183,9 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Set the email of the {@link User}. Can't be empty. Max size is 100 characters.
-   * 
+   *
    * @param email the email of the {@link User}. Can't be empty. Max size is 100 characters.
-   * 
+   *
    * @see #email
    * @see #setEmail(String)
    */
@@ -194,7 +195,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   
   /**
    * Set the user's HTTP session attributes.
-   * 
+   *
    * @see #session
    */
   @Override
@@ -306,7 +307,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
       final User user = this.managerFactory.getUserManager().getConnectUser(this.login, this.password);
       final List<RoleUser> roles = this.managerFactory.getUserManager().getRoleUserList(user.getId());
       this.session.put("user", user);
-      this.session.put("roles", roles); 
+      this.session.put("roles", roles);
     } catch (FunctionalException | TechnicalException pException) {
       this.addActionError(pException.getMessage());
       return Action.ERROR;

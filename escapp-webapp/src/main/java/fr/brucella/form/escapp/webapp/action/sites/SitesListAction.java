@@ -19,7 +19,7 @@ import fr.brucella.form.escapp.model.search.SiteSearch;
 
 /**
  * Actions related to site listing.
- * 
+ *
  * @author BRUCELLA2
  */
 public class SitesListAction extends ActionSupport {
@@ -35,7 +35,7 @@ public class SitesListAction extends ActionSupport {
   /**
    * String representing the department code to which {@link Site} belongs. Can't be empty and size
    * need to be 3 characters. Ex : "034", "030", "02A".
-   * 
+   *
    * @see #getDepartmentSite()
    * @see #setDepartmentSite(String)
    */
@@ -43,7 +43,7 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * Municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #getMunicipalitySite()
    * @see #setMunicipalitySite(String)
    */
@@ -51,7 +51,7 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * Minimum grade for the {@link Route} belongs to {@link Site}.
-   * 
+   *
    * @see #getMinGrade()
    * @see #setMinGrade(String)
    */
@@ -59,7 +59,7 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * Maximum grade for the {@link Route} belongs to {@link Site}.
-   * 
+   *
    * @see #getMaxGrade()
    * @see #setMaxGrade(String)
    */
@@ -70,7 +70,7 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * A list of {@link Site}.
-   * 
+   *
    * @see #getSitesList()
    * @see #setSitesList(List)
    */
@@ -89,16 +89,16 @@ public class SitesListAction extends ActionSupport {
   /**
    * Sites list action logger
    */
-  private static final Log               LOG              = LogFactory.getLog(SitesListAction.class);
+  private static final Log  LOG              = LogFactory.getLog(SitesListAction.class);
   
   
   // ===== Getters =====
   
   /**
    * Get the list of {@link Site}.
-   * 
+   *
    * @return the list of {@link Site}.
-   * 
+   *
    * @see #sitesList
    * @see #setSitesList(List)
    */
@@ -107,12 +107,12 @@ public class SitesListAction extends ActionSupport {
   }
   
   /**
-   * Get the String representing the department code to which {@link Site} belongs. Can't be empty and size
-   * need to be 3 characters. Ex : "034", "030", "02A".
-   * 
-   * @return the String representing the department code to which {@link Site} belongs. Can't be empty and size
-   *          need to be 3 characters. Ex : "034", "030", "02A".
-   * 
+   * Get the String representing the department code to which {@link Site} belongs. Can't be empty and
+   * size need to be 3 characters. Ex : "034", "030", "02A".
+   *
+   * @return the String representing the department code to which {@link Site} belongs. Can't be empty
+   *         and size need to be 3 characters. Ex : "034", "030", "02A".
+   *
    * @see #departmentSite
    * @see #setDepartmentSite(String)
    */
@@ -121,10 +121,12 @@ public class SitesListAction extends ActionSupport {
   }
   
   /**
-   * Get the Municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
-   * @return the Municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
+   * Get the Municipality to which {@link Site} belongs. Can't be empty and max size is 100
+   * characters.
+   *
+   * @return the Municipality to which {@link Site} belongs. Can't be empty and max size is 100
+   *         characters.
+   *
    * @see #municipalitySite
    * @see #setMunicipalitySite(String)
    */
@@ -134,9 +136,9 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * Get the Minimum grade for the {@link Route} belongs to {@link Site}.
-   * 
+   *
    * @return the Minimum grade for the {@link Route} belongs to {@link Site}.
-   * 
+   *
    * @see #minGrade
    * @see #setMinGrade(String)
    */
@@ -146,9 +148,9 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * Get the Maximum grade for the {@link Route} belongs to {@link Site}.
-   *  
-   * @return the Maximum grade for the {@link Route} belongs to {@link Site}.
    * 
+   * @return the Maximum grade for the {@link Route} belongs to {@link Site}.
+   *
    * @see #maxGrade
    * @see #setMaxGrade(String)
    */
@@ -159,12 +161,12 @@ public class SitesListAction extends ActionSupport {
   
   // ===== Setters =====
   /**
-   * Set the String representing the department code to which {@link Site} belongs. Can't be empty and size
-   * need to be 3 characters. Ex : "034", "030", "02A".
-   * 
-   * @param departmentSite the String representing the department code to which {@link Site} belongs. Can't be empty and size
-   *                        need to be 3 characters. Ex : "034", "030", "02A".
-   * 
+   * Set the String representing the department code to which {@link Site} belongs. Can't be empty and
+   * size need to be 3 characters. Ex : "034", "030", "02A".
+   *
+   * @param departmentSite the String representing the department code to which {@link Site} belongs.
+   *        Can't be empty and size need to be 3 characters. Ex : "034", "030", "02A".
+   *
    * @see #departmentSite
    * @see #getDepartmentSite()
    */
@@ -173,10 +175,12 @@ public class SitesListAction extends ActionSupport {
   }
   
   /**
-   * Set the Municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
-   * @param municipalitySite the Municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
+   * Set the Municipality to which {@link Site} belongs. Can't be empty and max size is 100
+   * characters.
+   *
+   * @param municipalitySite the Municipality to which {@link Site} belongs. Can't be empty and max
+   *        size is 100 characters.
+   *
    * @see #municipalitySite
    * @see #getMunicipalitySite()
    */
@@ -186,9 +190,9 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * Set the Minimum grade for the {@link Route} belongs to {@link Site}.
-   * 
+   *
    * @param minGrade the Minimum grade for the {@link Route} belongs to {@link Site}.
-   * 
+   *
    * @see #minGrade
    * @see #getMinGrade()
    */
@@ -198,9 +202,9 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * Set the Maximum grade for the {@link Route} belongs to {@link Site}.
-   * 
+   *
    * @param maxGrade the Maximum grade for the {@link Route} belongs to {@link Site}.
-   * 
+   *
    * @see #maxGrade
    * @see #getMaxGrade()
    */
@@ -210,9 +214,9 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * Set the list of {@link Site}.
-   * 
+   *
    * @param sitesList the list of {@link Site}.
-   * 
+   *
    * @see #sitesList
    * @see #getSitesList()
    */

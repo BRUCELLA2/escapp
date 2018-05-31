@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+	<constant name="struts.multipart.maxSize" value="52428800" />
+
+	<package name="default" extends="struts-default">
+		<!-- Default action -->
+		<default-action-ref name="index" />
+
+		<!-- Index action -->
+		<action name="index">
+			<result name="success">/jsp/index.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- site searching action -->
+		<action name="searching_site"
+			class="fr.brucella.form.escapp.webapp.action.sites.SitesListAction"
+			method="doSiteSearching">
+			<result name="success">/jsp/sites/sites.jsp</result>
+			<result name="input">/jsp/sites/sites.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- site detail action -->
+		<action name="site_details"
+			class="fr.brucella.form.escapp.webapp.action.sites.SiteDetailsAction"
+			method="doSiteDetails">
+			<result name="success">/jsp/sites/site_details.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- site add action -->
+		<action name="add_site"
+			class="fr.brucella.form.escapp.webapp.action.sites.SiteAddAction"
+			method="doAddSite">
+			<result name="success" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+			<result name="input">jsp/sites/add_site.jsp</result>
+			<result name="error">jsp/error.jsp</result>
+		</action>
+
+		<!-- site sector add action -->
+		<action name="add_sector"
+			class="fr.brucella.form.escapp.webapp.action.sites.SiteAddAction"
+			method="doAddSector">
+			<result name="success" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+			<result name="input">jsp/sites/add_sector.jsp</result>
+			<result name="error">jsp/error.jsp</result>
+		</action>
+
+		<!-- site route add action -->
+		<action name="add_route"
+			class="fr.brucella.form.escapp.webapp.action.sites.SiteAddAction"
+			method="doAddRoute">
+			<result name="success" type="redirectAction">
+				<param name="actionName">route_details</param>
+				<param name="id">${routeId}</param>
+			</result>
+			<result name="input">jsp/sites/add_route.jsp</result>
+			<result name="error">jsp/error.jsp</result>
+		</action>
+
+		<!-- site length add action -->
+		<action name="add_length"
+			class="fr.brucella.form.escapp.webapp.action.sites.SiteAddAction"
+			method="doAddLength">
+			<result name="success" type="redirectAction">
+				<param name="actionName">route_details</param>
+				<param name="id">${routeId}</param>
+			</result>
+			<result name="input">jsp/sites/add_length.jsp</result>
+			<result name="error">jsp/error.jsp</result>
+		</action>
+
+		<!-- route detail action -->
+		<action name="route_details"
+			class="fr.brucella.form.escapp.webapp.action.sites.SiteDetailsAction"
+			method="doRouteDetails">
+			<result name="success">/jsp/sites/route_details.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- topo searching action -->
+		<action name="searching_topo"
+			class="fr.brucella.form.escapp.webapp.action.topos.ToposListAction"
+			method="doTopoSearching">
+			<result name="success">/jsp/topos/topos.jsp</result>
+			<result name="input">/jsp/topos/topos.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- add topo action -->
+		<action name="add_topo"
+			class="fr.brucella.form.escapp.webapp.action.topos.TopoAddAction">
+			<interceptor-ref name="exception" />
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">application/pdf</param>
+				<!-- 52428800 = 50mb -->
+				<param name="maximumSize">52428800</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success" type="redirectAction">
+				<param name="actionName">my_topos</param>
+			</result>
+			<result name="input">/jsp/topos/add_topo.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- topo detail action -->
+		<action name="topo_details"
+			class="fr.brucella.form.escapp.webapp.action.topos.TopoDetailsAction"
+			method="doTopoDetails">
+			<result name="success">/jsp/topos/topo_details.jsp</result>
+			<result name="input">/jsp/topos/topo_details.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- topo booking action -->
+		<action name="book_topo"
+			class="fr.brucella.form.escapp.webapp.action.topos.TopoDetailsAction"
+			method="doBooking">
+			<result name="success">/jsp/topos/topo_details.jsp</result>
+			<result name="input">/jsp/topos/topo_details.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- topo change borrowable action -->
+		<action name="change_borrowable"
+			class="fr.brucella.form.escapp.webapp.action.topos.TopoDetailsAction"
+			method="doChangeBorrowable">
+			<result name="success" type="redirectAction">
+				<param name="actionName">topo_details</param>
+				<param name="id">${id}</param>
+			</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- topo delete action -->
+		<action name="delete_topo"
+			class="fr.brucella.form.escapp.webapp.action.topos.TopoDetailsAction"
+			method="doDelete">
+			<result name="success" type="redirectAction">
+				<param name="actionName">my_topos</param>
+			</result>
+			<result name="error">jsp/error.jsp</result>
+		</action>
+
+
+		<!-- my topo action -->
+		<action name="my_topos"
+			class="fr.brucella.form.escapp.webapp.action.topos.ToposListAction"
+			method="doMyToposList">
+			<result name="success">/jsp/topos/my_topos.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</action>
+
+		<!-- comment site action -->
+		<action name="comment_site"
+			class="fr.brucella.form.escapp.webapp.action.comments.CommentsAction"
+			method="doAddCommentSite">
+			<result name="input" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+		</action>
+
+		<!-- comment sector action -->
+		<action name="comment_sector"
+			class="fr.brucella.form.escapp.webapp.action.comments.CommentsAction"
+			method="doAddCommentSector">
+			<result name="input" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">site_details</param>
+				<param name="id">${siteId}</param>
+			</result>
+		</action>
+
+		<!-- comment route action -->
+		<action name="comment_route"
+			class="fr.brucella.form.escapp.webapp.action.comments.CommentsAction"
+			method="doAddCommentRoute">
+			<result name="input" type="redirectAction">
+				<param name="actionName">route_details</param>
+				<param name="id">${routeId}</param>
+			</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">route_details</param>
+				<param name="id">${routeId}</param>
+			</result>
+		</action>
+
+		<!-- comment topo action -->
+		<action name="comment_topo"
+			class="fr.brucella.form.escapp.webapp.action.comments.CommentsAction"
+			method="doAddCommentTopo">
+			<result name="input" type="redirectAction">
+				<param name="actionName">topo_details</param>
+				<param name="id">${topoId}</param>
+			</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">topo_details</param>
+				<param name="id">${topoId}</param>
+			</result>
+		</action>
+
+		<!-- register action -->
+		<action name="register"
+			class="fr.brucella.form.escapp.webapp.action.users.UserAction"
+			method="doRegister">
+			<result name="input">/jsp/users/register.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success" type="redirectAction">
+				/jsp/index.jsp
+			</result>
+		</action>
+
+		<!-- logout action -->
+		<action name="logout"
+			class="fr.brucella.form.escapp.webapp.action.users.UserAction"
+			method="doLogout">
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success">/jsp/index.jsp</result>
+		</action>
+
+		<!-- login action -->
+		<action name="login"
+			class="fr.brucella.form.escapp.webapp.action.users.UserAction"
+			method="doLogin">
+			<result name="input">/jsp/users/login.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+			<result name="success">/jsp/index.jsp</result>
+		</action>
+
+		<!-- download action -->
+		<action name="download"
+			class="fr.brucella.form.escapp.webapp.action.topos.TopoDetailsAction">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+
+	</package>
+</struts>

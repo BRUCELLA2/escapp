@@ -23,7 +23,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
  * Actions related to the addition of Site (with Sector, Route and Length).
- * 
+ *
  * @author BRUCELLA2
  *
  */
@@ -39,7 +39,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Name of the {@link Site}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #getSiteName()
    * @see #setSiteName(String)
    */
@@ -48,7 +48,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   /**
    * String representing the department code to which {@link Site} belongs. Can't be empty and size
    * need to be 3 characters. Ex : "034", "030", "02A".
-   * 
+   *
    * @see #getSiteDepartment()
    * @see #setSiteDepartment(String)
    */
@@ -56,7 +56,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #getSiteMunicipality()
    * @see #setSiteMunicipality(String)
    */
@@ -64,7 +64,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Description of the {@link Site}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @see #getSiteDescription()
    * @see #setSiteDescription(String)
    */
@@ -72,7 +72,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Name of the {@link Sector}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #getSectorName()
    * @see #setSectorName(String)
    */
@@ -80,7 +80,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Description of the {@link Sector}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @see #getSectorDescription()
    * @see #setSectorDescription(String)
    */
@@ -88,7 +88,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Name of the {@link Route}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #getRouteName()
    * @see #setRouteName(String)
    */
@@ -97,7 +97,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   /**
    * Grade of the {@link Route}. The grade is a {@link String} which represents the difficulty. Can't
    * be empty and max size is 2 characters.
-   * 
+   *
    * @see #getRouteGrade()
    * @see #setRouteGrade(String)
    */
@@ -105,7 +105,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Description of the {@link Route}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @see #getRouteDescription()
    * @see #setRouteDescription(String)
    */
@@ -113,7 +113,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Number of points for this {@link Route}. Can't be null.
-   * 
+   *
    * @see #getRoutePointsNb()
    * @see #setRoutePointsNb(Integer)
    */
@@ -121,7 +121,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Length in meters of the {@link Length}. Can't be null.
-   * 
+   *
    * @see #getLengthLength()
    * @see #setLengthLength(Integer)
    */
@@ -130,7 +130,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   /**
    * Grade of the {@link Length}. The grade is a {@link String} which represents the difficulty. Can't
    * be empty and max size is 2 characters.
-   * 
+   *
    * @see #getLengthGrade()
    * @see #setLengthGrade(String)
    */
@@ -138,7 +138,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Description of the {@link Length}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @see #getLengthDescription()
    * @see #setLengthDescription(String)
    */
@@ -146,7 +146,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Number of points for this {@link Length}. Can't be null.
-   * 
+   *
    * @see #getLengthPointsNb()
    * @see #setLengthPointsNb(Integer)
    */
@@ -155,7 +155,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   // ----- Input / Output
   /**
    * id of the {@link Site}.
-   * 
+   *
    * @see #getSiteId()
    * @see #setSiteId(Integer)
    */
@@ -163,7 +163,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * id of the {@link Sector}.
-   * 
+   *
    * @see #getSectorId()
    * @see #setSectorId(Integer)
    */
@@ -171,7 +171,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * id of the {@link Route}.
-   * 
+   *
    * @see #getRouteId()
    * @see #setRouteId(Integer)
    */
@@ -201,9 +201,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the id of the {@link Site}.
-   * 
+   *
    * @return the id of the {@link Site}.
-   * 
+   *
    * @see #siteId
    * @see #setSiteId(Integer)
    */
@@ -213,9 +213,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the name of the {@link Site}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @return the name of the {@link Site}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #siteName
    * @see #setSiteName(String)
    */
@@ -224,12 +224,12 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Get the String representing the department code to which {@link Site} belongs. Can't be empty and size
-   * need to be 3 characters. Ex : "034", "030", "02A".
+   * Get the String representing the department code to which {@link Site} belongs. Can't be empty and
+   * size need to be 3 characters. Ex : "034", "030", "02A".
+   *
+   * @return the String representing the department code to which {@link Site} belongs. Can't be empty
+   *         and size need to be 3 characters. Ex : "034", "030", "02A".
    * 
-   * @return the String representing the department code to which {@link Site} belongs. Can't be empty and size
-   *          need to be 3 characters. Ex : "034", "030", "02A".
-   *          
    * @see #siteDepartment
    * @see #setSiteDepartment(String)
    */
@@ -238,10 +238,12 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Get the municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
-   * @return the municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
+   * Get the municipality to which {@link Site} belongs. Can't be empty and max size is 100
+   * characters.
+   *
+   * @return the municipality to which {@link Site} belongs. Can't be empty and max size is 100
+   *         characters.
+   *
    * @see #siteMunicipality
    * @see #setSiteMunicipality(String)
    */
@@ -251,9 +253,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the description of the {@link Site}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @return the description of the {@link Site}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @see #siteDescription
    * @see #setSiteDescription(String)
    */
@@ -263,9 +265,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the name of the {@link Sector}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @return the name of the {@link Sector}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #sectorName
    * @see #setSectorName(String)
    */
@@ -275,9 +277,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the description of the {@link Sector}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @return the description of the {@link Sector}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @see #sectorDescription
    * @see #setSectorDescription(String)
    */
@@ -287,9 +289,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the id of the {@link Sector}.
-   * 
+   *
    * @return the id of the {@link Sector}.
-   * 
+   *
    * @see #sectorId
    * @see #setSectorId(Integer)
    */
@@ -299,9 +301,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the name of the {@link Route}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @return the name of the {@link Route}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #routeName
    * @see #setRouteName(String)
    */
@@ -310,12 +312,12 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Get the grade of the {@link Route}. The grade is a {@link String} which represents the difficulty. Can't
-   * be empty and max size is 2 characters.
-   * 
-   * @return the grade of the {@link Route}. The grade is a {@link String} which represents the difficulty. Can't
-   *          be empty and max size is 2 characters.
-   * 
+   * Get the grade of the {@link Route}. The grade is a {@link String} which represents the
+   * difficulty. Can't be empty and max size is 2 characters.
+   *
+   * @return the grade of the {@link Route}. The grade is a {@link String} which represents the
+   *         difficulty. Can't be empty and max size is 2 characters.
+   *
    * @see #routeGrade
    * @see #setRouteGrade(String)
    */
@@ -325,9 +327,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the description of the {@link Route}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @return the description of the {@link Route}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @see #routeDescription
    * @see #setRouteDescription(String)
    */
@@ -337,9 +339,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the number of points for this {@link Route}. Can't be null.
-   * 
+   *
    * @return the number of points for this {@link Route}. Can't be null.
-   * 
+   *
    * @see #routePointsNb
    * @see #setRoutePointsNb(Integer)
    */
@@ -349,9 +351,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the id of the {@link Route}.
-   * 
+   *
    * @return the id of the {@link Route}.
-   * 
+   *
    * @see #routeId
    * @see #setRouteId(Integer)
    */
@@ -361,9 +363,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the length in meters of the {@link Length}. Can't be null.
-   * 
+   *
    * @return the length in meters of the {@link Length}. Can't be null.
-   * 
+   *
    * @see #lengthLength
    * @see #setLengthLength(Integer)
    */
@@ -372,12 +374,12 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Get the grade of the {@link Length}. The grade is a {@link String} which represents the difficulty. Can't
-   * be empty and max size is 2 characters.
-   * 
-   * @return the grade of the {@link Length}. The grade is a {@link String} which represents the difficulty. Can't
-   *          be empty and max size is 2 characters.
-   * 
+   * Get the grade of the {@link Length}. The grade is a {@link String} which represents the
+   * difficulty. Can't be empty and max size is 2 characters.
+   *
+   * @return the grade of the {@link Length}. The grade is a {@link String} which represents the
+   *         difficulty. Can't be empty and max size is 2 characters.
+   *
    * @see #lengthGrade
    * @see #setLengthGrade(String)
    */
@@ -387,9 +389,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the description of the {@link Length}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @return the description of the {@link Length}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
    * @see #lengthDescription
    * @see #setLengthDescription(String)
    */
@@ -399,9 +401,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Get the number of points for this {@link Length}. Can't be null.
-   * 
+   *
    * @return the number of points for this {@link Length}. Can't be null.
-   * 
+   *
    * @see #lengthPointsNb
    * @see #setLengthPointsNb(Integer)
    */
@@ -413,9 +415,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the id of the {@link Site}.
-   * 
+   *
    * @param siteId the id of the {@link Site}.
-   * 
+   *
    * @see #siteId
    * @see #getSiteId()
    */
@@ -425,9 +427,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the name of the {@link Site}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @param siteName the name of the {@link Site}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #siteName
    * @see #getSiteName()
    */
@@ -436,12 +438,12 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Set the String representing the department code to which {@link Site} belongs. Can't be empty and size
-   * need to be 3 characters. Ex : "034", "030", "02A".
-   * 
-   * @param siteDepartment the String representing the department code to which {@link Site} belongs. Can't be empty and size
-   *                        need to be 3 characters. Ex : "034", "030", "02A".
-   * 
+   * Set the String representing the department code to which {@link Site} belongs. Can't be empty and
+   * size need to be 3 characters. Ex : "034", "030", "02A".
+   *
+   * @param siteDepartment the String representing the department code to which {@link Site} belongs.
+   *        Can't be empty and size need to be 3 characters. Ex : "034", "030", "02A".
+   *
    * @see #siteDepartment
    * @see #getSiteDepartment()
    */
@@ -450,10 +452,12 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Set the municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
-   * @param siteMunicipality the municipality to which {@link Site} belongs. Can't be empty and max size is 100 characters.
-   * 
+   * Set the municipality to which {@link Site} belongs. Can't be empty and max size is 100
+   * characters.
+   *
+   * @param siteMunicipality the municipality to which {@link Site} belongs. Can't be empty and max
+   *        size is 100 characters.
+   *
    * @see #siteMunicipality
    * @see #setSiteMunicipality(String)
    */
@@ -463,9 +467,10 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the description of the {@link Site}. Can be empty. Max size is 10 000 characters.
-   * 
-   * @param siteDescription the description of the {@link Site}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
+   * @param siteDescription the description of the {@link Site}. Can be empty. Max size is 10 000
+   *        characters.
+   *
    * @see #siteDescription
    * @see #getSiteDescription()
    */
@@ -475,9 +480,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the name of the {@link Sector}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @param sectorName the name of the {@link Sector}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #sectorName
    * @see #getSectorName()
    */
@@ -487,9 +492,10 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the description of the {@link Sector}. Can be empty. Max size is 10 000 characters.
-   * 
-   * @param sectorDescription the description of the {@link Sector}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
+   * @param sectorDescription the description of the {@link Sector}. Can be empty. Max size is 10 000
+   *        characters.
+   *
    * @see #sectorDescription
    * @see #getSectorDescription()
    */
@@ -499,9 +505,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the id of the {@link Sector}.
-   * 
+   *
    * @param sectorId the id of the {@link Sector}.
-   * 
+   *
    * @see #sectorId
    * @see #getSectorId()
    */
@@ -511,9 +517,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the name of the {@link Route}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @param routeName the name of the {@link Route}. Can't be empty and max size is 100 characters.
-   * 
+   *
    * @see #routeName
    * @see #getRouteName()
    */
@@ -522,12 +528,12 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Set the grade of the {@link Route}. The grade is a {@link String} which represents the difficulty. Can't
-   * be empty and max size is 2 characters.
-   * 
-   * @param routeGrade the grade of the {@link Route}. The grade is a {@link String} which represents the difficulty. Can't
-   *                    be empty and max size is 2 characters.
-   * 
+   * Set the grade of the {@link Route}. The grade is a {@link String} which represents the
+   * difficulty. Can't be empty and max size is 2 characters.
+   *
+   * @param routeGrade the grade of the {@link Route}. The grade is a {@link String} which represents
+   *        the difficulty. Can't be empty and max size is 2 characters.
+   *
    * @see #routeGrade
    * @see #getRouteGrade()
    */
@@ -537,9 +543,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the number of points for this {@link Route}. Can't be null.
-   * 
+   *
    * @param routePointsNb the number of points for this {@link Route}. Can't be null.
-   * 
+   *
    * @see #routePointsNb
    * @see #setRoutePointsNb(Integer)
    */
@@ -549,9 +555,10 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the description of the {@link Route}. Can be empty. Max size is 10 000 characters.
-   * 
-   * @param routeDescription the description of the {@link Route}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
+   * @param routeDescription the description of the {@link Route}. Can be empty. Max size is 10 000
+   *        characters.
+   *
    * @see #routeDescription
    * @see #getRouteDescription()
    */
@@ -561,9 +568,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the id of the {@link Route}.
-   * 
+   *
    * @param routeId the id of the {@link Route}.
-   * 
+   *
    * @see #routeId
    * @see #getRouteId()
    */
@@ -573,9 +580,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the length in meters of the {@link Length}. Can't be null.
-   *  
-   * @param lengthLength the length in meters of the {@link Length}. Can't be null.
    * 
+   * @param lengthLength the length in meters of the {@link Length}. Can't be null.
+   *
    * @see #lengthLength
    * @see #setLengthLength(Integer)
    */
@@ -584,12 +591,12 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Set the grade of the {@link Length}. The grade is a {@link String} which represents the difficulty. Can't
-   * be empty and max size is 2 characters.
-   * 
-   * @param lengthGrade the grade of the {@link Length}. The grade is a {@link String} which represents the difficulty. Can't
-   *                      be empty and max size is 2 characters.
-   * 
+   * Set the grade of the {@link Length}. The grade is a {@link String} which represents the
+   * difficulty. Can't be empty and max size is 2 characters.
+   *
+   * @param lengthGrade the grade of the {@link Length}. The grade is a {@link String} which
+   *        represents the difficulty. Can't be empty and max size is 2 characters.
+   *
    * @see #lengthGrade
    * @see #getLengthGrade()
    */
@@ -599,9 +606,10 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the description of the {@link Length}. Can be empty. Max size is 10 000 characters.
-   * 
-   * @param lengthDescription the description of the {@link Length}. Can be empty. Max size is 10 000 characters.
-   * 
+   *
+   * @param lengthDescription the description of the {@link Length}. Can be empty. Max size is 10 000
+   *        characters.
+   *
    * @see #lengthDescription
    * @see #getLengthDescription()
    */
@@ -611,9 +619,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the number of points for this {@link Length}. Can't be null.
-   * 
+   *
    * @param lengthPointsNb the number of points for this {@link Length}. Can't be null.
-   * 
+   *
    * @see #lengthPointsNb
    * @see #getLengthPointsNb()
    */

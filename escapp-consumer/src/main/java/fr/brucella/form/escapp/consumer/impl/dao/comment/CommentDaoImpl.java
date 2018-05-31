@@ -58,29 +58,29 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
       return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
       
     } catch (EmptyResultDataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("id = " + commentId);
       }
       LOG.error(pException.getMessage());
       throw new NotFoundException("Le commentaire demandé n'a pas été trouvé", pException);
     } catch (PermissionDeniedDataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("id = " + commentId);
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("id = " + commentId);
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("id = " + commentId);
       }
       LOG.error(pException.getMessage());
@@ -111,26 +111,26 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
         return commentsList;
       }
     } catch (PermissionDeniedDataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("targetType = " + targetType);
-        LOG.debug("idCommentTarget = " +  idCommentTarget);
+        LOG.debug("idCommentTarget = " + idCommentTarget);
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("targetType = " + targetType);
-        LOG.debug("idCommentTarget = " +  idCommentTarget);
+        LOG.debug("idCommentTarget = " + idCommentTarget);
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("targetType = " + targetType);
-        LOG.debug("idCommentTarget = " +  idCommentTarget);
+        LOG.debug("idCommentTarget = " + idCommentTarget);
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
@@ -164,28 +164,28 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
         return commentsListWithLogin;
       }
     } catch (PermissionDeniedDataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("targetType = " + targetType);
-        LOG.debug("idCommentTarget = " +  idCommentTarget);
+        LOG.debug("idCommentTarget = " + idCommentTarget);
         LOG.debug("order = " + order);
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("targetType = " + targetType);
-        LOG.debug("idCommentTarget = " +  idCommentTarget);
+        LOG.debug("idCommentTarget = " + idCommentTarget);
         LOG.debug("order = " + order);
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("targetType = " + targetType);
-        LOG.debug("idCommentTarget = " +  idCommentTarget);
+        LOG.debug("idCommentTarget = " + idCommentTarget);
         LOG.debug("order = " + order);
       }
       LOG.error(pException.getMessage());
@@ -213,29 +213,29 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
       }
       
     } catch (DataIntegrityViolationException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("Comment = " + comment.toString());
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du commentaire n'a pu être réalisée.", pException);
     } catch (PermissionDeniedDataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("Comment = " + comment.toString());
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("Comment = " + comment.toString());
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("Comment = " + comment.toString());
       }
       LOG.error(pException.getMessage());
@@ -262,36 +262,36 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
       return keyHolder.getKey().intValue();
       
     } catch (DuplicateKeyException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("Comment = " + comment.toString());
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException("Un commentaire existe déjà avec cet identifiant", pException);
     } catch (DataIntegrityViolationException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("Comment = " + comment.toString());
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException("Les données n'étant pas conformes, la création du commentaire n'a pu être réalisée", pException);
     } catch (PermissionDeniedDataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("Comment = " + comment.toString());
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("Comment = " + comment.toString());
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("Comment = " + comment.toString());
       }
       LOG.error(pException.getMessage());
@@ -318,22 +318,22 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
       }
       
     } catch (PermissionDeniedDataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("id = " + commentId);
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(PERMISSION_DENIED, pException);
     } catch (DataAccessResourceFailureException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("id = " + commentId);
       }
       LOG.error(pException.getMessage());
       throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
     } catch (DataAccessException pException) {
-      if(LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql );
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
         LOG.debug("id = " + commentId);
       }
       LOG.error(pException.getMessage());

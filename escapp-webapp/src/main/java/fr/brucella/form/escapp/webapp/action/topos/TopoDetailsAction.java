@@ -279,7 +279,7 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
    * Set the id of the {@link Topo}.
    *
    * @param id the id of the {@link Topo}
-   * 
+   *
    * @see #id
    * @see #getId()
    */
@@ -289,9 +289,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   
   /**
    * Set the name of the topo pdf file.
-   * 
+   *
    * @param fileName the name of the topo pdf file.
-   * 
+   *
    * @see #fileName
    * @see #getFileName()
    */
@@ -301,9 +301,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   
   /**
    * Set the number of days of borrow.
-   * 
+   *
    * @param nbDays the number of days of borrow
-   * 
+   *
    * @see #nbDays
    * @see #getNbDays()
    */
@@ -313,9 +313,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   
   /**
    * Set the string indicating if the {@link Topo} can be borrow.
-   * 
+   *
    * @param borrowable the string indicating if the {@link Topo} can be borrow.
-   * 
+   *
    * @see #borrowable
    * @see #getBorrowable()
    */
@@ -325,9 +325,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   
   /**
    * Set the {@link Topo} detailed in the web page.
-   * 
+   *
    * @param topo the {@link Topo} detailed in the web page
-   * 
+   *
    * @see #topo
    * @see #getTopo()
    */
@@ -337,9 +337,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   
   /**
    * Set the number of {@link Comment} for the {@link Topo}.
-   * 
+   *
    * @param nbCommentsTopo the number of {@link Comment} for the {@link Topo}
-   * 
+   *
    * @see #nbCommentsTopo
    * @see #getNbCommentsTopo()
    */
@@ -350,10 +350,10 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   /**
    * Set the {@link List} of {@link Pair} of {@link Comment} with the login of the {@link User} who
    * write the {@link Comment} for the {@link Topo}.
-   * 
+   *
    * @param commentsTopoList the {@link List} of {@link Pair} of {@link Comment} with the login of the
    *        {@link User} who write the {@link Comment} for the {@link Topo}.
-   * 
+   *
    * @see #commentsTopoList
    * @see #getCommentsTopoList()
    */
@@ -363,9 +363,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   
   /**
    * Set the Owner {@link User} of the {@link Topo}.
-   * 
+   *
    * @param ownerTopo
-   * 
+   *
    * @see #ownerTopo
    * @see #getOwnerTopo()
    */
@@ -375,9 +375,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   
   /**
    * Set the {@link User} who borrow the {@link Topo}.
-   * 
+   *
    * @param borrowerTopo the {@link User} who borrow the {@link Topo}
-   * 
+   *
    * @see #borrowerTopo
    * @see #getBorrowerTopo()
    */
@@ -543,11 +543,11 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
     
     try {
       
-      topo = this.managerFactory.getTopoManager().getTopoById(this.id);
+      this.topo = this.managerFactory.getTopoManager().getTopoById(this.id);
       
       final ServletContext servletContext = ServletActionContext.getServletContext();
       final String path = servletContext.getRealPath("/WEB-INF/files/");
-      final File topoPdf = new File(path, topo.getPdfFileName());
+      final File topoPdf = new File(path, this.topo.getPdfFileName());
       FileUtils.deleteQuietly(topoPdf);
       
       this.managerFactory.getTopoManager().deleteTopo(this.id, user);

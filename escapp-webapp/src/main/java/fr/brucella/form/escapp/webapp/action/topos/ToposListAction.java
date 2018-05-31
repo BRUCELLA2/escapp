@@ -21,7 +21,7 @@ import fr.brucella.form.escapp.model.search.TopoSearch;
 
 /**
  * Actions related to topo listing.
- * 
+ *
  * @author BRUCELLA2
  */
 public class ToposListAction extends ActionSupport implements ServletRequestAware {
@@ -37,7 +37,7 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   /**
    * String representing the department code associated to {@link Topo}. Can't be empty and size need
    * to be 3 characters. Ex : "034", "030", "02A"
-   * 
+   *
    * @see #getDepartmentTopo()
    * @see #setDepartmentTopo(String)
    */
@@ -45,15 +45,16 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * Municipality associated to {@link Topo}. Can be empty and max size is 100 characters.
-   * 
+   *
    * @see #getMunicipalityTopo()
    * @see #setMunicipalityTopo(String)
    */
   private String             municipalityTopo;
   
   /**
-   * String indicating if the {@link Topo} is available for a new borrow (Topo is borrowable and not borrow at this time).
-   * 
+   * String indicating if the {@link Topo} is available for a new borrow (Topo is borrowable and not
+   * borrow at this time).
+   *
    * @see #getAvailable()
    * @see #setAvailable(String)
    */
@@ -64,7 +65,7 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * A list of {@link Topo}.
-   * 
+   *
    * @see #getToposList()
    * @see #setToposList(List)
    */
@@ -72,7 +73,7 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * List of {@link Topo} owned by the user.
-   * 
+   *
    * @see #getToposOwnerList()
    * @see #setToposOwnerList(List)
    */
@@ -80,7 +81,7 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * List of {@link Topo} borrowed by the user.
-   * 
+   *
    * @see #getToposBorrowerList()
    * @see #setToposBorrowerList(List)
    */
@@ -109,9 +110,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * Get the list of {@link Topo}.
-   * 
+   *
    * @return the list of {@link Topo}.
-   * 
+   *
    * @see #toposList
    * @see #setToposList(List)
    */
@@ -120,12 +121,12 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   }
   
   /**
-   * Get the String representing the department code associated to {@link Topo}. Can't be empty and size need
-   * to be 3 characters. Ex : "034", "030", "02A"
-   * 
-   * @return the String representing the department code associated to {@link Topo}. Can't be empty and size need
-   *          to be 3 characters. Ex : "034", "030", "02A"
-   * 
+   * Get the String representing the department code associated to {@link Topo}. Can't be empty and
+   * size need to be 3 characters. Ex : "034", "030", "02A"
+   *
+   * @return the String representing the department code associated to {@link Topo}. Can't be empty
+   *         and size need to be 3 characters. Ex : "034", "030", "02A"
+   *
    * @see #departmentTopo
    * @see #setDepartmentTopo(String)
    */
@@ -135,9 +136,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * Get the municipality associated to {@link Topo}. Can be empty and max size is 100 characters.
-   * 
+   *
    * @return the municipality associated to {@link Topo}. Can be empty and max size is 100 characters.
-   * 
+   *
    * @see #municipalityTopo
    * @see #setMunicipalityTopo(String)
    */
@@ -146,10 +147,12 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   }
   
   /**
-   * Get the String indicating if the {@link Topo} is available for a new borrow (Topo is borrowable and not borrow at this time).
-   * 
-   * @return String indicating if the {@link Topo} is available for a new borrow (Topo is borrowable and not borrow at this time).
-   * 
+   * Get the String indicating if the {@link Topo} is available for a new borrow (Topo is borrowable
+   * and not borrow at this time).
+   *
+   * @return String indicating if the {@link Topo} is available for a new borrow (Topo is borrowable
+   *         and not borrow at this time).
+   *
    * @see #available
    * @see #setAvailable(String)
    */
@@ -159,9 +162,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * Get the list of {@link Topo} owned by the user.
-   * 
+   *
    * @return the list of {@link Topo} owned by the user.
-   * 
+   *
    * @see #toposOwnerList
    * @see #setToposOwnerList(List)
    */
@@ -171,9 +174,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * Get the List of {@link Topo} borrowed by the user.
-   * 
+   *
    * @return the List of {@link Topo} borrowed by the user.
-   * 
+   *
    * @see #toposBorrowerList
    * @see #setToposBorrowerList(List)
    */
@@ -185,12 +188,12 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   // ===== Setters =====
   
   /**
-   * Set the String representing the department code associated to {@link Topo}. Can't be empty and size need
-   * to be 3 characters. Ex : "034", "030", "02A"
-   * 
-   * @param departmentTopo the String representing the department code associated to {@link Topo}. Can't be empty and size need
-   *                         to be 3 characters. Ex : "034", "030", "02A"
-   * 
+   * Set the String representing the department code associated to {@link Topo}. Can't be empty and
+   * size need to be 3 characters. Ex : "034", "030", "02A"
+   *
+   * @param departmentTopo the String representing the department code associated to {@link Topo}.
+   *        Can't be empty and size need to be 3 characters. Ex : "034", "030", "02A"
+   *
    * @see #departmentTopo
    * @see #getDepartmentTopo()
    */
@@ -200,9 +203,10 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * Set the municipality associated to {@link Topo}. Can be empty and max size is 100 characters.
-   * 
-   * @param municipalityTopo the municipality associated to {@link Topo}. Can be empty and max size is 100 characters.
-   * 
+   *
+   * @param municipalityTopo the municipality associated to {@link Topo}. Can be empty and max size is
+   *        100 characters.
+   *
    * @see #municipalityTopo
    * @see #getMunicipalityTopo()
    */
@@ -211,10 +215,12 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   }
   
   /**
-   * Set the String indicating if the {@link Topo} is available for a new borrow (Topo is borrowable and not borrow at this time).
-   * 
-   * @param available the String indicating if the {@link Topo} is available for a new borrow (Topo is borrowable and not borrow at this time).
-   * 
+   * Set the String indicating if the {@link Topo} is available for a new borrow (Topo is borrowable
+   * and not borrow at this time).
+   *
+   * @param available the String indicating if the {@link Topo} is available for a new borrow (Topo is
+   *        borrowable and not borrow at this time).
+   *
    * @see #available
    * @see #getAvailable()
    */
@@ -224,9 +230,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * Set the list of {@link Topo}.
-   * 
+   *
    * @param toposList the list of {@link Topo}.
-   * 
+   *
    * @see #toposList
    * @see #getToposList()
    */
@@ -236,9 +242,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * Set the list of {@link Topo} owned by the user.
-   * 
+   *
    * @param toposOwnerList the list of {@link Topo} owned by the user.
-   * 
+   *
    * @see #toposOwnerList
    * @see #getToposOwnerList()
    */
@@ -248,9 +254,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
   
   /**
    * Set the List of {@link Topo} borrowed by the user.
-   * 
+   *
    * @param toposBorrowerList the List of {@link Topo} borrowed by the user.
-   * 
+   *
    * @see #toposBorrowerList
    * @see #getToposBorrowerList()
    */

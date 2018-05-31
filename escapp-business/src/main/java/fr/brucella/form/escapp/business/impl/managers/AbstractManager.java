@@ -11,7 +11,7 @@ import fr.brucella.form.escapp.consumer.contract.DaoFactory;
 
 /**
  * Abstract Manager.
- * 
+ *
  * @author BRUCELLA2
  */
 @Component

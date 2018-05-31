@@ -32,12 +32,12 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
   /**
    * Topo Manager logger.
    */
-  private static final Log LOG              = LogFactory.getLog(UserManagerImpl.class);
+  private static final Log      LOG              = LogFactory.getLog(UserManagerImpl.class);
   
   /**
    * Password Encoder.
    */
-  private BCryptPasswordEncoder    vPasswordEncoder = new BCryptPasswordEncoder();
+  private BCryptPasswordEncoder vPasswordEncoder = new BCryptPasswordEncoder();
   
   
   // Methods

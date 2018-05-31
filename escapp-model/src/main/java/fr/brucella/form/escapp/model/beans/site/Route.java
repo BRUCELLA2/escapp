@@ -196,8 +196,8 @@ public class Route implements Serializable {
   /**
    * Set the String which represents the grade of the {@link Route}.
    *
-   * @param grade the String which represents the grade of the {@link Route}. Can't be empty. Max
-   *        size is 2 characters.
+   * @param grade the String which represents the grade of the {@link Route}. Can't be empty. Max size
+   *        is 2 characters.
    *
    * @see #grade
    * @see #getGrade()
@@ -210,8 +210,8 @@ public class Route implements Serializable {
   /**
    * Set the id of the {@link Sector} to which the {@link Route} belongs.
    *
-   * @param sectorId the {@link Integer} id of the {@link Sector} to which the {@link Sector}
-   *        belongs. Can't be null.
+   * @param sectorId the {@link Integer} id of the {@link Sector} to which the {@link Sector} belongs.
+   *        Can't be null.
    * @see #sectorId
    * @see #getSectorId()
    */

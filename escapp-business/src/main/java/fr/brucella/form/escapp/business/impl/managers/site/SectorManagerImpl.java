@@ -29,7 +29,7 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager 
   /**
    * Sector Manager logger.
    */
-  private static final Log  LOG = LogFactory.getLog(SectorManagerImpl.class);
+  private static final Log LOG = LogFactory.getLog(SectorManagerImpl.class);
   
   /**
    * @see SectorManager#getSectorsSiteList(Integer)

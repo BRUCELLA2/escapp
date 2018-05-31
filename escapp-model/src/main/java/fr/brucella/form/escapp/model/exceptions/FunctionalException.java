@@ -12,7 +12,7 @@ public class FunctionalException extends Exception {
    * Serial ID.
    */
   private static final long serialVersionUID = -3003406283253185758L;
-
+  
   /**
    * Constructs a new FunctionalException with the specified detail message.
    *
