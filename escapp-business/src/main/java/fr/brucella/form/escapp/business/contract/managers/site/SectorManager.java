@@ -8,7 +8,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * Interface for Sector Manager
+ * Interface for Sector Manager.
  *
  * @author BRUCELLA2
  */

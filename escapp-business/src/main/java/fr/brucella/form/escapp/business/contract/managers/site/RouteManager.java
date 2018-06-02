@@ -8,7 +8,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * Interface for Route Manager
+ * Interface for Route Manager.
  *
  * @author BRUCELLA2
  */

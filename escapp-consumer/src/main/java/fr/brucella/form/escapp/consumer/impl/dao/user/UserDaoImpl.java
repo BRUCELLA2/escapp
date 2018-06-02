@@ -55,18 +55,26 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       
       return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
       
-    } catch (EmptyResultDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -85,18 +93,26 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     
     try {
       return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
-    } catch (EmptyResultDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("login = " + userLogin);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException("L'utilisateur demandé n'a pas été trouvé", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("login = " + userLogin);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -113,15 +129,19 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     
     try {
       return this.getNamedJdbcTemplate().queryForObject(sql, params, Integer.class);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("login = " + userLogin);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -139,21 +159,33 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("user = " + user.toString());
+        }
         throw new NotFoundException("L'utilisateur à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
       }
       
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de l'utilisateur n'a pu être réalisée.", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("user = " + user.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de l'utilisateur n'a pu être réalisée.", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("user = " + user.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -174,21 +206,33 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
       return keyHolder.getKey().intValue();
       
-    } catch (DuplicateKeyException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Un utilisateur existe déjà avec cet identifiant technique.", pException);
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la création de l'utilisateur n'a pu être réalisée", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DuplicateKeyException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("user = " + user.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Un utilisateur existe déjà avec cet identifiant technique.", exception);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("user = " + user.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la création de l'utilisateur n'a pu être réalisée", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("user = " + user.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -207,18 +251,26 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("id = " + userId);
+        }
         throw new NotFoundException("L'utilisateur à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
       }
       
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
 }

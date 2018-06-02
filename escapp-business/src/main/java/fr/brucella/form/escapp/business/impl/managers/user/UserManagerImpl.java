@@ -37,7 +37,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
   /**
    * Password Encoder.
    */
-  private BCryptPasswordEncoder vPasswordEncoder = new BCryptPasswordEncoder();
+  private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
   
   
   // Methods
@@ -49,15 +49,23 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
   public User getUserByLogin(final String userLogin) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (StringUtils.isEmpty(userLogin)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("login = null");
+      }
       throw new FunctionalException("Le login de l'utilisateur recherché est incorrect (Login vide) - Echec de la recherche");
     }
     
     try {
       return this.getDaoFactory().getUserDao().getUserByLogin(userLogin);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("login = " + userLogin);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -68,15 +76,23 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
   public User getUserById(final Integer userId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (userId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("id = null");
+      }
       throw new FunctionalException("L'identifiant de l'utilisateur recherché est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
     try {
       return this.getDaoFactory().getUserDao().getUserById(userId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("id = " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -87,14 +103,23 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
   public User getConnectUser(final String userLogin, final String rawUserPassword) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (StringUtils.isAllEmpty(userLogin, rawUserPassword)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("login and raw password = null");
+      }
       throw new FunctionalException("Le login et le mot de passe de l'utilisateur sont incorrect (Login et mot de passe vides) - Echec de la connection");
     }
     
     if (StringUtils.isEmpty(userLogin)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("login = null");
+      }
       throw new FunctionalException("Le login de l'utilisateur est incorrect (Login vide) - Echec de la connection");
     }
     
     if (StringUtils.isEmpty(rawUserPassword)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("raw password = null");
+      }
       throw new FunctionalException("Le mot de passe est incorrect (Mot de passe vide) - Echec de la connection");
     }
     
@@ -104,12 +129,21 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
         return user;
       }
       else {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("login = " + userLogin);
+          LOG.debug("password = wrong");
+        }
         throw new NotFoundException("Le login et le mot de passe ne correspondent pas - Echec de la connection");
       }
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("login = " + userLogin);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -120,10 +154,16 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
   public User addUser(final User userToAdd) throws TechnicalException, FunctionalException {
     
     if (userToAdd == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("user = null");
+      }
       throw new FunctionalException("Aucun utilisateur n'a été transmis (Utilisateur vide) - Echec de l'ajout de l'utilisateur");
     }
     
     if (StringUtils.isEmpty(userToAdd.getPassword())) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("password = null");
+      }
       throw new FunctionalException("Le mot de passe associé à l'utilisateur est incorrect (Mot de passe vide) - Echec de l'ajout de l'utilisateur");
     }
     
@@ -135,26 +175,33 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
     final Set<ConstraintViolation<User>> violations = this.getConstraintValidator().validate(user);
     
     if (!violations.isEmpty()) {
-      for (final ConstraintViolation<User> violation : violations) {
-        LOG.debug(violation.getMessage());
+      if (LOG.isDebugEnabled()) {
+        for (final ConstraintViolation<User> violation : violations) {
+          LOG.debug(violation.getMessage());
+        }
       }
       throw new FunctionalException("L'utilisateur à ajouter n'est pas valide", new ConstraintViolationException(violations));
     }
     
     try {
       if (!this.checkLoginDispo(user.getLogin())) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("login = " + user.getLogin());
+        }
         throw new FunctionalException("Cette identifiant est déjà utilisé");
       }
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
     }
     
     try {
       final int newUserId = this.getDaoFactory().getUserDao().insertUser(user);
       user.setId(newUserId);
       return user;
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
     }
     
   }
@@ -166,9 +213,15 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
   public void modifyPassword(final User userToModify, final String newRawPassword) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (userToModify == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("user = null");
+      }
       throw new FunctionalException("L'utilisateur à modifier n'a pas été transmis (Utilisateur vide) - Echec de la modification de mot de passe");
     }
     if (StringUtils.isEmpty(newRawPassword)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("password = null");
+      }
       throw new FunctionalException("Le nouveau mot de passe n'a pas été transmis (Mot de passe vide) - Echec de la modificaiton de mot de passe");
     }
     
@@ -179,18 +232,25 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
     final Set<ConstraintViolation<User>> violations = this.getConstraintValidator().validate(user);
     
     if (!violations.isEmpty()) {
-      for (final ConstraintViolation<User> violation : violations) {
-        LOG.debug(violation.getMessage());
+      if (LOG.isDebugEnabled()) {
+        for (final ConstraintViolation<User> violation : violations) {
+          LOG.debug(violation.getMessage());
+        }
       }
       throw new FunctionalException("L'utilisateur à modifier n'est pas valide", new ConstraintViolationException(violations));
     }
     
     try {
       this.getDaoFactory().getUserDao().updateUser(user);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("login = " + user.getLogin());
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
     
   }
@@ -202,6 +262,9 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
   public List<RoleUser> getRoleUserList(final Integer userId) throws TechnicalException, FunctionalException {
     
     if (userId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("user id = null");
+      }
       throw new FunctionalException("L'utilisateur n'a pas été transmis (Utilisateur vide) - Echec de la récupération des roles");
     }
     
@@ -209,9 +272,14 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
     
     try {
       rolesUser = this.getDaoFactory().getRoleUserDao().getRoleUserList(userId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("user id = " + userId);
+        LOG.debug(exception.getMessage());
+      }
       rolesUser = new ArrayList<>();
     }
     
@@ -230,15 +298,16 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
       if (this.getDaoFactory().getUserDao().countUserByLogin(login) > 0) {
         dispo = false;
       }
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
     }
     
     return dispo;
   }
   
   /**
-   * This method encrypte a raw password with the password encoder {@link #vPasswordEncoder}.
+   * This method encrypte a raw password with the password encoder {@link #passwordEncoder}.
    *
    * @param rawPassword the raw password to encrypte
    *
@@ -246,13 +315,13 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
    */
   private String encodePassword(final String rawPassword) {
     
-    return this.vPasswordEncoder.encode(rawPassword);
+    return this.passwordEncoder.encode(rawPassword);
     
   }
   
   /**
    * This method check if a raw password is the same than the encrypted password. This method use the
-   * password encoder {@link #vPasswordEncoder}
+   * password encoder {@link #passwordEncoder}
    *
    * @param rawPassword The raw password
    * @param encodePassword the encrypted password
@@ -261,7 +330,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
    */
   private boolean checkPassword(final String rawPassword, final String encodePassword) {
     
-    return this.vPasswordEncoder.matches(rawPassword, encodePassword);
+    return this.passwordEncoder.matches(rawPassword, encodePassword);
     
   }
   

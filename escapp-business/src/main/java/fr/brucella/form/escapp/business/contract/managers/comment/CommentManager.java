@@ -14,7 +14,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * Interface for Comment Manager
+ * Interface for Comment Manager.
  *
  * @author BRUCELLA2
  */
@@ -283,7 +283,7 @@ public interface CommentManager {
   void deleteComment(final Integer commentId) throws TechnicalException, FunctionalException, NotFoundException;
   
   /**
-   * Save the modification of the {@link Comment}
+   * Save the modification of the {@link Comment}.
    *
    * @param comment the {@link Comment} modified to save.
    * @param user the {@link User} who modified the {@link Comment}

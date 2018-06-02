@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
- * Business object which represents the role of an User
+ * Business object which represents the role of an User.
  *
  * @author BRUCELLA2
  */
@@ -39,11 +39,11 @@ public class RoleUser implements Serializable {
   // ===== Getters =====
   
   /**
-   * Get the id of the {@link User}
+   * Get the id of the {@link User}.
    *
    * @return the {@link Integer} id of the {@link User} Can't be null.
    *
-   * @see #userId;
+   * @see #userId
    * @see #setUserId(Integer)
    */
   public Integer getUserId() {
@@ -51,7 +51,7 @@ public class RoleUser implements Serializable {
   }
   
   /**
-   * Get the role of the {@link User}
+   * Get the role of the {@link User}.
    *
    * @return the role of the {@link User} Can't be empty.
    *

@@ -55,18 +55,26 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
       
       return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
       
-    } catch (EmptyResultDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new NotFoundException("Le topo demandé n'a pas été trouvé", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + topoId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException("Le topo demandé n'a pas été trouvé", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + topoId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -84,21 +92,27 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
       
       final List<Topo> allToposList = this.getJdbcTemplate().query(sql, rowMapper);
       if (allToposList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+        }
         throw new NotFoundException("Aucun topo n'a été trouvé.");
       }
       else {
         return allToposList;
       }
       
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -130,19 +144,31 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
     final RowMapper<Topo> rowMapper = new TopoRM();
     
     try {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("search = " + topoSearch.toString());
+      }
       return this.getNamedJdbcTemplate().query(sql.toString(), params, rowMapper);
-    } catch (EmptyResultDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new NotFoundException("Aucun topo ne correspond à votre recherche", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("search = " + topoSearch.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException("Aucun topo ne correspond à votre recherche", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("search = " + topoSearch.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -163,21 +189,29 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
       
       final List<Topo> ownerToposList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
       if (ownerToposList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("owner id = " + ownerId);
+        }
         throw new NotFoundException("Aucun topo n'a été trouvé pour ce propriétaire.");
       }
       else {
         return ownerToposList;
       }
       
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("owner id = " + ownerId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -198,21 +232,29 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
       
       final List<Topo> borrowerToposList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
       if (borrowerToposList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("borrower id = " + borrowerId);
+        }
         throw new NotFoundException("Aucun topo n'a été trouvé pour cet emprunteur.");
       }
       else {
         return borrowerToposList;
       }
       
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("borrower id = " + borrowerId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -241,21 +283,33 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("topo = " + topo.toString());
+        }
         throw new NotFoundException("Le topo à modifier n'a pas été trouvé. La mise à jour n'a pas été faite.");
       }
       
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du topo n'a pu être réalisée.", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("topo = " + topo.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du topo n'a pu être réalisée.", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("topo = " + topo.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -287,21 +341,33 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
       this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
       return keyHolder.getKey().intValue();
       
-    } catch (DuplicateKeyException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Un topo existe déjà avec cet identifiant", pException);
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la création du topo n'a pu être réalisée", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DuplicateKeyException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("topo = " + topo.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Un topo existe déjà avec cet identifiant", exception);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("topo = " + topo.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la création du topo n'a pu être réalisée", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("topo = " + topo.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -320,18 +386,26 @@ public class TopoDaoImpl extends AbstractDao implements TopoDao {
       
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("id = " + topoId);
+        }
         throw new NotFoundException("Le topo à supprimer n'a pas été trouvé. La suppression n'a pas été réalisée.");
       }
       
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + topoId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
 }

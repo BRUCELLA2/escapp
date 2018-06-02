@@ -55,18 +55,26 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       
       return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
       
-    } catch (EmptyResultDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new NotFoundException("La voie demandée n'a pas été trouvée", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + routeId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException("La voie demandée n'a pas été trouvée", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + routeId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -87,21 +95,29 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       
       final List<Route> routesList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
       if (routesList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("id = " + sectorId);
+        }
         throw new NotFoundException("Aucune voie n'a été trouvée.");
       }
       else {
         return routesList;
       }
       
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + sectorId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -118,21 +134,31 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("Route = " + route.toString());
+        }
         throw new NotFoundException("La voie à modifier n'a pas été trouvée. La mise à jour n'a pas été faite.");
       }
       
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de la voie n'a pu être réalisée.", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Route = " + route.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de la voie n'a pu être réalisée.", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Route = " + route.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -154,21 +180,33 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
       return keyHolder.getKey().intValue();
       
-    } catch (DuplicateKeyException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Une voie existe déjà avec cet identifiant", pException);
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la création de la voie n'a pu être réalisée", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DuplicateKeyException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Route = " + route.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Une voie existe déjà avec cet identifiant", exception);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Route = " + route.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la création de la voie n'a pu être réalisée", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Route = " + route.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -187,18 +225,26 @@ public class RouteDaoImpl extends AbstractDao implements RouteDao {
       
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("Id = " + routeId);
+        }
         throw new NotFoundException("La voie à supprimer n'a pas été trouvée. La suppression n'a pas été réalisée.");
       }
       
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Id = " + routeId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   

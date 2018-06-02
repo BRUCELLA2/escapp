@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.Action;
@@ -32,6 +34,12 @@ public class SiteDetailsAction extends ActionSupport {
    * Serial ID.
    */
   private static final long            serialVersionUID = -8899315209160242753L;
+  
+  // ----- Logger
+  /**
+   * Site details action logger.
+   */
+  private static final Log             LOG              = LogFactory.getLog(SiteDetailsAction.class);
   
   // ----- Input
   /**
@@ -531,14 +539,16 @@ public class SiteDetailsAction extends ActionSupport {
   public String doSiteDetails() {
     
     if (this.id == null) {
+      LOG.error("Site id null - site details failure");
       this.addActionError("L'identifiant du site recherché est incorrect (Identifiant vide) - Echec de la recherche");
       return Action.ERROR;
     }
     
     try {
       this.site = this.managerFactory.getSiteManager().getSiteById(this.id);
-    } catch (TechnicalException | NotFoundException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | NotFoundException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -549,10 +559,11 @@ public class SiteDetailsAction extends ActionSupport {
     try {
       this.commentsSiteList = this.managerFactory.getCommentManager().getCommentsSiteListWithLogin(this.id, "ASC");
       this.nbCommentsSite = this.commentsSiteList.size();
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
-    } catch (NotFoundException pException) {
+    } catch (NotFoundException exception) {
       this.nbCommentsSite = 0;
       this.addActionMessage("Aucun commentaire");
     }
@@ -573,10 +584,11 @@ public class SiteDetailsAction extends ActionSupport {
         this.nbCommentsSectorsList.add(new MutablePair<Integer, Integer>(sectorL.getId(), tempCommentsSectorList.size()));
         this.commentsSectorList.addAll(tempCommentsSectorList);
       }
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
-    } catch (NotFoundException pException) {
+    } catch (NotFoundException exception) {
       return Action.SUCCESS;
     }
     
@@ -592,6 +604,7 @@ public class SiteDetailsAction extends ActionSupport {
   public String doRouteDetails() {
     
     if (this.id == null) {
+      LOG.error("route id null - route details failure");
       this.addActionError("L'identifiant de la voie recherché est incorrect (Identifiant vide) - Echec de l'affichage des détails");
       return Action.ERROR;
     }
@@ -601,8 +614,9 @@ public class SiteDetailsAction extends ActionSupport {
         // Sector and site are needed to have full details on the route.
         this.sector = this.managerFactory.getSectorManager().getSectorById(this.route.getSectorId());
         this.site = this.managerFactory.getSiteManager().getSiteById(this.sector.getSiteId());
-      } catch (TechnicalException | NotFoundException | FunctionalException pException) {
-        this.addActionError(pException.getMessage());
+      } catch (TechnicalException | NotFoundException | FunctionalException exception) {
+        this.addActionError(exception.getMessage());
+        LOG.error(exception.getMessage());
         return Action.ERROR;
       }
     }
@@ -612,9 +626,12 @@ public class SiteDetailsAction extends ActionSupport {
      */
     try {
       this.lengthsList = this.managerFactory.getLengthManager().getLengthsRouteList(this.route.getId());
-    } catch (TechnicalException | FunctionalException | NotFoundException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
+    } catch (NotFoundException exception) {
+      this.lengthsList = new ArrayList<>();
     }
     
     /*
@@ -627,9 +644,13 @@ public class SiteDetailsAction extends ActionSupport {
      */
     try {
       this.commentsRouteList = this.managerFactory.getCommentManager().getCommentsRouteListWithLogin(this.id, "ASC");
-    } catch (TechnicalException | NotFoundException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
+    } catch (NotFoundException exception) {
+      this.addActionMessage("Aucun commentaire");
+      this.commentsRouteList = new ArrayList<>();
     }
     
     this.nbCommentsRoute = this.commentsRouteList.size();

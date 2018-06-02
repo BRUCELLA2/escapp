@@ -405,6 +405,7 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   public String doTopoDetails() {
     
     if (this.id == null) {
+      LOG.error("Topo id null - topo details failure");
       this.addActionError("L'identifiant du topo recherché est incorrect (Identifiant vide) - Echec de la recherche");
       return Action.ERROR;
     }
@@ -417,19 +418,21 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
       if (this.topo.getBorrower() != null) {
         this.borrowerTopo = this.managerFactory.getUserManager().getUserById(this.topo.getBorrower());
       }
-    } catch (TechnicalException | NotFoundException | FunctionalException pException) {
-      TopoDetailsAction.LOG.debug(pException.getMessage());
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | NotFoundException | FunctionalException exception) {
+      TopoDetailsAction.LOG.debug(exception.getMessage());
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
     try {
       this.commentsTopoList = this.managerFactory.getCommentManager().getCommentsTopoListWithLogin(this.id, "ASC");
       this.nbCommentsTopo = this.commentsTopoList.size();
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
-    } catch (NotFoundException pException) {
+    } catch (NotFoundException exception) {
       this.nbCommentsTopo = 0;
       this.addActionMessage("Aucun commentaire");
     }
@@ -464,6 +467,7 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   public String doBooking() {
     
     if (this.id == null) {
+      LOG.error("Topo id null - topo details failure");
       this.addActionError("L'identifiant du topo à réserver est incorrect (Identifiant vide) - Echec de la réservation");
       return Action.ERROR;
     }
@@ -475,6 +479,7 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
     
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     if (user == null) {
+      LOG.error("user null - topo booking failure");
       this.addActionError("Vous n'êtes plus identifié, la réservation du topo n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
@@ -483,8 +488,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
       this.topo = this.managerFactory.getTopoManager().getTopoById(this.id);
       this.topo = this.managerFactory.getTopoManager().borrowTopo(this.topo, this.nbDays, user);
       this.borrowerTopo = user;
-    } catch (TechnicalException | NotFoundException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | NotFoundException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -500,12 +506,14 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   public String doChangeBorrowable() {
     
     if (this.id == null) {
+      LOG.error("Topo id null - topo change borrowable status failure");
       this.addActionError("L'identifiant du topo à modifier est incorrect (Identifiant vide) - Echec de la modification");
       return Action.ERROR;
     }
     
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     if (user == null) {
+      LOG.error("user null - topo change borrowable status failure");
       this.addActionError("Vous n'êtes plus identifié, la modification du topo n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
@@ -514,8 +522,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
       this.topo = this.managerFactory.getTopoManager().getTopoById(this.id);
       this.topo.setBorrowable(StringUtils.equals(this.borrowable, "true"));
       this.managerFactory.getTopoManager().modifyTopo(this.topo, user);
-    } catch (TechnicalException | NotFoundException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | NotFoundException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -531,12 +540,14 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
   public String doDelete() {
     
     if (this.id == null) {
+      LOG.error("Topo id null - topo delete failure");
       this.addActionError("L'identifiant du topo à supprimer est incorrect (Identifiant vide) - Echec de la modification");
       return Action.ERROR;
     }
     
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     if (user == null) {
+      LOG.error("user null - topo delete failure");
       this.addActionError("Vous n'êtes plus identifié, la suppression du topo n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
@@ -552,8 +563,9 @@ public class TopoDetailsAction extends ActionSupport implements ServletRequestAw
       
       this.managerFactory.getTopoManager().deleteTopo(this.id, user);
       
-    } catch (TechnicalException | NotFoundException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | NotFoundException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     

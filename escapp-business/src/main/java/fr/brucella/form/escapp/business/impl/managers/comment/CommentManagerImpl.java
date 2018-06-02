@@ -57,6 +57,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public List<Comment> getCommentsSiteList(final Integer siteId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (siteId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("site id = " + siteId);
+      }
       throw new FunctionalException("L'identifiant du site est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -72,6 +75,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
       throws TechnicalException, FunctionalException, NotFoundException {
     
     if (siteId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("site id = " + siteId);
+      }
       throw new FunctionalException("L'identifiant du site est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -86,6 +92,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public List<Comment> getCommentsSectorList(final Integer sectorId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (sectorId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector id = " + sectorId);
+      }
       throw new FunctionalException("L'identifiant du secteur est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -101,6 +110,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
       throws TechnicalException, FunctionalException, NotFoundException {
     
     if (sectorId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector id = " + sectorId);
+      }
       throw new FunctionalException("L'identifiant du secteur est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -115,6 +127,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public List<Comment> getCommentsRouteList(final Integer routeId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (routeId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("route id = " + routeId);
+      }
       throw new FunctionalException("L'identifiant de la voie est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -130,6 +145,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
       throws TechnicalException, FunctionalException, NotFoundException {
     
     if (routeId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("route id = " + routeId);
+      }
       throw new FunctionalException("L'identifiant de la voie est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -144,6 +162,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public List<Comment> getCommentsLengthList(final Integer lengthId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (lengthId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("length id = " + lengthId);
+      }
       throw new FunctionalException("L'identifiant de la longueur est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -160,6 +181,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
       throws TechnicalException, FunctionalException, NotFoundException {
     
     if (lengthId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("length id = " + lengthId);
+      }
       throw new FunctionalException("L'identifiant de la longueur est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -174,6 +198,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public List<Comment> getCommentsTopoList(final Integer topoId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (topoId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("topo id = " + topoId);
+      }
       throw new FunctionalException("L'identifiant du topo est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -189,6 +216,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
       throws TechnicalException, FunctionalException, NotFoundException {
     
     if (topoId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("topo id = " + topoId);
+      }
       throw new FunctionalException("L'identifiant du topo est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
@@ -202,15 +232,23 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public Comment getCommentById(final Integer commentId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (commentId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment id = " + commentId);
+      }
       throw new FunctionalException("L'identifiant du commentaire recherché est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
     try {
       return this.getDaoFactory().getCommentDao().getComment(commentId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment id = " + commentId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -222,12 +260,18 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public void addCommentSite(final Comment comment) throws TechnicalException, FunctionalException {
     
     if (comment == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = null");
+      }
       throw new FunctionalException(NO_COMMENT_SEND);
     }
     
     final String pTargetType = SITE;
     
     if (comment.getTargetType() != null && !comment.getTargetType().isEmpty() && !comment.getTargetType().equals(pTargetType)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+      }
       throw new FunctionalException("Le type de la cible du commentaire est différent de celui attendu (Site) - Echec de l'ajout du commentaire");
     }
     else {
@@ -236,10 +280,15 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
     
     try {
       this.getDaoFactory().getSiteDao().getSite(comment.getIdCommentTarget());
-    } catch (NotFoundException pException) {
-      throw new FunctionalException("Le site cible du commentaire n'a pas été trouvé - Echec de l'ajout du commentaire.", pException);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException("Un problème technique pour trouver le site cible est survenu - Echec de l'ajout du commentaire.", pException);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new FunctionalException("Le site cible du commentaire n'a pas été trouvé - Echec de l'ajout du commentaire.", exception);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Un problème technique pour trouver le site cible est survenu - Echec de l'ajout du commentaire.", exception);
     }
     
     this.addComment(comment);
@@ -253,24 +302,36 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public void addCommentSector(final Comment comment) throws TechnicalException, FunctionalException {
     
     if (comment == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = null");
+      }
       throw new FunctionalException(NO_COMMENT_SEND);
     }
     
-    final String pTargetType = SECTOR;
+    final String targetType = SECTOR;
     
-    if (comment.getTargetType() != null && !comment.getTargetType().isEmpty() && !comment.getTargetType().equals(pTargetType)) {
+    if (comment.getTargetType() != null && !comment.getTargetType().isEmpty() && !comment.getTargetType().equals(targetType)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+        LOG.debug("target type = " + targetType);
+      }
       throw new FunctionalException("Le type de la cible du commentaire est différent de celui attendu (Secteur) - Echec de l'ajout du commentaire");
     }
     else {
-      comment.setTargetType(pTargetType);
+      comment.setTargetType(targetType);
     }
     
     try {
       this.getDaoFactory().getSectorDao().getSector(comment.getIdCommentTarget());
-    } catch (NotFoundException pException) {
-      throw new FunctionalException("Le secteur cible du commentaire n'a pas été trouvé - Echec de l'ajout du commentaire.", pException);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException("Un problème technique pour trouver le secteur cible est survenu - Echec de l'ajout du commentaire.", pException);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new FunctionalException("Le secteur cible du commentaire n'a pas été trouvé - Echec de l'ajout du commentaire.", exception);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Un problème technique pour trouver le secteur cible est survenu - Echec de l'ajout du commentaire.", exception);
     }
     
     this.addComment(comment);
@@ -284,24 +345,36 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public void addCommentRoute(final Comment comment) throws TechnicalException, FunctionalException {
     
     if (comment == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = null");
+      }
       throw new FunctionalException(NO_COMMENT_SEND);
     }
     
-    final String pTargetType = ROUTE;
+    final String targetType = ROUTE;
     
-    if (comment.getTargetType() != null && !comment.getTargetType().isEmpty() && !comment.getTargetType().equals(pTargetType)) {
+    if (comment.getTargetType() != null && !comment.getTargetType().isEmpty() && !comment.getTargetType().equals(targetType)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+        LOG.debug("target type = " + targetType);
+      }
       throw new FunctionalException("Le type de la cible du commentaire est différent de celui attendu (Voie) - Echec de l'ajout du commentaire");
     }
     else {
-      comment.setTargetType(pTargetType);
+      comment.setTargetType(targetType);
     }
     
     try {
       this.getDaoFactory().getRouteDao().getRoute(comment.getIdCommentTarget());
-    } catch (NotFoundException pException) {
-      throw new FunctionalException("La voie cible du commentaire n'a pas été trouvée - Echec de l'ajout du commentaire.", pException);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException("Un problème technique pour trouver la voie cible est survenu - Echec de l'ajout du commentaire.", pException);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new FunctionalException("La voie cible du commentaire n'a pas été trouvée - Echec de l'ajout du commentaire.", exception);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Un problème technique pour trouver la voie cible est survenu - Echec de l'ajout du commentaire.", exception);
     }
     
     this.addComment(comment);
@@ -315,24 +388,36 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public void addCommentLength(final Comment comment) throws TechnicalException, FunctionalException {
     
     if (comment == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = null");
+      }
       throw new FunctionalException(NO_COMMENT_SEND);
     }
     
-    final String pTargetType = LENGTH;
+    final String targetType = LENGTH;
     
-    if (comment.getTargetType() != null && !comment.getTargetType().isEmpty() && !comment.getTargetType().equals(pTargetType)) {
+    if (comment.getTargetType() != null && !comment.getTargetType().isEmpty() && !comment.getTargetType().equals(targetType)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+        LOG.debug("target type = " + targetType);
+      }
       throw new FunctionalException("Le type de la cible du commentaire est différent de celui attendu (Longueur) - Echec de l'ajout du commentaire");
     }
     else {
-      comment.setTargetType(pTargetType);
+      comment.setTargetType(targetType);
     }
     
     try {
       this.getDaoFactory().getLengthDao().getLength(comment.getIdCommentTarget());
-    } catch (NotFoundException pException) {
-      throw new FunctionalException("La longueur cible du commentaire n'a pas été trouvée - Echec de l'ajout du commentaire.", pException);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException("Un problème technique pour trouver la longueur cible est survenu - Echec de l'ajout du commentaire.", pException);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new FunctionalException("La longueur cible du commentaire n'a pas été trouvée - Echec de l'ajout du commentaire.", exception);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Un problème technique pour trouver la longueur cible est survenu - Echec de l'ajout du commentaire.", exception);
     }
     
     this.addComment(comment);
@@ -346,24 +431,36 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public void addCommentTopo(final Comment comment) throws TechnicalException, FunctionalException {
     
     if (comment == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = null");
+      }
       throw new FunctionalException(NO_COMMENT_SEND);
     }
     
-    final String pTargetType = TOPO;
+    final String targetType = TOPO;
     
-    if (comment.getTargetType() != null && !comment.getTargetType().isEmpty() && !comment.getTargetType().equals(pTargetType)) {
+    if (comment.getTargetType() != null && !comment.getTargetType().isEmpty() && !comment.getTargetType().equals(targetType)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+        LOG.debug("target type = " + targetType);
+      }
       throw new FunctionalException("Le type de la cible du commentaire est différent de celui attentdu (Topo) - Echec de l'ajout du commentaire");
     }
     else {
-      comment.setTargetType(pTargetType);
+      comment.setTargetType(targetType);
     }
     
     try {
       this.getDaoFactory().getTopoDao().getTopo(comment.getIdCommentTarget());
-    } catch (NotFoundException pException) {
-      throw new FunctionalException("Le topo cible du commentaire n'a pas été trouvée - Echec de l'ajout du commentaire.", pException);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException("Un problème technique pour trouver le topo est survenu - Echec de l'ajout du commentaire.", pException);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new FunctionalException("Le topo cible du commentaire n'a pas été trouvée - Echec de l'ajout du commentaire.", exception);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Un problème technique pour trouver le topo est survenu - Echec de l'ajout du commentaire.", exception);
     }
     
     this.addComment(comment);
@@ -376,15 +473,23 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public void deleteComment(final Integer commentId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (commentId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment id = " + commentId);
+      }
       throw new FunctionalException("L'identifiant du commentaire à supprimer est incorrect (Identifiant vide) - Echec de la suppression");
     }
     
     try {
       this.getDaoFactory().getCommentDao().deleteComment(commentId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment id = " + commentId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -395,43 +500,69 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   public void modifyComment(final Comment comment, final User user) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (comment == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = null");
+      }
       throw new FunctionalException(NO_COMMENT_SEND);
     }
     
     if (user == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("user =  null");
+      }
       throw new FunctionalException("Aucun utilisateur n'est associé à la modification (Utilisateur vide) - Echec de la modification");
     }
     else {
       try {
         if (user != this.getDaoFactory().getUserDao().getUserById(comment.getEscappUser())) {
+          if (LOG.isDebugEnabled()) {
+            LOG.debug("comment = " + comment.toString());
+            LOG.debug("user = " + user.toString());
+          }
           throw new FunctionalException(
               "L'utilisateur demandant la modification ne correspond pas à celui qui a créé le commentaire - Echec de la modification");
         }
-      } catch (NotFoundException pException) {
+      } catch (NotFoundException exception) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("comment = " + comment.toString());
+          LOG.debug("user = " + user.toString());
+        }
+        LOG.error(exception.getMessage());
         throw new FunctionalException(
             "Seul le créateur du commentaire peut réaliser une modification. L'utilisateur ayant créé le commentaire n'a pu être trouvé - Echec de la modification",
-            pException);
-      } catch (TechnicalException pException) {
+            exception);
+      } catch (TechnicalException exception) {
+        LOG.error(exception.getMessage());
         throw new TechnicalException("Un problème technique empêche de vérifier quel est l'utilisateur ayant créé le commentaire - Echec de la modificaiton",
-            pException);
+            exception);
       }
     }
     
     final Set<ConstraintViolation<Comment>> violations = this.getConstraintValidator().validate(comment);
     
     if (!violations.isEmpty()) {
-      for (final ConstraintViolation<Comment> violation : violations) {
-        LOG.debug(violation.getMessage());
+      if (LOG.isDebugEnabled()) {
+        for (final ConstraintViolation<Comment> violation : violations) {
+          LOG.debug(violation.getMessage());
+        }
+        LOG.debug("comment = " + comment.toString());
+        LOG.debug("user = " + user.toString());
       }
       throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(violations));
     }
     
     try {
       this.getDaoFactory().getCommentDao().updateComment(comment);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment = " + comment.toString());
+        LOG.debug("user = " + user.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
     }
     
   }
@@ -453,10 +584,16 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
     
     try {
       return this.getDaoFactory().getCommentDao().getCommentsList(targetType, idCommentTarget);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment target id = " + idCommentTarget);
+        LOG.debug("target type = " + targetType);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -489,10 +626,17 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
     
     try {
       return this.getDaoFactory().getCommentDao().getCommentsListWithLogin(targetType, idCommentTarget, commentOrder);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("comment target id = " + idCommentTarget);
+        LOG.debug("target type = " + targetType);
+        LOG.debug("order = " + order);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -510,8 +654,11 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
     final Set<ConstraintViolation<Comment>> violations = this.getConstraintValidator().validate(comment);
     
     if (!violations.isEmpty()) {
-      for (final ConstraintViolation<Comment> violation : violations) {
-        LOG.debug(violation.getMessage());
+      if (LOG.isDebugEnabled()) {
+        for (final ConstraintViolation<Comment> violation : violations) {
+          LOG.debug(violation.getMessage());
+        }
+        LOG.debug("comment = " + comment.toString());
       }
       throw new FunctionalException("Le commentaire à ajouter n'est pas valide", new ConstraintViolationException(violations));
     }
@@ -519,8 +666,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
     try {
       final int newCommentId = this.getDaoFactory().getCommentDao().insertComment(comment);
       comment.setId(newCommentId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
     }
   }
   

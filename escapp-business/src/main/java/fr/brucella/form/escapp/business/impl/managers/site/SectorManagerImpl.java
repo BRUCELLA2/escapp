@@ -38,15 +38,23 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager 
   public List<Sector> getSectorsSiteList(final Integer siteId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (siteId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("site id= " + siteId);
+      }
       throw new FunctionalException("L'identifiant du site est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
     try {
       return this.getDaoFactory().getSectorDao().getSectorsList(siteId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("site id= " + siteId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -57,15 +65,23 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager 
   public Sector getSectorById(final Integer sectorId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (sectorId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector id= " + sectorId);
+      }
       throw new FunctionalException("L'identifiant du secteur recherché est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
     try {
       return this.getDaoFactory().getSectorDao().getSector(sectorId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector id= " + sectorId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -76,24 +92,35 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager 
   public void modifySector(final Sector sector) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (sector == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector = null");
+      }
       throw new FunctionalException("Aucune modification n'a été transmise (Secteur vide) - Echec de la mise à jour");
     }
     
     final Set<ConstraintViolation<Sector>> violations = this.getConstraintValidator().validate(sector);
     
     if (!violations.isEmpty()) {
-      for (final ConstraintViolation<Sector> violation : violations) {
-        LOG.debug(violation.getMessage());
+      if (LOG.isDebugEnabled()) {
+        for (final ConstraintViolation<Sector> violation : violations) {
+          LOG.debug(violation.getMessage());
+        }
+        LOG.debug("length = " + sector.toString());
       }
       throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(violations));
     }
     
     try {
       this.getDaoFactory().getSectorDao().updateSector(sector);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector = " + sector.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -104,14 +131,20 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager 
   public void addSector(final Sector sector) throws TechnicalException, FunctionalException {
     
     if (sector == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector = null");
+      }
       throw new FunctionalException("Aucun secteur n'a été transmis (Secteur vide) - Echec de l'ajout");
     }
     
     final Set<ConstraintViolation<Sector>> violations = this.getConstraintValidator().validate(sector);
     
     if (!violations.isEmpty()) {
-      for (final ConstraintViolation<Sector> violation : violations) {
-        LOG.debug(violation.getMessage());
+      if (LOG.isDebugEnabled()) {
+        for (final ConstraintViolation<Sector> violation : violations) {
+          LOG.debug(violation.getMessage());
+        }
+        LOG.debug("length = " + sector.toString());
       }
       throw new FunctionalException("Le secteur à ajouter n'est pas valide", new ConstraintViolationException(violations));
     }
@@ -119,8 +152,9 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager 
     try {
       final int newSectorId = this.getDaoFactory().getSectorDao().insertSector(sector);
       sector.setId(newSectorId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
     }
   }
   
@@ -131,15 +165,23 @@ public class SectorManagerImpl extends AbstractManager implements SectorManager 
   public void deleteSector(final Integer sectorId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (sectorId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector id= " + sectorId);
+      }
       throw new FunctionalException("L'identifiant du sector à supprimer est incorrect (Identifiant null) - Echec de la suppression");
     }
     
     try {
       this.getDaoFactory().getSectorDao().deleteSector(sectorId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector id = " + sectorId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,12 @@ public class TopoAddAction extends ActionSupport implements ServletRequestAware 
    * Serial ID.
    */
   private static final long  serialVersionUID = 2759897204577580047L;
+  
+  // ----- Logger
+  /**
+   * Topo add action logger.
+   */
+  private static final Log   LOG              = LogFactory.getLog(TopoAddAction.class);
   
   // ----- Input
   
@@ -187,7 +195,7 @@ public class TopoAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Get the content Type of the topo file
+   * Get the content Type of the topo file.
    *
    * @return the content Type of the topo file
    *
@@ -199,7 +207,7 @@ public class TopoAddAction extends ActionSupport implements ServletRequestAware 
   }
   
   /**
-   * Get the name of the topo file
+   * Get the name of the topo file.
    *
    * @return the name of the topo file
    *
@@ -347,11 +355,17 @@ public class TopoAddAction extends ActionSupport implements ServletRequestAware 
   public String execute() throws Exception {
     
     if (StringUtils.isAllEmpty(this.name, this.department, this.isBorrowable, this.municipality, this.description)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Topo name, topo department, isborrowable, topo municipality and topo description = null");
+      }
       return Action.INPUT;
     }
     
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     if (user == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User not connected - add topo failure");
+      }
       this.addActionError("Vous n'êtes plus identifié, l'affichage de vos topos n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
@@ -391,15 +405,17 @@ public class TopoAddAction extends ActionSupport implements ServletRequestAware 
         return Action.INPUT;
       }
       FileUtils.copyFile(this.topoFile, destFile);
-    } catch (IOException pException) {
+    } catch (IOException exception) {
+      LOG.error(exception.getMessage());
       this.addActionError("Un problème lors de l'enregistrement du fichier est survenu - Echec de l'ajout du topo");
       return Action.ERROR;
     }
     
     try {
       this.managerFactory.getTopoManager().addTopo(topo);
-    } catch (FunctionalException | TechnicalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (FunctionalException | TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      this.addActionError(exception.getMessage());
       FileUtils.deleteQuietly(destFile);
       return Action.ERROR;
     }

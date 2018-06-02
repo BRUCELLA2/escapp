@@ -41,15 +41,23 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
   public List<Route> getRoutesSectorList(final Integer sectorId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (sectorId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector id= " + sectorId);
+      }
       throw new FunctionalException("L'identifiant du Secteur est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
     try {
       return this.getDaoFactory().getRouteDao().getRoutesList(sectorId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("sector id= " + sectorId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -60,15 +68,23 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
   public Route getRouteById(final Integer routeId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (routeId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("route id= " + routeId);
+      }
       throw new FunctionalException("L'identifiant du site recherché est incorrect (Identifiant vide) - Echec de la recherche");
     }
     
     try {
       return this.getDaoFactory().getRouteDao().getRoute(routeId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("route id= " + routeId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
     
   }
@@ -80,24 +96,35 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
   public void modifyRoute(final Route route) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (route == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("route = null");
+      }
       throw new FunctionalException("Aucune modification n'a été transmise (Voie vide) - Echec de la mise à jour");
     }
     
-    final Set<ConstraintViolation<Route>> vViolations = this.getConstraintValidator().validate(route);
+    final Set<ConstraintViolation<Route>> violations = this.getConstraintValidator().validate(route);
     
-    if (!vViolations.isEmpty()) {
-      for (final ConstraintViolation<Route> violation : vViolations) {
-        LOG.debug(violation.getMessage());
+    if (!violations.isEmpty()) {
+      if (LOG.isDebugEnabled()) {
+        for (final ConstraintViolation<Route> violation : violations) {
+          LOG.debug(violation.getMessage());
+        }
+        LOG.debug("route = " + route.toString());
       }
-      throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(vViolations));
+      throw new FunctionalException("Les modifications demandées ne sont pas valides", new ConstraintViolationException(violations));
     }
     
     try {
       this.getDaoFactory().getRouteDao().updateRoute(route);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("route = " + route.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
   }
   
@@ -108,23 +135,30 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
   public void addRoute(final Route route) throws TechnicalException, FunctionalException {
     
     if (route == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("route = null");
+      }
       throw new FunctionalException("Aucune voie n'a été transmise (Voie vide) - Echec de l'ajout");
     }
     
-    final Set<ConstraintViolation<Route>> vViolations = this.getConstraintValidator().validate(route);
+    final Set<ConstraintViolation<Route>> violations = this.getConstraintValidator().validate(route);
     
-    if (!vViolations.isEmpty()) {
-      for (final ConstraintViolation<Route> violation : vViolations) {
-        LOG.debug(violation.getMessage());
+    if (!violations.isEmpty()) {
+      if (LOG.isDebugEnabled()) {
+        for (final ConstraintViolation<Route> violation : violations) {
+          LOG.debug(violation.getMessage());
+        }
+        LOG.debug("route = " + route.toString());
       }
-      throw new FunctionalException("La voie à ajouter n'est pas valide", new ConstraintViolationException(vViolations));
+      throw new FunctionalException("La voie à ajouter n'est pas valide", new ConstraintViolationException(violations));
     }
     
     try {
       final int newRouteId = this.getDaoFactory().getRouteDao().insertRoute(route);
       route.setId(newRouteId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
     }
   }
   
@@ -135,15 +169,23 @@ public class RouteManagerImpl extends AbstractManager implements RouteManager {
   public void deleteRoute(final Integer routeId) throws TechnicalException, FunctionalException, NotFoundException {
     
     if (routeId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("route id= " + routeId);
+      }
       throw new FunctionalException("L'identifiant de la voie à supprimer est incorrect (Identifiant null) - Echec de la suppression");
     }
     
     try {
       this.getDaoFactory().getRouteDao().deleteRoute(routeId);
-    } catch (TechnicalException pException) {
-      throw new TechnicalException(pException.getMessage(), pException);
-    } catch (NotFoundException pException) {
-      throw new NotFoundException(pException.getMessage(), pException);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("route id= " + routeId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(exception.getMessage(), exception);
     }
     
   }

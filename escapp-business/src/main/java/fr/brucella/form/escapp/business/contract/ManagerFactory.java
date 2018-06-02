@@ -18,49 +18,49 @@ public interface ManagerFactory {
   // ===== Getters =====
   
   /**
-   * Get the Comment Manager
+   * Get the Comment Manager.
    *
    * @return the Comment Manager
    */
   CommentManager getCommentManager();
   
   /**
-   * Get the Length Manager
+   * Get the Length Manager.
    *
    * @return the Length Manager
    */
   LengthManager getLengthManager();
   
   /**
-   * Get the Route Manager
+   * Get the Route Manager.
    *
    * @return the Route Manager
    */
   RouteManager getRouteManager();
   
   /**
-   * Get the Sector Manager
+   * Get the Sector Manager.
    *
    * @return the Sector Manager
    */
   SectorManager getSectorManager();
   
   /**
-   * Get the Site Manager
+   * Get the Site Manager.
    *
    * @return the Site Manager
    */
   SiteManager getSiteManager();
   
   /**
-   * Get the Topo Manager
+   * Get the Topo Manager.
    *
    * @return the Topo Manager
    */
   TopoManager getTopoManager();
   
   /**
-   * Get the User Manager
+   * Get the User Manager.
    *
    * @return the User Manager
    */
@@ -69,51 +69,51 @@ public interface ManagerFactory {
   // ===== Setters =====
   
   /**
-   * Set the Comment Manager
+   * Set the Comment Manager.
    *
-   * @param pCommentManager the Comment Manager
+   * @param commentManager the Comment Manager
    */
-  void setCommentManager(CommentManager pCommentManager);
+  void setCommentManager(CommentManager commentManager);
   
   /**
-   * Set the Length Manager
+   * Set the Length Manager.
    *
-   * @param pLengthManager the Length Manager
+   * @param lengthManager the Length Manager
    */
-  void setLengthManager(LengthManager pLengthManager);
+  void setLengthManager(LengthManager lengthManager);
   
   /**
-   * Set the Route Manager
+   * Set the Route Manager.
    *
-   * @param pRouteManager the Route Manager
+   * @param routeManager the Route Manager
    */
-  void setRouteManager(RouteManager pRouteManager);
+  void setRouteManager(RouteManager routeManager);
   
   /**
-   * Set the Sector Manager
+   * Set the Sector Manager.
    *
-   * @param pSectorManager the Sector Manager
+   * @param sectorManager the Sector Manager
    */
-  void setSectorManager(SectorManager pSectorManager);
+  void setSectorManager(SectorManager sectorManager);
   
   /**
-   * Set the Site Manager
+   * Set the Site Manager.
    *
-   * @param pSiteManager the Site Manager
+   * @param siteManager the Site Manager
    */
-  void setSiteManager(SiteManager pSiteManager);
+  void setSiteManager(SiteManager siteManager);
   
   /**
-   * Set the Topo Manager
+   * Set the Topo Manager.
    *
-   * @param pTopoManager the Topo Manager
+   * @param topoManager the Topo Manager
    */
-  void setTopoManager(TopoManager pTopoManager);
+  void setTopoManager(TopoManager topoManager);
   
   /**
-   * Set the User Manager
+   * Set the User Manager.
    *
-   * @param pUserManager the Topo Manager
+   * @param userManager the Topo Manager
    */
-  void setUserManager(UserManager pUserManager);
+  void setUserManager(UserManager userManager);
 }

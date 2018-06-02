@@ -21,7 +21,7 @@ import fr.brucella.form.escapp.business.contract.managers.user.UserManager;
 public class ManagerFactoryImpl implements ManagerFactory {
   
   /**
-   * Comment Manager
+   * Comment Manager.
    *
    * @see CommentManager
    */
@@ -29,7 +29,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
   private CommentManager commentManager;
   
   /**
-   * Length Manager
+   * Length Manager.
    *
    * @see LengthManager
    */
@@ -37,7 +37,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
   private LengthManager  lengthManager;
   
   /**
-   * Route Manager
+   * Route Manager.
    *
    * @see RouteManager
    */
@@ -45,7 +45,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
   private RouteManager   routeManager;
   
   /**
-   * Sector Manager
+   * Sector Manager.
    *
    * @see SectorManager
    */
@@ -53,7 +53,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
   private SectorManager  sectorManager;
   
   /**
-   * Site Manager
+   * Site Manager.
    *
    * @see SiteManager
    */
@@ -61,7 +61,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
   private SiteManager    siteManager;
   
   /**
-   * Topo Manager
+   * Topo Manager.
    *
    * @see TopoManager
    */
@@ -69,7 +69,7 @@ public class ManagerFactoryImpl implements ManagerFactory {
   private TopoManager    topoManager;
   
   /**
-   * User Manager
+   * User Manager.
    *
    * @see UserManager
    */
@@ -142,56 +142,56 @@ public class ManagerFactoryImpl implements ManagerFactory {
    * @see ManagerFactory#setCommentManager(CommentManager)
    */
   @Override
-  public void setCommentManager(final CommentManager pCommentManager) {
-    this.commentManager = pCommentManager;
+  public void setCommentManager(final CommentManager commentManager) {
+    this.commentManager = commentManager;
   }
   
   /**
    * @see ManagerFactory#setLengthManager(LengthManager)
    */
   @Override
-  public void setLengthManager(final LengthManager pLengthManager) {
-    this.lengthManager = pLengthManager;
+  public void setLengthManager(final LengthManager lengthManager) {
+    this.lengthManager = lengthManager;
   }
   
   /**
    * @see ManagerFactory#setRouteManager(RouteManager)
    */
   @Override
-  public void setRouteManager(final RouteManager pRouteManager) {
-    this.routeManager = pRouteManager;
+  public void setRouteManager(final RouteManager routeManager) {
+    this.routeManager = routeManager;
   }
   
   /**
    * @see ManagerFactory#setSectorManager(SectorManager)
    */
   @Override
-  public void setSectorManager(final SectorManager pSectorManager) {
-    this.sectorManager = pSectorManager;
+  public void setSectorManager(final SectorManager sectorManager) {
+    this.sectorManager = sectorManager;
   }
   
   /**
    * @see ManagerFactory#setSiteManager(SiteManager)
    */
   @Override
-  public void setSiteManager(final SiteManager pSiteManager) {
-    this.siteManager = pSiteManager;
+  public void setSiteManager(final SiteManager siteManager) {
+    this.siteManager = siteManager;
   }
   
   /**
    * @see ManagerFactory#setTopoManager(TopoManager)
    */
   @Override
-  public void setTopoManager(final TopoManager pTopoManager) {
-    this.topoManager = pTopoManager;
+  public void setTopoManager(final TopoManager topoManager) {
+    this.topoManager = topoManager;
   }
   
   /**
    * @see ManagerFactory#setUserManager(UserManager)
    */
   @Override
-  public void setUserManager(final UserManager pUserManager) {
-    this.userManager = pUserManager;
+  public void setUserManager(final UserManager userManager) {
+    this.userManager = userManager;
   }
   
 }

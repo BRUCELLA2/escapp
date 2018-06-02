@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,6 +36,12 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
    */
   private static final long  serialVersionUID = -854809676971542803L;
   
+  
+  // ----- Site add action Logger
+  /**
+   * Site add action logger.
+   */
+  private static final Log   LOG              = LogFactory.getLog(SiteAddAction.class);
   
   // ----- Input
   
@@ -229,7 +237,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
    *
    * @return the String representing the department code to which {@link Site} belongs. Can't be empty
    *         and size need to be 3 characters. Ex : "034", "030", "02A".
-   * 
+   *
    * @see #siteDepartment
    * @see #setSiteDepartment(String)
    */
@@ -580,7 +588,7 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   
   /**
    * Set the length in meters of the {@link Length}. Can't be null.
-   * 
+   *
    * @param lengthLength the length in meters of the {@link Length}. Can't be null.
    *
    * @see #lengthLength
@@ -649,10 +657,16 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   public String doAddSite() {
     
     if (this.isAdmin() == false) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User is not Admin - Add site failure");
+      }
       return Action.ERROR;
     }
     
     if (StringUtils.isAllEmpty(this.siteName, this.siteDepartment, this.siteMunicipality, this.siteDescription)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Site name, site department, site munucipality and site description = null");
+      }
       return Action.INPUT;
     }
     
@@ -679,8 +693,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
     try {
       this.managerFactory.getSiteManager().addSite(site);
       this.siteId = site.getId();
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -696,14 +711,21 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   public String doAddSector() {
     
     if (this.isAdmin() == false) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User is not Admin - Add sector failure");
+      }
       return Action.ERROR;
     }
     
     if (StringUtils.isAllEmpty(this.sectorName, this.sectorDescription)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Sector name and sector description = null");
+      }
       return Action.INPUT;
     }
     
     if (this.siteId == null) {
+      LOG.error("Site id null - Add sector failure");
       this.addActionError("L'identifiant du site auquel doit être associé le secteur est invalide (identifiant vide) - Echec de l'ajout");
       return Action.ERROR;
     }
@@ -723,8 +745,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
     
     try {
       this.managerFactory.getSectorManager().addSector(sector);
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -739,14 +762,21 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   public String doAddRoute() {
     
     if (this.isAdmin() == false) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User is not Admin - Add route failure");
+      }
       return Action.ERROR;
     }
     
     if (StringUtils.isAllEmpty(this.routeName, this.routeGrade, this.routeDescription) && this.routePointsNb == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("ROute name, route grade, route description and nb points route = null");
+      }
       return Action.INPUT;
     }
     
     if (this.sectorId == null) {
+      LOG.error("Sector id null - Add route failure");
       this.addActionError("L'identifiant du secteur auquel doit être associé la voie est invalide (identifiant vide) - Echec de l'ajout");
       return Action.ERROR;
     }
@@ -775,8 +805,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
     try {
       this.managerFactory.getRouteManager().addRoute(route);
       this.routeId = route.getId();
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -791,15 +822,22 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   public String doAddLength() {
     
     if (this.isAdmin() == false) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User is not Admin - Add route failure");
+      }
       return Action.ERROR;
     }
     
     if (this.routeId == null) {
+      LOG.error("Route id null - Add length failure");
       this.addActionError("L'identifiant de la route à laquelle doit être associé la longueur est invalide (identifiant vide) - Echec de l'ajout");
       return Action.ERROR;
     }
     
     if (StringUtils.isAllEmpty(this.lengthGrade, this.lengthDescription) && this.lengthLength == null && this.lengthPointsNb == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("length grade, length description, length length and nb points length = null");
+      }
       return Action.INPUT;
     }
     
@@ -826,8 +864,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
     
     try {
       this.managerFactory.getLengthManager().addLength(length);
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -842,6 +881,9 @@ public class SiteAddAction extends ActionSupport implements ServletRequestAware 
   private boolean isAdmin() {
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     if (user == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User not connected - user can't be admin");
+      }
       this.addActionError("Vous n'êtes plus identifié, l'ajout n'a pu se faire. Merci de vous reconnecter.");
       return false;
     }

@@ -26,7 +26,7 @@ import fr.brucella.form.escapp.model.exceptions.NotFoundException;
 import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 
 /**
- * Length Data Access Object
+ * Length Data Access Object.
  *
  * @author BRUCELLA2
  */
@@ -34,7 +34,7 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
 public class LengthDaoImpl extends AbstractDao implements LengthDao {
   
   /**
-   * Length DAO logger
+   * Length DAO logger.
    */
   private static final Log LOG = LogFactory.getLog(LengthDaoImpl.class);
   
@@ -54,18 +54,26 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
       
       return this.getNamedJdbcTemplate().queryForObject(sql, params, rowMapper);
       
-    } catch (EmptyResultDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new NotFoundException("La longueur demandée n'a pas été trouvée", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + lengthId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException("La longueur demandée n'a pas été trouvée", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + lengthId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -85,21 +93,29 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
       
       final List<Length> lengthsList = this.getNamedJdbcTemplate().query(sql, params, rowMapper);
       if (lengthsList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("id = " + routeId);
+        }
         throw new NotFoundException("Aucune longueur n'a été trouvée.");
       }
       else {
         return lengthsList;
       }
       
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + routeId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -117,21 +133,33 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
       
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("Length = " + length.toString());
+        }
         throw new NotFoundException("La longueur à modifier n'a pas été trouvée. La mise à jour n'a pas été faite.");
       }
       
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de la longueur n'a pu être réalisée.", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Length = " + length.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour de la longueur n'a pu être réalisée.", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Length = " + length.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -153,21 +181,33 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
       this.getNamedJdbcTemplate().update(sql, params, keyHolder, new String[] {"id"});
       return keyHolder.getKey().intValue();
       
-    } catch (DuplicateKeyException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Une longueur existe déjà avec cet identifiant", pException);
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la création de la longueur n'a pu être réalisée", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DuplicateKeyException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Length = " + length.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Une longueur existe déjà avec cet identifiant", exception);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Length = " + length.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la création de la longueur n'a pu être réalisée", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("Length = " + length.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -186,18 +226,26 @@ public class LengthDaoImpl extends AbstractDao implements LengthDao {
       
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("id = " + lengthId);
+        }
         throw new NotFoundException("La longueur à supprimer n'a pas été trouvée. La suppression n'a pas été réalisée.");
       }
       
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + lengthId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   

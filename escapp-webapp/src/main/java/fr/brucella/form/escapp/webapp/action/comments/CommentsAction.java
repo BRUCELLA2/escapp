@@ -3,6 +3,8 @@ package fr.brucella.form.escapp.webapp.action.comments;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +32,12 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
    * Serial ID.
    */
   private static final long  serialVersionUID = -617440123390057718L;
+  
+  // ----- Logger
+  /**
+   * Comments action logger.
+   */
+  private static final Log   LOG              = LogFactory.getLog(CommentsAction.class);
   
   // ----- Input
   /**
@@ -339,12 +347,18 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
   public String doAddCommentSite() {
     
     if (StringUtils.isEmpty(this.commentSite) || this.siteId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Comment site and site id = null");
+      }
       return Action.INPUT;
     }
     
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     
     if (user == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User not connected - add comment site failure");
+      }
       this.addActionError("Vous n'êtes plus identifié, l'ajout du commentaire n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
@@ -356,8 +370,9 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
     
     try {
       this.managerFactory.getCommentManager().addCommentSite(comment);
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -373,6 +388,9 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
   public String doAddCommentSector() {
     
     if (StringUtils.isEmpty(this.commentSector) || this.sectorId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Comment sector and sector id = null");
+      }
       return Action.INPUT;
     }
     
@@ -382,14 +400,18 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
       sector = this.managerFactory.getSectorManager().getSectorById(this.sectorId);
       // siteId is need for the redirection to the site details
       this.siteId = sector.getSiteId();
-    } catch (TechnicalException | FunctionalException | NotFoundException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException | NotFoundException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     
     if (user == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User not connected - add comment sector failure");
+      }
       this.addActionError("Vous n'êtes plus identifié, l'ajout du commentaire n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
@@ -401,8 +423,9 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
     
     try {
       this.managerFactory.getCommentManager().addCommentSector(comment);
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -418,12 +441,18 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
   public String doAddCommentRoute() {
     
     if (StringUtils.isEmpty(this.commentRoute) || this.routeId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Comment route and route id = null");
+      }
       return Action.INPUT;
     }
     
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     
     if (user == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User not connected - add comment route failure");
+      }
       this.addActionError("Vous n'êtes plus identifié, l'ajout du commentaire n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
@@ -436,8 +465,9 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
     
     try {
       this.managerFactory.getCommentManager().addCommentRoute(comment);
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -453,12 +483,18 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
   public String doAddCommentTopo() {
     
     if (StringUtils.isEmpty(this.commentTopo) || this.topoId == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Comment topo and topo id = null");
+      }
       return Action.INPUT;
     }
     
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     
     if (user == null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("User not connected - add comment topo failure");
+      }
       this.addActionError("Vous n'êtes pas identifié, l'ajout du commentaire n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
@@ -470,8 +506,9 @@ public class CommentsAction extends ActionSupport implements ServletRequestAware
     
     try {
       this.managerFactory.getCommentManager().addCommentTopo(comment);
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     

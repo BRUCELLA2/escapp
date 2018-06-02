@@ -49,18 +49,30 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
     
     try {
       return this.getNamedJdbcTemplate().query(sql, params, rowMapper);
-    } catch (EmptyResultDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new NotFoundException("L'utilisateur n'a aucun role", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException("L'utilisateur n'a aucun role", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("id = " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
     
   }
@@ -80,20 +92,32 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("role = " + roleUser.toString());
+        }
         throw new NotFoundException("Le role associé à l'utilisateur n'a pas été trouvé. La mise à jour n'a pas été faite.");
       }
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du role n'a pu être réalisée.", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("role = " + roleUser.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la mise à jour du role n'a pu être réalisée.", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("role = " + roleUser.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
     
   }
@@ -112,21 +136,33 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
     
     try {
       this.getNamedJdbcTemplate().update(sql, params);
-    } catch (DuplicateKeyException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Un role identique pour cet utilisateur existe déjà.", pException);
-    } catch (DataIntegrityViolationException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException("Les données n'étant pas conformes, la création du role pour cet utilisateur n'a pu être réalisée", pException);
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (DuplicateKeyException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("role = " + roleUser.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Un role identique pour cet utilisateur existe déjà.", exception);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("role = " + roleUser.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException("Les données n'étant pas conformes, la création du role pour cet utilisateur n'a pu être réalisée", exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());;
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("role = " + roleUser.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
   }
   
@@ -145,17 +181,25 @@ public class RoleUserDaoImpl extends AbstractDao implements RoleUserDao {
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, params);
       if (result == 0) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("role = " + roleUser.toString());
+        }
         throw new NotFoundException("Le role à supprimer pour cet utilisateur n'a pas été toruvé. La suppresion n'a pas été réalisée.");
       }
-    } catch (PermissionDeniedDataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(PERMISSION_DENIED, pException);
-    } catch (DataAccessResourceFailureException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, pException);
-    } catch (DataAccessException pException) {
-      LOG.debug(pException.getStackTrace());
-      throw new TechnicalException(DATA_ACCESS_EXCEPTION, pException);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(PERMISSION_DENIED, exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_RESOURCE_FAILURE, exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("role = " + roleUser.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(DATA_ACCESS_EXCEPTION, exception);
     }
     
   }

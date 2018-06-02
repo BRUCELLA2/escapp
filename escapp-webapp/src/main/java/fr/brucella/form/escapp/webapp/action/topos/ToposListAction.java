@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,6 +33,11 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
    */
   private static final long  serialVersionUID = 1573862908235940140L;
   
+  // ----- Topos list action Logger
+  /**
+   * Site add action logger.
+   */
+  private static final Log   LOG              = LogFactory.getLog(ToposListAction.class);
   
   // ----- Input
   
@@ -286,8 +293,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
     
     try {
       this.toposList = this.managerFactory.getTopoManager().getAllToposList();
-    } catch (TechnicalException | NotFoundException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | NotFoundException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -304,6 +312,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
     TopoSearch topoSearch;
     
     if (StringUtils.isAllEmpty(this.departmentTopo, this.municipalityTopo, this.available)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("TOpo department, topo munucipality, topo available = null");
+      }
       topoSearch = null;
     }
     else {
@@ -320,8 +331,9 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
     
     try {
       this.toposList = this.managerFactory.getTopoManager().getSearchToposList(topoSearch);
-    } catch (TechnicalException | FunctionalException | NotFoundException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException | NotFoundException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -339,25 +351,28 @@ public class ToposListAction extends ActionSupport implements ServletRequestAwar
     final User user = (User) this.servletRequest.getSession().getAttribute("user");
     
     if (user == null) {
+      LOG.error("user null - my topos list failure");
       this.addActionError("Vous n'êtes plus identifié, l'affichage de vos topos n'a pu se faire. Merci de vous reconnecter.");
       return Action.ERROR;
     }
     
     try {
       this.toposOwnerList = this.managerFactory.getTopoManager().getOwnerToposList(user.getId());
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
-    } catch (NotFoundException pException) {
+    } catch (NotFoundException exception) {
       this.toposOwnerList = null;
     }
     
     try {
       this.toposBorrowerList = this.managerFactory.getTopoManager().getBorrowerToposList(user.getId());
-    } catch (TechnicalException | FunctionalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | FunctionalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
-    } catch (NotFoundException pException) {
+    } catch (NotFoundException exception) {
       this.toposBorrowerList = null;
     }
     

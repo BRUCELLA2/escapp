@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,13 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
    * Serial ID.
    */
   private static final long   serialVersionUID = -9137265072794078899L;
+  
+  
+  // ----- Topos list action Logger
+  /**
+   * User action logger.
+   */
+  private static final Log    LOG              = LogFactory.getLog(UserAction.class);
   
   // ----- Input
   
@@ -236,8 +245,9 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
         if (!this.managerFactory.getUserManager().checkLoginDispo(this.login)) {
           this.addFieldError("login", "L'identifiant est déjà utilisé");
         }
-      } catch (TechnicalException pException) {
-        this.addActionError(pException.getMessage());
+      } catch (TechnicalException exception) {
+        this.addActionError(exception.getMessage());
+        LOG.error(exception.getMessage());
         return Action.ERROR;
       }
     }
@@ -270,8 +280,9 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     
     try {
       user = this.managerFactory.getUserManager().addUser(user);
-    } catch (FunctionalException | TechnicalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (FunctionalException | TechnicalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -308,10 +319,11 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
       final List<RoleUser> roles = this.managerFactory.getUserManager().getRoleUserList(user.getId());
       this.session.put("user", user);
       this.session.put("roles", roles);
-    } catch (FunctionalException | TechnicalException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (FunctionalException | TechnicalException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
-    } catch (NotFoundException pException) {
+    } catch (NotFoundException exception) {
       this.addFieldError("login", "L'identifiant et/ou le mot de passe sont incorrects - La connexion n'a pu être réalisée");
       this.addFieldError("password", "L'identifiant et/ou le mot de passe sont incorrects - La connexion n'a pu être réalisée");
       return Action.INPUT;

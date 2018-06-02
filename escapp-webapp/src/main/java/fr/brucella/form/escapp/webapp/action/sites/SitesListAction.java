@@ -29,6 +29,11 @@ public class SitesListAction extends ActionSupport {
    */
   private static final long serialVersionUID = -8977464808054592705L;
   
+  // ----- Logger
+  /**
+   * Sites list action logger.
+   */
+  private static final Log  LOG              = LogFactory.getLog(SitesListAction.class);
   
   // ----- Input
   
@@ -83,13 +88,6 @@ public class SitesListAction extends ActionSupport {
    */
   @Autowired
   private ManagerFactory    managerFactory;
-  
-  
-  // ----- Logger
-  /**
-   * Sites list action logger
-   */
-  private static final Log  LOG              = LogFactory.getLog(SitesListAction.class);
   
   
   // ===== Getters =====
@@ -148,7 +146,7 @@ public class SitesListAction extends ActionSupport {
   
   /**
    * Get the Maximum grade for the {@link Route} belongs to {@link Site}.
-   * 
+   *
    * @return the Maximum grade for the {@link Route} belongs to {@link Site}.
    *
    * @see #maxGrade
@@ -235,8 +233,9 @@ public class SitesListAction extends ActionSupport {
     
     try {
       this.sitesList = this.managerFactory.getSiteManager().getAllSitesList();
-    } catch (TechnicalException | NotFoundException pException) {
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | NotFoundException exception) {
+      this.addActionError(exception.getMessage());
+      LOG.error(exception.getMessage());
       return Action.ERROR;
     }
     
@@ -253,6 +252,9 @@ public class SitesListAction extends ActionSupport {
     SiteSearch siteSearch;
     
     if (StringUtils.isAllEmpty(this.departmentSite, this.municipalitySite, this.minGrade, this.maxGrade)) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("site department, site munucipality, min grade and max grade = null");
+      }
       siteSearch = null;
     }
     else {
@@ -265,10 +267,9 @@ public class SitesListAction extends ActionSupport {
     
     try {
       this.sitesList = this.managerFactory.getSiteManager().getSearchSitesList(siteSearch);
-    } catch (TechnicalException | NotFoundException | FunctionalException pException) {
-      LOG.debug(pException.getStackTrace());
-      LOG.error(pException.getMessage());
-      this.addActionError(pException.getMessage());
+    } catch (TechnicalException | NotFoundException | FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      this.addActionError(exception.getMessage());
       return Action.ERROR;
     }
     
