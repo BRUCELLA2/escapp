@@ -35,7 +35,7 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
   private static final Log    LOG             = LogFactory.getLog(CommentManagerImpl.class);
   
   // ----- STRING CONSTANTS
-  private static final String SITE            = "site";
+  private static final String SITE            = "Site";
   private static final String SECTOR          = "Sector";
   private static final String ROUTE           = "Route";
   private static final String LENGTH          = "Length";

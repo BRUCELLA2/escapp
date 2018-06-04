@@ -29,18 +29,18 @@ import fr.brucella.form.escapp.model.exceptions.TechnicalException;
  * @author BRUCELLA2
  */
 public class SiteDetailsAction extends ActionSupport {
-  
+
   /**
    * Serial ID.
    */
   private static final long            serialVersionUID = -8899315209160242753L;
-  
+
   // ----- Logger
   /**
    * Site details action logger.
    */
   private static final Log             LOG              = LogFactory.getLog(SiteDetailsAction.class);
-  
+
   // ----- Input
   /**
    * Id of the {@link Site} or {@link Route}.
@@ -49,7 +49,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setId(Integer)
    */
   private Integer                      id;
-  
+
   // ----- Output
   /**
    * The {@link Site} detailed in the web page.
@@ -58,7 +58,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setSite(Site)
    */
   private Site                         site;
-  
+
   /**
    * The {@link Sector} to which the {@link Route} belongs.
    *
@@ -66,7 +66,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setSector(Sector)
    */
   private Sector                       sector;
-  
+
   /**
    * List of all {@link Sector} of the {@link Site}.
    *
@@ -74,7 +74,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setSectorsList(List)
    */
   private List<Sector>                 sectorsList;
-  
+
   /**
    * The {@link Route} detailed in the web page.
    *
@@ -82,7 +82,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setRoute(Route)
    */
   private Route                        route;
-  
+
   /**
    * List of all {@link Route} of the {@link Site}.
    *
@@ -90,7 +90,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setRoutesList(List)
    */
   private List<Route>                  routesList;
-  
+
   /**
    * List of all {@link Length} of the {@link Route}.
    *
@@ -98,7 +98,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setLengthsList(List)
    */
   private List<Length>                 lengthsList;
-  
+
   /**
    * Number of points of the {@link Route}.
    *
@@ -106,7 +106,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setNbPoints(Integer)
    */
   private int                          nbPoints;
-  
+
   /**
    * Number of {@link Comment} for the {@link Site}.
    *
@@ -114,7 +114,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setNbCommentsSite(Integer)
    */
   private Integer                      nbCommentsSite;
-  
+
   /**
    * {@link List} of {@link Pair} of id of the {@link Sector} and number of {@link Comment} for this
    * {@link Sector}. To the left, id of the {@link Sector}, to the right number of {@link Comment} for
@@ -124,7 +124,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setNbCommentsSectorsList(List)
    */
   private List<Pair<Integer, Integer>> nbCommentsSectorsList;
-  
+
   /**
    * Number of {@link Comment} for the {@link Route}.
    *
@@ -132,7 +132,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setNbCommentsRoute(Integer)
    */
   private Integer                      nbCommentsRoute;
-  
+
   /**
    * {@link List} of {@link Pair} of {@link Comment} with the login of the {@link User} who write the
    * {@link Comment} for the {@link Site}.
@@ -141,7 +141,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setCommentsSiteList(List)
    */
   private List<Pair<Comment, String>>  commentsSiteList;
-  
+
   /**
    * {@link List} of {@link Pair} of {@link Comment} with the login of {@link User} who write the
    * {@link Comment} for all the {@link Sector} of the {@link Site}.
@@ -150,7 +150,7 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setCommentsSectorList(List)
    */
   private List<Pair<Comment, String>>  commentsSectorList;
-  
+
   /**
    * {@link List} of {@link Pair} of {@link Comment} with the login of {@link User} who write the
    * {@link Comment} for the {@link Route}.
@@ -159,18 +159,18 @@ public class SiteDetailsAction extends ActionSupport {
    * @see #setCommentsRouteList(List)
    */
   private List<Pair<Comment, String>>  commentsRouteList;
-  
+
   // ----- Manager
-  
+
   /**
    * The Manager Factory Manager Factory allow to get and set business managers.
    */
   @Autowired
   private ManagerFactory               managerFactory;
-  
-  
+
+
   // ===== Getters =====
-  
+
   /**
    * Get the id of the {@link Site} or {@link Route}.
    *
@@ -182,7 +182,7 @@ public class SiteDetailsAction extends ActionSupport {
   public Integer getId() {
     return this.id;
   }
-  
+
   /**
    * Get the {@link Site} detailed in the web page.
    *
@@ -194,7 +194,7 @@ public class SiteDetailsAction extends ActionSupport {
   public Site getSite() {
     return this.site;
   }
-  
+
   /**
    * Get the {@link Sector} to which the {@link Route} belongs.
    *
@@ -206,7 +206,7 @@ public class SiteDetailsAction extends ActionSupport {
   public Sector getSector() {
     return this.sector;
   }
-  
+
   /**
    * Get the list of all {@link Sector} of the {@link Site}.
    *
@@ -218,7 +218,7 @@ public class SiteDetailsAction extends ActionSupport {
   public List<Sector> getSectorsList() {
     return this.sectorsList;
   }
-  
+
   /**
    * Get the {@link Route} detailed in the web page.
    *
@@ -230,7 +230,7 @@ public class SiteDetailsAction extends ActionSupport {
   public Route getRoute() {
     return this.route;
   }
-  
+
   /**
    * Get the list of all {@link Route} of the {@link Site}.
    *
@@ -242,7 +242,7 @@ public class SiteDetailsAction extends ActionSupport {
   public List<Route> getRoutesList() {
     return this.routesList;
   }
-  
+
   /**
    * Get the list of all {@link Length} of the {@link Route}.
    *
@@ -254,7 +254,7 @@ public class SiteDetailsAction extends ActionSupport {
   public List<Length> getLengthsList() {
     return this.lengthsList;
   }
-  
+
   /**
    * Get the number of points of the {@link Route}.
    *
@@ -266,7 +266,7 @@ public class SiteDetailsAction extends ActionSupport {
   public int getNbPoints() {
     return this.nbPoints;
   }
-  
+
   /**
    * Get the number of {@link Comment} for the {@link Site}.
    *
@@ -278,7 +278,7 @@ public class SiteDetailsAction extends ActionSupport {
   public Integer getNbCommentsSite() {
     return this.nbCommentsSite;
   }
-  
+
   /**
    * Get the number of {@link Comment} for the {@link Route}.
    *
@@ -290,7 +290,7 @@ public class SiteDetailsAction extends ActionSupport {
   public Integer getNbCommentsRoute() {
     return this.nbCommentsRoute;
   }
-  
+
   /**
    * Get the {@link List} of {@link Pair} of id of the {@link Sector} and number of {@link Comment}
    * for this {@link Sector}.
@@ -305,7 +305,7 @@ public class SiteDetailsAction extends ActionSupport {
   public List<Pair<Integer, Integer>> getNbCommentsSectorsList() {
     return this.nbCommentsSectorsList;
   }
-  
+
   /**
    * Get the {@link List} of {@link Pair} of {@link Comment} with the login of the {@link User} who
    * write the {@link Comment} for the {@link Site}.
@@ -319,7 +319,7 @@ public class SiteDetailsAction extends ActionSupport {
   public List<Pair<Comment, String>> getCommentsSiteList() {
     return this.commentsSiteList;
   }
-  
+
   /**
    * Get the {@link List} of {@link Pair} of {@link Comment} with the login of {@link User} who write
    * the {@link Comment} for all the {@link Sector} of the {@link Site}.
@@ -333,7 +333,7 @@ public class SiteDetailsAction extends ActionSupport {
   public List<Pair<Comment, String>> getCommentsSectorList() {
     return this.commentsSectorList;
   }
-  
+
   /**
    * Get the {@link List} of {@link Pair} of {@link Comment} with the login of {@link User} who write
    * the {@link Comment} for the {@link Route}.
@@ -347,11 +347,11 @@ public class SiteDetailsAction extends ActionSupport {
   public List<Pair<Comment, String>> getCommentsRouteList() {
     return this.commentsRouteList;
   }
-  
-  
+
+
   // ===== Setters =====
-  
-  
+
+
   /**
    * Set the id of the {@link Site} or {@link Route}.
    *
@@ -363,7 +363,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setId(final Integer id) {
     this.id = id;
   }
-  
+
   /**
    * Set the {@link Site} detailed in the web page.
    *
@@ -375,7 +375,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setSite(final Site site) {
     this.site = site;
   }
-  
+
   /**
    * Set the {@link Sector} to which the {@link Route} belongs.
    *
@@ -387,7 +387,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setSector(final Sector sector) {
     this.sector = sector;
   }
-  
+
   /**
    * Set the list of all {@link Sector} of the {@link Site}.
    *
@@ -399,7 +399,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setSectorsList(final List<Sector> sectorsList) {
     this.sectorsList = sectorsList;
   }
-  
+
   /**
    * Set the {@link Route} detailed in the web page.
    *
@@ -411,7 +411,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setRoute(final Route route) {
     this.route = route;
   }
-  
+
   /**
    * Set the list of all {@link Route} of the {@link Site}.
    *
@@ -423,7 +423,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setRoutesList(final List<Route> routesList) {
     this.routesList = routesList;
   }
-  
+
   /**
    * Set the list of all {@link Length} of the {@link Route}.
    *
@@ -435,7 +435,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setLengthsList(final List<Length> lengthsList) {
     this.lengthsList = lengthsList;
   }
-  
+
   /**
    * Set the number of points of the {@link Route}.
    *
@@ -447,7 +447,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setNbPoints(final Integer nbPoints) {
     this.nbPoints = nbPoints;
   }
-  
+
   /**
    * Set the number of {@link Comment} for the {@link Site}.
    *
@@ -459,7 +459,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setNbCommentsSite(final Integer nbCommmentsSite) {
     this.nbCommentsSite = nbCommmentsSite;
   }
-  
+
   /**
    * Set the {@link List} of {@link Pair} of id of the {@link Sector} and number of {@link Comment}
    * for this {@link Sector}.
@@ -474,7 +474,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setNbCommentsSectorsList(final List<Pair<Integer, Integer>> nbCommentsSectorsList) {
     this.nbCommentsSectorsList = nbCommentsSectorsList;
   }
-  
+
   /**
    * Set the number of {@link Comment} for the {@link Route}.
    *
@@ -486,7 +486,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setNbCommentsRoute(final Integer nbCommentsRoute) {
     this.nbCommentsRoute = nbCommentsRoute;
   }
-  
+
   /**
    * Set the {@link List} of {@link Pair} of {@link Comment} with the login of the {@link User} who
    * write the {@link Comment} for the {@link Site}.
@@ -500,7 +500,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setCommentsSiteList(final List<Pair<Comment, String>> commentsSiteList) {
     this.commentsSiteList = commentsSiteList;
   }
-  
+
   /**
    * Set the {@link List} of {@link Pair} of {@link Comment} with the login of {@link User} who write
    * the {@link Comment} for all the {@link Sector} of the {@link Site}.
@@ -514,7 +514,7 @@ public class SiteDetailsAction extends ActionSupport {
   public void setCommentsSectorList(final List<Pair<Comment, String>> commentsSectorList) {
     this.commentsSectorList = commentsSectorList;
   }
-  
+
   /**
    * Set the {@link List} of {@link Pair} of {@link Comment} with the login of {@link User} who write
    * the {@link Comment} for the {@link Route}.
@@ -528,22 +528,22 @@ public class SiteDetailsAction extends ActionSupport {
   public void setCommentsRouteList(final List<Pair<Comment, String>> commentsRouteList) {
     this.commentsRouteList = commentsRouteList;
   }
-  
+
   // ===== Methods =====
-  
+
   /**
    * Prepare the site details with comments.
    *
    * @return ERROR if error occurred SUCCESS otherwise
    */
   public String doSiteDetails() {
-    
+
     if (this.id == null) {
       LOG.error("Site id null - site details failure");
       this.addActionError("L'identifiant du site recherché est incorrect (Identifiant vide) - Echec de la recherche");
       return Action.ERROR;
     }
-    
+
     try {
       this.site = this.managerFactory.getSiteManager().getSiteById(this.id);
     } catch (TechnicalException | NotFoundException | FunctionalException exception) {
@@ -551,8 +551,8 @@ public class SiteDetailsAction extends ActionSupport {
       LOG.error(exception.getMessage());
       return Action.ERROR;
     }
-    
-    
+
+
     /*
      * Get comment for the site
      */
@@ -567,42 +567,71 @@ public class SiteDetailsAction extends ActionSupport {
       this.nbCommentsSite = 0;
       this.addActionMessage("Aucun commentaire");
     }
-    
+
     /*
-     * Get all sector list for the site Get all route list for the site Get comments list for the sector
+     * Get all sector list for the site
      */
     try {
       this.sectorsList = this.managerFactory.getSectorManager().getSectorsSiteList(this.site.getId());
-      this.routesList = new ArrayList<>();
-      this.commentsSectorList = new ArrayList<>();
-      this.nbCommentsSectorsList = new ArrayList<>();
-      
-      List<Pair<Comment, String>> tempCommentsSectorList;
-      for (final Sector sectorL : this.sectorsList) {
-        this.routesList.addAll(this.managerFactory.getRouteManager().getRoutesSectorList(sectorL.getId()));
-        tempCommentsSectorList = this.managerFactory.getCommentManager().getCommentsSectorListWithLogin(sectorL.getId(), "ASC");
-        this.nbCommentsSectorsList.add(new MutablePair<Integer, Integer>(sectorL.getId(), tempCommentsSectorList.size()));
-        this.commentsSectorList.addAll(tempCommentsSectorList);
-      }
     } catch (TechnicalException | FunctionalException exception) {
       this.addActionError(exception.getMessage());
       LOG.error(exception.getMessage());
       return Action.ERROR;
     } catch (NotFoundException exception) {
-      return Action.SUCCESS;
+      this.sectorsList = new ArrayList<>();
     }
     
-    return this.hasErrors() ? Action.ERROR : Action.SUCCESS;
+    /*
+     * Get all route list for the site
+     */
+    this.routesList = new ArrayList<>();
     
+    for (final Sector sectorL : this.sectorsList) {
+      try {
+        this.routesList.addAll(this.managerFactory.getRouteManager().getRoutesSectorList(sectorL.getId()));
+      } catch (TechnicalException | FunctionalException exception) {
+        LOG.error(exception.getMessage());
+        return Action.ERROR;
+      } catch (NotFoundException exception) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("No route for sector " + sectorL.getId());
+        }
+      }
+    }
+    
+    this.commentsSectorList = new ArrayList<>();
+    this.nbCommentsSectorsList = new ArrayList<>();
+    List<Pair<Comment, String>> tempCommentsSectorList;
+
+    /*
+     * Get comments list for the sectors
+     */
+    for (final Sector sectorL2 : this.sectorsList) {
+      try {
+        tempCommentsSectorList = this.managerFactory.getCommentManager().getCommentsSectorListWithLogin(sectorL2.getId(), "ASC");
+        this.nbCommentsSectorsList.add(new MutablePair<Integer, Integer>(sectorL2.getId(), tempCommentsSectorList.size()));
+        this.commentsSectorList.addAll(tempCommentsSectorList);
+      } catch (TechnicalException | FunctionalException exception) {
+        LOG.error(exception.getMessage());
+        return Action.ERROR;
+      } catch (NotFoundException exception) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("No comment for sector " + sectorL2.getId());
+        }
+      }
+    }
+
+    return this.hasErrors() ? Action.ERROR : Action.SUCCESS;
+
   }
-  
+
   /**
    * Prepare the route details with comments.
    *
    * @return ERROR if error occurred SUCCESS otherwise
    */
   public String doRouteDetails() {
-    
+
     if (this.id == null) {
       LOG.error("route id null - route details failure");
       this.addActionError("L'identifiant de la voie recherché est incorrect (Identifiant vide) - Echec de l'affichage des détails");
@@ -620,7 +649,7 @@ public class SiteDetailsAction extends ActionSupport {
         return Action.ERROR;
       }
     }
-    
+
     /*
      * Get length list
      */
@@ -633,12 +662,17 @@ public class SiteDetailsAction extends ActionSupport {
     } catch (NotFoundException exception) {
       this.lengthsList = new ArrayList<>();
     }
-    
+
     /*
      * Calculate number of points for the route
      */
-    this.nbPoints = this.sumNbPoints(this.lengthsList);
-    
+    if (this.lengthsList.isEmpty()) {
+      this.nbPoints = this.route.getPointsNb();
+    }
+    else {
+      this.nbPoints = this.sumNbPoints(this.lengthsList);
+    }
+
     /*
      * Get comments list for the route
      */
@@ -652,12 +686,12 @@ public class SiteDetailsAction extends ActionSupport {
       this.addActionMessage("Aucun commentaire");
       this.commentsRouteList = new ArrayList<>();
     }
-    
+
     this.nbCommentsRoute = this.commentsRouteList.size();
-    
+
     return this.hasErrors() ? Action.ERROR : Action.SUCCESS;
   }
-  
+
   /**
    * Calculate the number of points for the route.
    *
@@ -667,7 +701,7 @@ public class SiteDetailsAction extends ActionSupport {
    */
   private int sumNbPoints(final List<Length> lengthsList) {
     int nbPoins = 0;
-    
+
     for (final Length length : lengthsList) {
       nbPoins += length.getPointsNb();
     }
